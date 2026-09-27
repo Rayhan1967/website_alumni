@@ -3,6 +3,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useTracerStore } from '@/store/tracerStore';
 import { Menu, Bell, LogOut, FileText, ChevronDown } from 'lucide-react';
 import { UserAvatar } from '@/components/ui/UserAvatar';
+import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { useNavigate } from 'react-router-dom';
 
 interface DashboardHeaderProps {
@@ -17,6 +18,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   const { user, logout } = useAuthStore();
   const { isSubmitted } = useTracerStore();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -38,9 +40,14 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     };
   }, [dropdownOpen]);
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setDropdownOpen(false);
+    setShowLogoutModal(true);
+  };
+
+  const confirmLogout = () => {
     logout();
-    navigate('/');
+    navigate('/', { replace: true });
   };
 
   return (
@@ -59,9 +66,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         <div>
           <h1 className="text-sm sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <span>Halo, {user?.nama || 'Ahmad Dani'}!</span>
-            <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-              Alumni Aktif
-            </span>
+            
           </h1>
           <p className="text-xs text-slate-500 hidden sm:block">
             SMK Sasmita Jaya 2 Pamulang • Tahun Lulus {user?.tahun_lulus || 2024}
@@ -121,7 +126,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
               <div className="border-t border-slate-100 pt-1">
                 <button
-                  onClick={handleLogout}
+                  onClick={handleLogoutClick}
                   className="w-full px-4 py-2 text-left hover:bg-rose-50 flex items-center gap-2 text-rose-600 font-medium cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
@@ -133,6 +138,18 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         </div>
 
       </div>
+
+      {/* Friendly Logout Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+        onConfirm={confirmLogout}
+        title="Keluar dari Portal Alumni?"
+        message="Sesi login Anda akan diakhiri. Anda dapat masuk kembali kapan saja menggunakan NISN atau NIK Anda."
+        confirmText="Ya, Keluar"
+        cancelText="Batal"
+        type="danger"
+      />
     </header>
   );
 };

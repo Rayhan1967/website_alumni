@@ -103,18 +103,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
             </a>
           </nav>
 
-          {/* Action Button: Login button sized to match design (Visible only on Large Screens 1024px+) */}
+          {/* Action Button: Show Dashboard when authenticated, Login when not authenticated */}
           <div className="hidden lg:flex items-center gap-3">
-            {isAuthenticated && user ? (
-              <Button
+            {isAuthenticated ? (
+              <button
                 onClick={() => navigate('/dashboard')}
-                variant="primary"
-                size="md"
-                className="bg-[#132238] hover:bg-[#1a3050] text-white rounded-full px-5 py-2.5 text-sm font-semibold"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#132238] hover:bg-[#1a3050] text-white text-sm font-semibold shadow-md transition-all active:scale-95 cursor-pointer"
               >
-                <LayoutDashboard className="w-4 h-4 mr-1.5 text-amber-400" />
-                <span>Dashboard ({user.nama.split(' ')[0]})</span>
-              </Button>
+                <LayoutDashboard className="w-4 h-4 text-amber-400" />
+                <span>Dashboard</span>
+              </button>
             ) : (
               <button
                 onClick={() => navigate('/login')}
@@ -269,18 +267,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
               </nav>
             </div>
 
-            {/* Bottom Action Area */}
+            {/* Bottom Action Area: Show Buka Dashboard when authenticated, Login Alumni when not authenticated */}
             <div className="pt-4 border-t border-slate-100 space-y-3">
-              {isAuthenticated && user ? (
+              {isAuthenticated ? (
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
                     navigate('/dashboard');
                   }}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#132238] text-white text-sm font-bold shadow-md hover:bg-[#1c3355] transition"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#132238] text-white text-sm font-bold shadow-md hover:bg-[#1c3355] transition active:scale-95 cursor-pointer"
                 >
                   <LayoutDashboard className="w-4 h-4 text-amber-400" />
-                  <span>Dashboard ({user.nama.split(' ')[0]})</span>
+                  <span>Buka Dashboard</span>
                 </button>
               ) : (
                 <button

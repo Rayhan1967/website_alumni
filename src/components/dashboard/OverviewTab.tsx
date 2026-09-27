@@ -13,6 +13,7 @@ import {
   ArrowRight,
   MapPin,
   Calendar,
+  Clock,
   Sparkles,
   FileCheck2,
 } from "lucide-react";
@@ -223,15 +224,16 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
             <div
               key={job.id}
               onClick={() => onSelectJob(job)}
-              className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer hover:-translate-y-1 group"
+              className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-2">
-                  <span className="px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 text-[11px] font-bold">
+                  <span className="px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-[11px] font-bold">
                     {job.type}
                   </span>
-                  <span className="text-[11px] text-slate-400">
-                    Batas: {job.deadline}
+                  <span className="text-[11px] text-slate-400 flex items-center gap-1">
+                    <Clock className="w-3 h-3 text-slate-400 shrink-0" />
+                    <span>{job.deadline}</span>
                   </span>
                 </div>
 
@@ -255,9 +257,6 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
               </div>
 
               <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-[10px] text-slate-400">
-                  Target: {job.targetMajors[0]}
-                </span>
                 <span className="text-xs font-bold text-blue-600 group-hover:underline">
                   Detail & Lamar ➜
                 </span>

@@ -15,8 +15,14 @@ export const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { login } = useAuthStore();
+  const { login, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleLoginMethodChange = (method: 'nisn' | 'nik') => {
     setLoginMethod(method);
@@ -35,7 +41,7 @@ export const LoginPage: React.FC = () => {
     setLoading(true);
     try {
       await login(identifier, 'alumni');
-      navigate('/dashboard');
+      navigate('/dashboard', { replace: true });
     } catch {
       setError('Data tidak ditemukan. Silakan periksa kembali NISN/NIK Anda.');
     } finally {

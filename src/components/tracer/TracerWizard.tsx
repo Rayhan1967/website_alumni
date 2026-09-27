@@ -67,12 +67,8 @@ export const TracerWizard: React.FC = () => {
         </div>
 
         {/* Wizard Header Banner */}
-        <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-[#0b192e] rounded-xl p-4 sm:p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
+        <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-[#0b192e] rounded-md p-4 sm:p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
           <div className="relative z-10">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-[11px] sm:text-xs font-semibold mb-2 sm:mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>Kuesioner Resmi Lulusan Vokasi</span>
-            </div>
             <h1 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight">
               Tracer Study SMK Sasmita Jaya 2
             </h1>

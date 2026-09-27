@@ -4,6 +4,7 @@ import { JobVacancy } from '@/types/tracer';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
+import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import {
   Briefcase,
   Search,
@@ -32,6 +33,7 @@ export const LokerTab: React.FC<LokerTabProps> = ({
   );
   const [applyModalJob, setApplyModalJob] = useState<JobVacancy | null>(null);
   const [appliedSuccess, setAppliedSuccess] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const filteredJobs = MOCK_JOBS.filter((job) => {
     const matchQuery =
@@ -52,8 +54,8 @@ export const LokerTab: React.FC<LokerTabProps> = ({
     setTimeout(() => {
       setAppliedSuccess(false);
       setApplyModalJob(null);
-      alert('Lamaran berhasil dikirim ke Bursa Kerja Khusus (BKK) SMK Sasmita Jaya 2!');
-    }, 1200);
+      setShowSuccessModal(true);
+    }, 500);
   };
 
   return (
@@ -266,6 +268,16 @@ export const LokerTab: React.FC<LokerTabProps> = ({
           </div>
         </form>
       </Modal>
+
+      {/* Friendly Success Modal */}
+      <ConfirmModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        title="Lamaran Berhasil Terkirim!"
+        message="Data profil dan berkas lamaran Anda telah diteruskan ke tim Bursa Kerja Khusus (BKK) SMK Sasmita Jaya 2 untuk diproses ke mitra industri."
+        confirmText="Tutup"
+        type="success"
+      />
     </div>
   );
 };

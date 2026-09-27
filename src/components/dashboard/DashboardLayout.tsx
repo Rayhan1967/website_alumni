@@ -23,10 +23,46 @@ export const DashboardLayout: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  // Lock browser history back button on dashboard while session is active
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    window.history.pushState(null, '', window.location.href);
+
+    const handlePopState = () => {
+      // Re-push state so pressing back stays safely on dashboard
+      window.history.pushState(null, '', window.location.href);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [isAuthenticated]);
+
   const [activeTab, setActiveTab] = useState<DashboardTab>('beranda');
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem('sidebar_collapsed') === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [receiptModalOpen, setReceiptModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState<JobVacancy | null>(null);
+
+  const handleToggleCollapse = (val: boolean | ((prev: boolean) => boolean)) => {
+    setIsCollapsed((prev) => {
+      const next = typeof val === 'function' ? val(prev) : val;
+      try {
+        localStorage.setItem('sidebar_collapsed', String(next));
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+  };
 
   const { lastSubmissionId } = useTracerStore();
 
@@ -41,24 +77,30 @@ export const DashboardLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-100 flex">
-      {/* Sidebar matching Attachment 2 Wireframe */}
+      {/* Sidebar with Blue 900 scheme & Collapse Support */}
       <DashboardSidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         isMobileOpen={isMobileOpen}
         setIsMobileOpen={setIsMobileOpen}
+        isCollapsed={isCollapsed}
+        setIsCollapsed={handleToggleCollapse}
       />
 
       {/* Mobile Backdrop */}
       {isMobileOpen && (
         <div
-          className="fixed inset-0 bg-slate-950/50 z-20 lg:hidden backdrop-blur-xs"
+          className="fixed inset-0 bg-slate-950/60 z-40 lg:hidden backdrop-blur-xs transition-opacity duration-300"
           onClick={() => setIsMobileOpen(false)}
         />
       )}
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 lg:pl-64">
+      {/* Main Content Area - Smooth dynamic padding without layout shift */}
+      <div
+        className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out ${
+          isCollapsed ? 'lg:pl-20' : 'lg:pl-64'
+        }`}
+      >
         {/* Header */}
         <DashboardHeader
           onToggleMobileMenu={() => setIsMobileOpen(!isMobileOpen)}

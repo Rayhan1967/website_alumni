@@ -2,11 +2,17 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { UserSession } from '@/types/tracer';
 
+// 1 jam session timeout jika user tidak berada di dashboard (3.600.000 ms)
+export const DASHBOARD_SESSION_TIMEOUT_MS = 60 * 60 * 1000;
+
 interface AuthState {
   isAuthenticated: boolean;
   user: UserSession | null;
+  lastDashboardActivity: number | null;
   login: (nisnOrEmail: string, role?: 'alumni' | 'admin_bkk') => Promise<boolean>;
   logout: () => void;
+  recordDashboardActivity: () => void;
+  checkSessionExpiry: (currentPathname: string) => boolean;
   updateUserTracerStatus: (status: 'SUDAH' | 'BELUM' | 'DRAFT', submissionId?: string) => void;
 }
 
@@ -38,9 +44,10 @@ const DEFAULT_MOCK_ADMIN: UserSession = {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       isAuthenticated: false,
       user: null,
+      lastDashboardActivity: null,
 
       login: async (identifier: string, role = 'alumni') => {
         // Quick delay to simulate authentic authentication
@@ -60,9 +67,11 @@ export const useAuthStore = create<AuthState>()(
           user.email = identifier;
         }
 
+        const now = Date.now();
         set({
           isAuthenticated: true,
           user,
+          lastDashboardActivity: now,
         });
         return true;
       },
@@ -71,7 +80,45 @@ export const useAuthStore = create<AuthState>()(
         set({
           isAuthenticated: false,
           user: null,
+          lastDashboardActivity: null,
         });
+      },
+
+      recordDashboardActivity: () => {
+        set({ lastDashboardActivity: Date.now() });
+      },
+
+      checkSessionExpiry: (currentPathname: string) => {
+        const state = get();
+        if (!state.isAuthenticated) return false;
+
+        const now = Date.now();
+
+        // Jika user sedang berada di halaman dashboard, perbarui waktu aktivitas dashboard
+        if (currentPathname.startsWith('/dashboard')) {
+          set({ lastDashboardActivity: now });
+          return false;
+        }
+
+        // Jika user berada di luar dashboard:
+        // Cek apakah sudah lebih dari 1 jam (DASHBOARD_SESSION_TIMEOUT_MS) sejak terakhir di dashboard
+        if (state.lastDashboardActivity) {
+          const elapsed = now - state.lastDashboardActivity;
+          if (elapsed > DASHBOARD_SESSION_TIMEOUT_MS) {
+            // Sesi kedaluwarsa karena tidak berada di dashboard selama 1 jam
+            set({
+              isAuthenticated: false,
+              user: null,
+              lastDashboardActivity: null,
+            });
+            return true; // Expired
+          }
+        } else {
+          // Inisialisasi timestamp jika belum tersimpan
+          set({ lastDashboardActivity: now });
+        }
+
+        return false;
       },
 
       updateUserTracerStatus: (status, submissionId) => {
@@ -93,3 +140,4 @@ export const useAuthStore = create<AuthState>()(
     }
   )
 );
+

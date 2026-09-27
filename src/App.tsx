@@ -6,16 +6,27 @@ import { TracerWizard } from './components/tracer/TracerWizard';
 import { DashboardLayout } from './components/dashboard/DashboardLayout';
 import { NewsDetailPage } from './components/news/NewsDetailPage';
 import { AboutDetailPage } from './components/about/AboutDetailPage';
+import { SessionTracker } from './components/common/SessionTracker';
+
+import { useAuthStore } from './store/authStore';
 
 export const App: React.FC = () => {
+  const { isAuthenticated } = useAuthStore();
+
   return (
     <Router>
+      {/* Auto-logout & session tracker: logs out if user is outside dashboard for > 1 hour */}
+      <SessionTracker />
+
       <Routes>
         {/* Landing Page */}
         <Route path="/" element={<LandingPage />} />
 
-        {/* Dedicated Login Page */}
-        <Route path="/login" element={<LoginPage />} />
+        {/* Dedicated Login Page - Guest Only: If already logged in, redirect directly to /dashboard */}
+        <Route
+          path="/login"
+          element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />}
+        />
 
         {/* Dedicated About Tracer Study Detail Page */}
         <Route path="/tentang" element={<AboutDetailPage />} />
@@ -25,11 +36,17 @@ export const App: React.FC = () => {
         <Route path="/berita/:id" element={<NewsDetailPage />} />
         <Route path="/news/:id" element={<NewsDetailPage />} />
 
-        {/* Standalone Tracer Study Wizard (e.g. from WhatsApp Link) */}
-        <Route path="/tracer-study" element={<TracerWizard />} />
+        {/* Standalone Tracer Study Wizard (Requires Login) */}
+        <Route
+          path="/tracer-study"
+          element={isAuthenticated ? <TracerWizard /> : <Navigate to="/login" replace />}
+        />
 
-        {/* Dashboard and all sub-routes */}
-        <Route path="/dashboard/*" element={<DashboardLayout />} />
+        {/* Protected Dashboard and all sub-routes */}
+        <Route
+          path="/dashboard/*"
+          element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" replace />}
+        />
 
         {/* Fallback route */}
         <Route path="*" element={<Navigate to="/" replace />} />
