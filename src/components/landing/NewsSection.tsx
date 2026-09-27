@@ -26,7 +26,7 @@ export const NewsSection: React.FC = () => {
             <div
               key={item.id}
               onClick={() => navigate(`/berita/${item.id}`)}
-              className="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm flex flex-col cursor-pointer"
+              className="bg-white rounded-md overflow-hidden border border-slate-200 shadow-sm flex flex-col cursor-pointer"
             >
               {/* Image thumbnail (static, no hover zoom) */}
               <div className="relative h-48 w-full overflow-hidden bg-slate-100">
@@ -36,9 +36,6 @@ export const NewsSection: React.FC = () => {
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
-                <span className="absolute top-3 left-3 bg-slate-950/75 backdrop-blur-md text-white text-[11px] font-semibold px-2.5 py-1 rounded-lg">
-                  {item.category}
-                </span>
               </div>
 
               {/* Content */}

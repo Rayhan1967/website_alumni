@@ -127,7 +127,7 @@ export const AboutDetailPage: React.FC = () => {
                 <p>
                   Sesuai dengan amanat <strong>Perpres No. 68 Tahun 2022</strong> tentang Revitalisasi Pendidikan Vokasi dan Pelatihan Vokasi, keberhasilan sebuah SMK tidak hanya diukur dari angka kelulusan, melainkan dari <em>keterserapan lulusan</em> di dunia kerja, keberhasilan berwirausaha, serta kesiapan melanjutkan pendidikan ke jenjang yang lebih tinggi.
                 </p>
-                <p className="border-l-4 border-blue-600 pl-4 py-1.5 bg-blue-50/50 font-medium text-slate-800">
+                <p className="border-l-4 border-blue-900 pl-4 py-1.5 bg-blue-50/50 font-medium text-slate-800">
                   Data yang Anda isikan menjadi kompas strategis bagi sekolah dalam mengevaluasi kurikulum, memperbarui fasilitas laboratorium kejuruan, dan menjalin kemitraan rekrutmen dengan industri-industri terkemuka.
                 </p>
               </div>
@@ -216,7 +216,7 @@ export const AboutDetailPage: React.FC = () => {
             
             {/* Action CTA Card */}
             <div className="p-6 space-y-4 text-center">
-              <div className="w-14 h-14 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mx-auto shadow-xs">
+              <div className="w-14 h-14 rounded-ful text-blue-900 flex items-center justify-center mx-auto shadow-xs">
                 <img src="/icon-login-btn.png" alt="Isi Kuisioner" className="w-7 h-7 object-contain" />
               </div>
 
