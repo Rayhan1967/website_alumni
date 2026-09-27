@@ -56,6 +56,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     setIdentifier('0051234567');
   };
 
+  const handleAdminDemo = () => {
+    setLoginMethod('nisn');
+    setIdentifier('admin@smksasmitajaya2.sch.id');
+  };
+
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Backdrop */}
@@ -269,6 +274,13 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                   className="px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 font-semibold text-[10px]"
                 >
                   Alumni (Ahmad Dani)
+                </button>
+                <button
+                  type="button"
+                  onClick={handleAdminDemo}
+                  className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-semibold text-[10px]"
+                >
+                  Admin BKK
                 </button>
               </div>
 

@@ -48,6 +48,11 @@ export const LoginPage: React.FC = () => {
     setIdentifier('0051234567');
   };
 
+  const handleAdminDemo = () => {
+    setLoginMethod('nisn');
+    setIdentifier('admin@smksasmitajaya2.sch.id');
+  };
+
   return (
     <div className="min-h-screen bg-[#edf2f7] flex items-center justify-center p-4 sm:p-6 lg:p-10 relative overflow-hidden">
       
@@ -259,6 +264,13 @@ export const LoginPage: React.FC = () => {
                 className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 font-semibold text-[11px]"
               >
                 Alumni (Ahmad Dani)
+              </button>
+              <button
+                type="button"
+                onClick={handleAdminDemo}
+                className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-semibold text-[11px]"
+              >
+                Admin BKK
               </button>
             </div>
 

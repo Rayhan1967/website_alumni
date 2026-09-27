@@ -24,6 +24,18 @@ const DEFAULT_MOCK_USER: UserSession = {
   avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
 };
 
+const DEFAULT_MOCK_ADMIN: UserSession = {
+  id: 'adm-001',
+  nisn: '0000000000',
+  nama: 'Admin BKK Sasmita',
+  email: 'admin@smksasmitajaya2.sch.id',
+  role: 'admin_bkk',
+  jurusan: 'Pengelola BKK & Tracer Study',
+  tahun_lulus: 2020,
+  tracerStatus: 'SUDAH',
+  avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80',
+};
+
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
@@ -32,9 +44,16 @@ export const useAuthStore = create<AuthState>()(
 
       login: async (identifier: string, role = 'alumni') => {
         // Quick delay to simulate authentic authentication
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 400));
 
-        let user: UserSession = { ...DEFAULT_MOCK_USER, role };
+        const isAdmin = identifier.toLowerCase().includes('admin') || role === 'admin_bkk';
+        const baseUser = isAdmin ? DEFAULT_MOCK_ADMIN : DEFAULT_MOCK_USER;
+
+        let user: UserSession = {
+          ...baseUser,
+          role: isAdmin ? 'admin_bkk' : 'alumni',
+        };
+
         if (identifier && identifier.length === 10) {
           user.nisn = identifier;
         } else if (identifier.includes('@')) {
