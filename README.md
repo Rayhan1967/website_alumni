@@ -176,7 +176,7 @@ web_alumni/
 
 ---
 
-## 🌿 Alur Kolaborasi Git
+## Alur Kolaborasi Git
 
 Proyek ini menggunakan model branching sederhana:
 - `main` : Kode produksi yang stabil dan siap dideploy.
@@ -191,7 +191,7 @@ git checkout -b feat/nama-fitur
 
 ---
 
-## 🔒 Kebijakan Data & Kerahasiaan
+## Kebijakan Data & Kerahasiaan
 
 1. **Data Pengujian (Mock Data)**: Seluruh data alumni, NIK, dan nomor kontak yang tercantum pada sistem saat ini merupakan data sintetis murni untuk keperluan demonstrasi dan pengujian antarmuka.
 2. **Kerahasiaan Kredensial**: Variabel lingkungan konfigurasi rahasia dikelola secara terpisah melalui `.env` lokal dan dilarang untuk dipublikasikan ke remote repository.
