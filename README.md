@@ -11,14 +11,14 @@ Platform resmi penelusuran lulusan (*Tracer Study*) dan pengelolaan data alumni 
 ---
 
 ## Daftar Isi
-- [Fitur Utama](#-fitur-utama)
-- [Tech Stack](#-tech-stack)
-- [Kredensial Awal & Akun Demo](#-kredensial-awal--akun-demo)
-- [Prasyarat Sistem](#-prasyarat-sistem)
-- [Langkah Instalasi & Menjalankan Proyek](#-langkah-instalasi--menjalankan-proyek)
-- [Struktur Direktori Proyek](#-struktur-direktori-proyek)
-- [Panduan Git & Branch Staging](#-panduan-git--branch-staging)
-- [Kebijakan Keamanan & Privasi](#-kebijakan-keamanan--privasi)
+- [Fitur Utama](#fitur-utama)
+- [Tech Stack](#tech-stack)
+- [Kredensial Awal & Akun Demo](#kredensial-awal--akun-demo)
+- [Prasyarat Sistem](#prasyarat-sistem)
+- [Langkah Instalasi & Menjalankan Proyek](#langkah-instalasi--menjalankan-proyek)
+- [Struktur Direktori Proyek](#struktur-direktori-proyek)
+- [Alur Kolaborasi Git](#-alur-kolaborasi-git)
+- [Kebijakan Data & Kerahasiaan](#-kebijakan-data--kerahasiaan)
 
 ---
 
@@ -69,18 +69,18 @@ Platform resmi penelusuran lulusan (*Tracer Study*) dan pengelolaan data alumni 
 
 ## Kredensial Awal & Akun Demo
 
-Untuk mempermudah pengujian di lingkungan development atau staging, Anda dapat menggunakan akun demo berikut pada halaman [Login (`/login`)](http://localhost:5173/login):
+Untuk mempermudah pengujian di lingkungan development atau staging, Anda dapat menggunakan akun demo berikut pada modal login atau halaman [Login (`/login`)](http://localhost:5173/login):
 
 ### 1. Akun Alumni
 - **Metode Login**: NISN atau NIK
 - **Contoh NISN**: `0051234567` atau `0061234567`
 - **Contoh NIK**: `3274012304050001`
-- *Tersedia tombol "Demo Akun" pada halaman login untuk pengisian instan.*
+- *Tersedia tombol "1-Click Demo: Alumni (Ahmad Dani)" untuk pengisian instan.*
 
-### 2. Akun Admin BKK / Pengelola
-- **Identifier**: `admin@smksasmitajaya2.sch.id`
+### 2. Akun Admin BKK `[KHUSUS DEV/DEMO MOCK]`
+- **Identifier**: `admin@smksasmitajaya2.sch.id` (atau ketik `admin`)
 - **Role**: `admin_bkk`
-- Memberikan akses penuh ke data agregat dan statistik kuesioner.
+- *Tersedia tombol "1-Click Demo: Admin BKK" untuk pengujian akses monitoring dan manajemen BKK.*
 
 ---
 
@@ -105,8 +105,6 @@ cd website-alumni
 
 ### 2. Switch ke Branch `staging`
 ```bash
-git checkout -b staging
-# Atau jika branch staging sudah ada di remote:
 git checkout staging
 ```
 
@@ -151,15 +149,11 @@ npm run preview
 web_alumni/
 ├── .vscode/               # Pengaturan workspace editor (Tailwind lint fix)
 ├── assets/                # Asset master sumber (gambar & SVG icon asli)
-├── public/                # Asset statis publik (logo, shield, icon, favicon)
-│   ├── Shield.svg         # Icon perisai keamanan data resmi
-│   ├── icon-login-btn.png # Icon resmi topi wisuda tombol login
-│   ├── logo-smk.png       # Logo resmi SMK Sasmita Jaya 2
-│   └── hero-students.png  # Ilustrasi siswa SMK
+├── public/                # Asset publik statis (logo, ilustrasi, icons)
 ├── src/
 │   ├── components/        # Komponen antarmuka React
 │   │   ├── about/         # Halaman detail Tentang Tracer Study (/tentang)
-│   │   ├── auth/          # Halaman Login (/login)
+│   │   ├── auth/          # Halaman Login & Modal (/login)
 │   │   ├── dashboard/     # Layout & komponen Dashboard Alumni & Admin
 │   │   ├── landing/       # Komponen Landing Page (Hero, Navbar, Features, Footer, dll.)
 │   │   ├── news/          # Portal Berita & Detail Artikel (/berita/:id)
@@ -182,39 +176,25 @@ web_alumni/
 
 ---
 
-## Panduan Git & Branch Staging
+## 🌿 Alur Kolaborasi Git
 
-### Menyiapkan Remote & Push ke Branch `staging`:
+Proyek ini menggunakan model branching sederhana:
+- `main` : Kode produksi yang stabil dan siap dideploy.
+- `staging` : Cabang aktif pengembangan frontend dan integrasi fitur baru.
 
-1. **Inisialisasi & Verifikasi Branch**:
-   ```bash
-   git status
-   git branch -M staging
-   ```
-
-2. **Tambahkan Remote Repository**:
-   ```bash
-   git remote add origin https://github.com/madin05/website-alumni.git
-   ```
-
-3. **Stage dan Commit Seluruh Berkas**:
-   ```bash
-   git add .
-   git commit -m "feat: inisialisasi platform tracer study alumni SMK Sasmita Jaya 2 (staging)"
-   ```
-
-4. **Push ke GitHub Branch `staging`**:
-   ```bash
-   git push -u origin staging
-   ```
+Jika berkontribusi, pastikan membuat branch fitur baru dari `staging`:
+```bash
+git checkout staging
+git pull origin staging
+git checkout -b feat/nama-fitur
+```
 
 ---
 
-## Kebijakan Keamanan & Privasi
+## 🔒 Kebijakan Data & Kerahasiaan
 
-1. **Data Dummy / Mock**: Seluruh data NIK, nomor kontak, dan identitas yang digunakan dalam kode demo adalah data fiktif untuk keperluan pengujian.
-2. **Kerahasiaan Kredensial**: File `.env`, certificate, token API, dan `node_modules/` **secara ketat diabaikan** melalui berkas `.gitignore` dan dilarang di-push ke repository publik.
-3. **Standar Desain**: Seluruh container kartu dan popup menerapkan radius sudut standar **12px (`rounded-xl` / `rounded-md`)** sesuai panduan desain antarmuka sekolah.
+1. **Data Pengujian (Mock Data)**: Seluruh data alumni, NIK, dan nomor kontak yang tercantum pada sistem saat ini merupakan data sintetis murni untuk keperluan demonstrasi dan pengujian antarmuka.
+2. **Kerahasiaan Kredensial**: Variabel lingkungan konfigurasi rahasia dikelola secara terpisah melalui `.env` lokal dan dilarang untuk dipublikasikan ke remote repository.
 
 ---
 
