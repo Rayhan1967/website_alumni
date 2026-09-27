@@ -1,0 +1,83 @@
+import React, { useState } from 'react';
+import { Navbar } from './Navbar';
+import { HeroSection } from './HeroSection';
+import { FeaturesGrid } from './FeaturesGrid';
+import { AboutTracer } from './AboutTracer';
+import { LegalBases } from './LegalBases';
+import { NewsSection } from './NewsSection';
+import { FaqSection } from './FaqSection';
+import { Footer } from './Footer';
+import { LoginModal } from '@/components/auth/LoginModal';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
+
+export const LandingPage: React.FC = () => {
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+
+  return (
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Navbar with Login Modal Trigger */}
+      <Navbar onOpenLogin={() => setLoginModalOpen(true)} />
+
+      {/* Hero Section */}
+      <HeroSection />
+
+      {/* Features Grid & About Tracer Study with continuous wavy illustration */}
+      <div className="relative overflow-hidden bg-[#f8fafc]/50">
+        {/* Continuous Background Wavy Decoration */}
+        <div className="absolute top-0 -left-20 w-[130%] max-w-none opacity-[0.08] pointer-events-none z-0">
+          <img
+            src="/background-decoration.svg"
+            alt="Background Decoration"
+            className="w-full h-auto object-cover"
+          />
+        </div>
+
+        {/* Features Grid ("Bersama Membangun Masa Depan Lulusan") */}
+        <ScrollReveal>
+          <FeaturesGrid />
+        </ScrollReveal>
+
+        {/* About Tracer Study */}
+        <ScrollReveal>
+          <AboutTracer />
+        </ScrollReveal>
+      </div>
+
+      {/* Dasar Hukum & Berita Sections with continuous background sweeping from top-right to bottom-left */}
+      <div className="relative overflow-hidden bg-white">
+        {/* Background Wavy Decoration from Top-Right down to Bottom-Left */}
+        <div className="absolute -top-10 -right-24 w-[135%] max-w-none opacity-[0.08] pointer-events-none z-0 transform -scale-x-100">
+          <img
+            src="/background-decoration.svg"
+            alt="Background Decoration"
+            className="w-full h-auto object-cover"
+          />
+        </div>
+
+        {/* Legal Bases SK */}
+        <ScrollReveal>
+          <LegalBases />
+        </ScrollReveal>
+
+        {/* News Section */}
+        <ScrollReveal>
+          <NewsSection />
+        </ScrollReveal>
+      </div>
+
+      {/* FAQ & Service Section */}
+      <ScrollReveal>
+        <FaqSection />
+      </ScrollReveal>
+
+      {/* Footer */}
+      <Footer />
+
+      {/* Login / Auth Modal */}
+      <LoginModal
+        isOpen={loginModalOpen}
+        onClose={() => setLoginModalOpen(false)}
+      />
+    </div>
+  );
+};
