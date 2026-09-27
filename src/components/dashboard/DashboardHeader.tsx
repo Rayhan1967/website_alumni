@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useTracerStore } from '@/store/tracerStore';
-import { Menu, Bell, User, LogOut, FileText, ChevronDown } from 'lucide-react';
+import { Menu, Bell, LogOut, FileText, ChevronDown } from 'lucide-react';
+import { UserAvatar } from '@/components/ui/UserAvatar';
 import { useNavigate } from 'react-router-dom';
 
 interface DashboardHeaderProps {
@@ -16,7 +17,26 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   const { user, logout } = useAuthStore();
   const { isSubmitted } = useTracerStore();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
+  // Close dropdown when tapping/clicking outside
+  useEffect(() => {
+    const handlePointerDown = (event: MouseEvent | TouchEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handlePointerDown);
+      document.addEventListener('touchstart', handlePointerDown);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('touchstart', handlePointerDown);
+    };
+  }, [dropdownOpen]);
 
   const handleLogout = () => {
     logout();
@@ -24,21 +44,21 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-xs">
+    <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-3.5 sm:px-8 py-2.5 sm:py-3.5 flex items-center justify-between shadow-xs">
       
       {/* Greetings Area (Left) matching Wireframe */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5 sm:gap-3">
         <button
           onClick={onToggleMobileMenu}
-          className="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100"
+          className="lg:hidden p-1.5 sm:p-2 rounded-lg text-slate-600 hover:bg-slate-100 cursor-pointer"
           aria-label="Buka Menu"
         >
           <Menu className="w-5 h-5" />
         </button>
 
         <div>
-          <h1 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
-            <span>Halo, {user?.nama || 'Ahmad Dani'}! 👋</span>
+          <h1 className="text-sm sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <span>Halo, {user?.nama || 'Ahmad Dani'}!</span>
             <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
               Alumni Aktif
             </span>
@@ -64,22 +84,17 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         </div>
 
         {/* Profile Circle with Dropdown */}
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-2 p-1 rounded-full hover:bg-slate-100 transition cursor-pointer"
+            className="flex items-center gap-1.5 p-1 rounded-full hover:bg-slate-100 transition cursor-pointer"
+            aria-expanded={dropdownOpen}
           >
-            <div className="w-10 h-10 rounded-full bg-slate-300 text-slate-700 overflow-hidden border border-slate-300 flex items-center justify-center font-bold text-xs">
-              {user?.avatarUrl ? (
-                <img
-                  src={user.avatarUrl}
-                  alt={user.nama}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <User className="w-5 h-5 text-slate-600" />
-              )}
-            </div>
+            <UserAvatar
+              name={user?.nama}
+              gender={user?.jenisKelamin}
+              className="w-10 h-10 border border-slate-300"
+            />
             <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block" />
           </button>
 
@@ -87,8 +102,8 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-40 text-xs text-slate-700">
               <div className="px-4 py-2.5 border-b border-slate-100">
-                <p className="font-bold text-slate-900">{user?.nama}</p>
-                <p className="text-slate-400 text-[11px] truncate">{user?.email}</p>
+                <p className="font-bold text-slate-900">{user?.nama || 'Ahmad Dani'}</p>
+                <p className="text-slate-400 text-[11px] truncate">{user?.email || 'alumni@example.com'}</p>
               </div>
 
               <div className="py-1">
@@ -97,9 +112,9 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                     setDropdownOpen(false);
                     onOpenReceipt();
                   }}
-                  className="w-full px-4 py-2 text-left hover:bg-slate-50 flex items-center gap-2 text-slate-700"
+                  className="w-full px-4 py-2 text-left hover:bg-slate-50 flex items-center gap-2 text-slate-700 cursor-pointer"
                 >
-                  <FileText className="w-4 h-4 text-blue-600" />
+                  <FileText className="w-4 h-4 text-blue-900" />
                   <span>Bukti Pengisian Tracer Study</span>
                 </button>
               </div>
@@ -107,7 +122,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
               <div className="border-t border-slate-100 pt-1">
                 <button
                   onClick={handleLogout}
-                  className="w-full px-4 py-2 text-left hover:bg-rose-50 flex items-center gap-2 text-rose-600 font-medium"
+                  className="w-full px-4 py-2 text-left hover:bg-rose-50 flex items-center gap-2 text-rose-600 font-medium cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Keluar</span>

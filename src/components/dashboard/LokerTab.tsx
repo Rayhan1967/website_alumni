@@ -57,12 +57,11 @@ export const LokerTab: React.FC<LokerTabProps> = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-          <Briefcase className="w-5 h-5 text-blue-600" />
-          <span>Bursa Kerja Khusus (BKK) & Info Lowongan</span>
+        <h2 className="text-base sm:text-xl font-bold text-slate-900">
+          Bursa Kerja Khusus (BKK) & Info Lowongan
         </h2>
         <p className="text-xs text-slate-500 mt-1">
           Daftar lowongan kerja, magang bersertifikat, dan penempatan industri mitra resmi SMK Sasmita Jaya 2
@@ -70,7 +69,7 @@ export const LokerTab: React.FC<LokerTabProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
+      <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="flex-1">
             <Input
@@ -98,11 +97,11 @@ export const LokerTab: React.FC<LokerTabProps> = ({
       </div>
 
       {/* Jobs Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-5">
         {filteredJobs.map((job) => (
           <div
             key={job.id}
-            className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between space-y-4"
+            className="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between space-y-3.5 sm:space-y-4"
           >
             <div>
               <div className="flex items-start justify-between gap-2 mb-2">

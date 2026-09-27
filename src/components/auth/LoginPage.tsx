@@ -132,7 +132,7 @@ export const LoginPage: React.FC = () => {
             </p>
 
             {/* Privacy callout box */}
-            <div className="p-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-left space-y-1 mt-6">
+            <div className="p-4 rounded-md bg-white/10 backdrop-blur-md border border-white/15 text-left space-y-1 mt-6">
               <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-white">
                 <span>Data Anda aman</span>
               </div>
@@ -162,10 +162,6 @@ export const LoginPage: React.FC = () => {
                 <ChevronLeft className="w-4 h-4" />
                 <span>Kembali ke beranda</span>
               </Link>
-
-              <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 uppercase tracking-wider">
-                Portal Resmi 2026
-              </span>
             </div>
 
             {/* Step Label & Title */}
@@ -236,7 +232,7 @@ export const LoginPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 px-6 rounded-xl bg-[#182945] hover:bg-[#122038] text-white font-bold text-sm tracking-wide shadow-md cursor-pointer disabled:opacity-75 flex items-center justify-center gap-2"
+                className="w-full py-3.5 px-6 rounded-md bg-[#182945] hover:bg-[#122038] text-white font-bold text-sm tracking-wide shadow-md cursor-pointer disabled:opacity-75 flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <span>Memproses...</span>

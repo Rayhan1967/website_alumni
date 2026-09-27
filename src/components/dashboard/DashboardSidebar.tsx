@@ -10,6 +10,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
+import { UserAvatar } from '@/components/ui/UserAvatar';
 import { useNavigate } from 'react-router-dom';
 
 export type DashboardTab =
@@ -65,15 +66,15 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
     >
       <div className="p-6 space-y-6">
         
-        {/* Logo Section - Round Logo matching Wireframe */}
+        {/* Logo Section - Crisp Emblem Badge */}
         <div className="flex flex-col items-center justify-center text-center pb-5 border-b border-slate-200">
-          <div className="w-16 h-16 rounded-full bg-white shadow-sm border border-slate-200 p-2 flex items-center justify-center mb-3">
+          <div className="w-14 h-14  p-1.5 flex items-center justify-center mb-2.5">
             <img
-              src="/logo-smk.png"
-              alt="Logo SMK Sasmita Jaya"
+              src="/logo-emblem.png"
+              alt="Logo SMK Sasmita Jaya 2"
               className="w-full h-full object-contain"
               onError={(e) => {
-                (e.target as HTMLImageElement).src = '/logo smk sasmita.png';
+                (e.target as HTMLImageElement).src = '/logo-smk.png';
               }}
             />
           </div>
@@ -81,7 +82,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
             SMK Sasmita Jaya 2
           </h2>
           <span className="text-[11px] text-slate-500 font-medium">
-            Portal Alumni & BKK
+            Portal Alumni
           </span>
         </div>
 
@@ -102,7 +103,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-blue-700' : 'text-slate-500'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-blue-900' : 'text-slate-500'}`} />
                   <span>{item.label}</span>
                 </div>
                 {isActive && <ChevronRight className="w-3.5 h-3.5 text-slate-500" />}
@@ -114,9 +115,14 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 
       {/* User profile footer & logout */}
       <div className="p-4 border-t border-slate-200 bg-slate-50/60">
-        <div className="flex items-center justify-between mb-3 px-2">
-          <div className="text-left">
-            <p className="text-xs font-bold text-slate-800 truncate max-w-[140px]">
+        <div className="flex items-center gap-2.5 mb-3 px-1">
+          <UserAvatar
+            name={user?.nama}
+            gender={user?.jenisKelamin}
+            className="w-9 h-9 border border-slate-300"
+          />
+          <div className="text-left overflow-hidden">
+            <p className="text-xs font-bold text-slate-800 truncate">
               {user?.nama || 'Alumni Sasmita'}
             </p>
             <p className="text-[10px] text-slate-500">

@@ -229,9 +229,6 @@ export const NewsDetailPage: React.FC = () => {
             {/* Tracer Study CTA Box */}
             <div className="bg-[#182945] p-6 sm:p-8 text-white shadow-lg relative overflow-hidden">
               <div className="relative z-10 space-y-4">
-                <span className="inline-block px-3 py-1 rounded-md bg-blue-500/30 text-blue-200 text-[11px] font-bold tracking-wider uppercase">
-                  Untuk Seluruh Alumni
-                </span>
                 <h3 className="text-xl font-extrabold text-white leading-tight">
                   Sudah Mengisi Kuesioner Tracer Study?
                 </h3>

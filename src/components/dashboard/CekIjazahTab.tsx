@@ -61,12 +61,11 @@ export const CekIjazahTab: React.FC = () => {
   const isSiap = ijazahData?.statusPengambilan === 'SIAP_DIAMBIL' || ijazahData?.statusPengambilan === 'SUDAH_DIAMBIL';
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-          <FileCheck2 className="w-5 h-5 text-blue-600" />
-          <span>Verifikasi & Pelacakan Status Ijazah</span>
+        <h2 className="text-base sm:text-xl font-bold text-slate-900">
+          Verifikasi & Pelacakan Status Ijazah
         </h2>
         <p className="text-xs text-slate-500 mt-1">
           Cek status pencetakan, legalisir, dan persyaratan pengambilan ijazah asli serta sertifikat BNSP
@@ -74,7 +73,7 @@ export const CekIjazahTab: React.FC = () => {
       </div>
 
       {/* Search Bar */}
-      <form onSubmit={handleSearch} className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-3">
+      <form onSubmit={handleSearch} className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-3">
         <div className="flex-1">
           <Input
             placeholder="Ketik NISN (10 Digit) untuk melacak..."
@@ -83,7 +82,7 @@ export const CekIjazahTab: React.FC = () => {
             leftIcon={<Search className="w-4 h-4" />}
           />
         </div>
-        <Button type="submit" variant="primary" className="bg-blue-600 hover:bg-blue-700 sm:w-auto">
+        <Button type="submit" variant="primary" className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto">
           <span>Lacak Status</span>
         </Button>
       </form>
@@ -95,9 +94,9 @@ export const CekIjazahTab: React.FC = () => {
       )}
 
       {ijazahData && (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Main Status Tracker Card */}
-          <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-6">
+          <div className="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-sm space-y-5 sm:space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
               <div>
                 <span className="text-xs text-slate-400 block font-medium">Pemilik Ijazah</span>

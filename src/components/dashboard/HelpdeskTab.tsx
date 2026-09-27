@@ -33,12 +33,11 @@ export const HelpdeskTab: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5 sm:space-y-8">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-          <Headphones className="w-5 h-5 text-blue-600" />
-          <span>Pusat Bantuan & Layanan BKK</span>
+        <h2 className="text-base sm:text-xl font-bold text-slate-900">
+          Pusat Bantuan & Layanan BKK
         </h2>
         <p className="text-xs text-slate-500 mt-1">
           Konsultasi karir, bantuan verifikasi ijazah, atau kendala pengisian tracer study
@@ -46,8 +45,8 @@ export const HelpdeskTab: React.FC = () => {
       </div>
 
       {/* Direct Contact Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="p-5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-3.5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
+        <div className="p-4 sm:p-5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-3.5">
           <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
             <Phone className="w-5 h-5" />
           </div>

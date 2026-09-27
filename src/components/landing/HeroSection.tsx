@@ -89,7 +89,7 @@ export const HeroSection: React.FC = () => {
         <div className="block lg:hidden absolute inset-0 bg-gradient-to-b from-[#004889]/95 via-[#0058a6]/90 to-[#004889]/95" />
 
         {/* Desktop Gradient Overlay (lg+): Crisp on left 30%, completely 100% transparent by 46% so it NEVER touches or hazes the students on the right */}
-        <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-[#004889] from-0% via-[#0863b4]/90 via-30% to-transparent to-46%" />
+        <div className="hidden lg:block absolute inset-y-0 left-0 w-[60%] bg-gradient-to-r from-[#004889] via-[#004889]/80 to-transparent pointer-events-none" />
 
         {/* Left Content Area */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -177,55 +177,67 @@ export const HeroSection: React.FC = () => {
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/20">
             
             {/* Stat 1: Alumni Terdaftar with Count-Up Animation */}
-            <div className="flex items-center justify-center gap-4 py-3 sm:py-1 px-4">
-              <img
-                src="/Group.svg"
-                alt="Alumni Terdaftar"
-                className="w-10 h-10 object-contain invert brightness-200 shrink-0"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/Student.svg';
-                }}
-              />
-              <div className="text-left">
-                <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-none">
-                  <StatCounter end={3.5} decimals={1} suffix="Ribu" trigger={statsVisible} />
+            <div className="py-3.5 md:py-1 px-4">
+              <div className="w-full max-w-[210px] md:max-w-none mx-auto flex items-center justify-start md:justify-center gap-4">
+                <div className="w-10 h-10 flex items-center justify-center shrink-0">
+                  <img
+                    src="/Group.svg"
+                    alt="Alumni Terdaftar"
+                    className="w-10 h-10 object-contain invert brightness-200"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/Student.svg';
+                    }}
+                  />
                 </div>
-                <div className="text-xs text-slate-300 font-medium mt-1">
-                  Alumni Terdaftar
+                <div className="text-left">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-none">
+                    <StatCounter end={3.5} decimals={1} suffix="Ribu" trigger={statsVisible} />
+                  </div>
+                  <div className="text-xs text-slate-300 font-medium mt-1">
+                    Alumni Terdaftar
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Stat 2: Bekerja with Count-Up Animation */}
-            <div className="flex items-center justify-center gap-4 py-3 sm:py-1 px-4">
-              <img
-                src="/Portfolio.svg"
-                alt="Bekerja"
-                className="w-10 h-10 object-contain invert brightness-200 shrink-0"
-              />
-              <div className="text-left">
-                <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-none">
-                  <StatCounter end={87.5} decimals={1} suffix="%" trigger={statsVisible} />
+            <div className="py-3.5 md:py-1 px-4">
+              <div className="w-full max-w-[210px] md:max-w-none mx-auto flex items-center justify-start md:justify-center gap-4">
+                <div className="w-10 h-10 flex items-center justify-center shrink-0">
+                  <img
+                    src="/Portfolio.svg"
+                    alt="Bekerja"
+                    className="w-10 h-10 object-contain invert brightness-200"
+                  />
                 </div>
-                <div className="text-xs text-slate-300 font-medium mt-1">
-                  Bekerja
+                <div className="text-left">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-none">
+                    <StatCounter end={87.5} decimals={1} suffix="%" trigger={statsVisible} />
+                  </div>
+                  <div className="text-xs text-slate-300 font-medium mt-1">
+                    Bekerja
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Stat 3: Melanjutkan Studi with Count-Up Animation */}
-            <div className="flex items-center justify-center gap-4 py-3 sm:py-1 px-4">
-              <img
-                src="/Graduation.svg"
-                alt="Melanjutkan Studi"
-                className="w-10 h-10 object-contain invert brightness-200 shrink-0"
-              />
-              <div className="text-left">
-                <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-none">
-                  <StatCounter end={12.5} decimals={1} suffix="%" trigger={statsVisible} />
+            <div className="py-3.5 md:py-1 px-4">
+              <div className="w-full max-w-[210px] md:max-w-none mx-auto flex items-center justify-start md:justify-center gap-4">
+                <div className="w-10 h-10 flex items-center justify-center shrink-0">
+                  <img
+                    src="/Graduation.svg"
+                    alt="Melanjutkan Studi"
+                    className="w-12 h-12 max-w-none object-contain invert brightness-200 scale-110"
+                  />
                 </div>
-                <div className="text-xs text-slate-300 font-medium mt-1">
-                  Melanjutkan Studi
+                <div className="text-left">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-none">
+                    <StatCounter end={12.5} decimals={1} suffix="%" trigger={statsVisible} />
+                  </div>
+                  <div className="text-xs text-slate-300 font-medium mt-1">
+                    Melanjutkan Studi
+                  </div>
                 </div>
               </div>
             </div>

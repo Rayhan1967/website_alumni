@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MOCK_ALUMNI_LIST } from '@/lib/mockData';
 import { Input } from '@/components/ui/Input';
+import { UserAvatar } from '@/components/ui/UserAvatar';
 import { Users, Search, GraduationCap, Building, MapPin, Sparkles } from 'lucide-react';
 
 export const AlumniTab: React.FC = () => {
@@ -20,12 +21,11 @@ export const AlumniTab: React.FC = () => {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-          <Users className="w-5 h-5 text-blue-600" />
-          <span>Direktori & Jejaring Alumni Sasmita Jaya</span>
+        <h2 className="text-base sm:text-xl font-bold text-slate-900">
+          Direktori & Jejaring Alumni Sasmita Jaya
         </h2>
         <p className="text-xs text-slate-500 mt-1">
           Terhubung dengan rekan alumni lintas angkatan dan kompetensi keahlian
@@ -33,7 +33,7 @@ export const AlumniTab: React.FC = () => {
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-3">
+      <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-3">
         <div className="flex-1">
           <Input
             placeholder="Cari nama alumni, profesi, atau lokasi..."
@@ -56,17 +56,17 @@ export const AlumniTab: React.FC = () => {
       </div>
 
       {/* Alumni Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5">
         {filteredAlumni.map((alumni, idx) => (
           <div
             key={idx}
-            className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+            className="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
           >
             <div className="flex items-start gap-3.5">
-              <img
-                src={alumni.avatar}
-                alt={alumni.nama}
-                className="w-12 h-12 rounded-full object-cover border-2 border-slate-100 shadow-xs shrink-0"
+              <UserAvatar
+                name={alumni.nama}
+                gender={alumni.jenisKelamin}
+                className="w-12 h-12 shrink-0 border-2 border-slate-100 shadow-xs"
               />
               <div className="overflow-hidden">
                 <h3 className="font-bold text-sm text-slate-900 truncate">

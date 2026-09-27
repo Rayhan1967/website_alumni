@@ -21,7 +21,7 @@ const DEFAULT_MOCK_USER: UserSession = {
   tracerStatus: 'SUDAH',
   submissionId: 'TRC-2026-0001',
   submittedAt: '2026-09-26T13:38:16Z',
-  avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+  jenisKelamin: 'L',
 };
 
 const DEFAULT_MOCK_ADMIN: UserSession = {
@@ -33,7 +33,7 @@ const DEFAULT_MOCK_ADMIN: UserSession = {
   jurusan: 'Pengelola BKK & Tracer Study',
   tahun_lulus: 2020,
   tracerStatus: 'SUDAH',
-  avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80',
+  jenisKelamin: 'L',
 };
 
 export const useAuthStore = create<AuthState>()(

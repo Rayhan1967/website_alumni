@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { Mail, MapPin, Phone, Printer } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -31,31 +31,38 @@ export const Footer: React.FC = () => {
             />
           </Link>
 
-          {/* School Address & Contacts */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left text-xs text-slate-400 max-w-md space-y-2.5 leading-relaxed mx-auto md:mx-0">
-            <div className="flex items-start gap-2.5 text-center md:text-left max-w-sm sm:max-w-md justify-center md:justify-start">
+          {/* School Address & Contacts (4 clean rows) */}
+          <div className="flex flex-col items-center md:items-start text-xs text-slate-400 max-w-md space-y-2 leading-relaxed mx-auto md:mx-0">
+            {/* 1. Alamat */}
+            <div className="flex items-start gap-2.5 text-left w-full max-w-xs sm:max-w-sm md:max-w-md">
               <MapPin className="w-4 h-4 text-slate-300 shrink-0 mt-0.5" />
-              <span>
+              <span className="text-left">
                 Jl. Surya Kencana No. 1, Pamulang Barat, Kec. Pamulang, Kota Tangerang Selatan, Banten 15417
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2 pt-1 text-slate-300">
-              <a
-                href="mailto:info@smksasmitajaya2.sch.id"
-                className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
-              >
-                <Mail className="w-3.5 h-3.5 shrink-0 text-slate-400" />
-                <span>info@smksasmitajaya2.sch.id</span>
-              </a>
-              <span className="text-slate-600 hidden sm:inline">|</span>
-              <a
-                href="tel:0217401813"
-                className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
-              >
-                <Phone className="w-3.5 h-3.5 shrink-0 text-slate-400" />
-                <span>(021) 740-1813</span>
-              </a>
+            {/* 2. Email */}
+            <a
+              href="mailto:sasmitajaya2pml@gmail.com"
+              className="inline-flex items-center gap-2.5 hover:text-white transition-colors text-slate-300 w-full max-w-xs sm:max-w-sm md:max-w-md"
+            >
+              <Mail className="w-4 h-4 shrink-0 text-slate-400" />
+              <span>sasmitajaya2pml@gmail.com</span>
+            </a>
+
+            {/* 3. Telepon */}
+            <a
+              href="tel:0217427375"
+              className="inline-flex items-center gap-2.5 hover:text-white transition-colors text-slate-300 w-full max-w-xs sm:max-w-sm md:max-w-md"
+            >
+              <Phone className="w-4 h-4 shrink-0 text-slate-400" />
+              <span>(021) 7427375</span>
+            </a>
+
+            {/* 4. Fax */}
+            <div className="inline-flex items-center gap-2.5 text-slate-300 w-full max-w-xs sm:max-w-sm md:max-w-md">
+              <Printer className="w-4 h-4 shrink-0 text-slate-400" />
+              <span>Fax: (021) 7412491</span>
             </div>
           </div>
 
@@ -67,7 +74,7 @@ export const Footer: React.FC = () => {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white hover:text-[#0b192e] text-white flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-white/10  text-white flex items-center justify-center transition-colors"
                 aria-label="Facebook"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -80,7 +87,7 @@ export const Footer: React.FC = () => {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white hover:text-[#0b192e] text-white flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-white/10  text-white flex items-center justify-center transition-colors"
                 aria-label="Instagram"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -93,7 +100,7 @@ export const Footer: React.FC = () => {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white hover:text-[#0b192e] text-white flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center transition-colors"
                 aria-label="YouTube"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">

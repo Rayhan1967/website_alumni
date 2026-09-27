@@ -127,6 +127,7 @@ export interface UserSession {
   tracerStatus: 'SUDAH' | 'BELUM' | 'DRAFT';
   submissionId?: string;
   submittedAt?: string;
+  jenisKelamin?: 'L' | 'P' | 'Laki-laki' | 'Perempuan';
   avatarUrl?: string;
 }
 

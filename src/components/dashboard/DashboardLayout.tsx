@@ -66,7 +66,7 @@ export const DashboardLayout: React.FC = () => {
         />
 
         {/* Dynamic Tab Body */}
-        <main className="p-4 sm:p-8 flex-1 max-w-7xl w-full mx-auto">
+        <main className="p-3.5 sm:p-6 lg:p-8 flex-1 max-w-7xl w-full mx-auto">
           {activeTab === 'beranda' && (
             <OverviewTab
               onNavigateTab={(tab) => setActiveTab(tab)}

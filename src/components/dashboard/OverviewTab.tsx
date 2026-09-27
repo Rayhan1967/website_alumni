@@ -1,8 +1,8 @@
-import React from 'react';
-import { useAuthStore } from '@/store/authStore';
-import { useTracerStore } from '@/store/tracerStore';
-import { MOCK_JOBS } from '@/lib/mockData';
-import { DashboardTab } from './DashboardSidebar';
+import React from "react";
+import { useAuthStore } from "@/store/authStore";
+import { useTracerStore } from "@/store/tracerStore";
+import { MOCK_JOBS } from "@/lib/mockData";
+import { DashboardTab } from "./DashboardSidebar";
 import {
   FileSpreadsheet,
   CheckCircle2,
@@ -15,8 +15,8 @@ import {
   Calendar,
   Sparkles,
   FileCheck2,
-} from 'lucide-react';
-import { Button } from '@/components/ui/Button';
+} from "lucide-react";
+import { Button } from "@/components/ui/Button";
 
 interface OverviewTabProps {
   onNavigateTab: (tab: DashboardTab) => void;
@@ -32,61 +32,55 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
   const { user } = useAuthStore();
   const { isSubmitted, lastSubmissionId } = useTracerStore();
 
-  const isTracerDone = isSubmitted || user?.tracerStatus === 'SUDAH';
+  const isTracerDone = isSubmitted || user?.tracerStatus === "SUDAH";
   const recentJobs = MOCK_JOBS.slice(0, 3);
 
   return (
-    <div className="space-y-8">
-      
+    <div className="space-y-6 sm:space-y-8">
       {/* 1. Banner Tracer Study matching Wireframe */}
-      <div className="relative rounded-xl overflow-hidden bg-gradient-to-r from-[#102a4e] via-[#1a3d6d] to-[#254f8a] text-white p-6 sm:p-8 shadow-md">
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-xl">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Program Resmi BKK Sasmita Jaya</span>
-            </div>
-
-            <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+      <div className="relative rounded-lg overflow-hidden bg-gradient-to-r from-[#102a4e] via-[#1a3d6d] to-[#254f8a] text-white p-4 sm:p-6 md:p-8 shadow-md">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
+          <div className="space-y-1.5 sm:space-y-2 max-w-xl">
+            <h2 className="text-base sm:text-xl md:text-2xl font-bold tracking-tight">
               {isTracerDone
-                ? 'Data Tracer Study Anda Sudah Tersimpan'
-                : 'Kuesioner Tracer Study 2026 Tersedia'}
+                ? "Data Tracer Study Anda Sudah Tersimpan"
+                : "Kuesioner Tracer Study 2026 Tersedia"}
             </h2>
 
             <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
               {isTracerDone
-                ? `Terima kasih telah mengisi Tracer Study. Nomor registrasi Anda: ${lastSubmissionId || 'TRC-2026-0001'}. Gunakan bukti ini untuk pengambilan ijazah asli.`
-                : 'Mohon luangkan waktu 3-5 menit untuk memperbarui data karir, studi, atau wirausaha Anda guna membantu pengembangan kurikulum sekolah.'}
+                ? `Terima kasih telah mengisi Tracer Study. Nomor registrasi Anda: ${lastSubmissionId || "TRC-2026-0001"}. Gunakan bukti ini untuk pengambilan ijazah asli.`
+                : "Mohon luangkan waktu 3-5 menit untuk memperbarui data karir, studi, atau wirausaha Anda guna membantu pengembangan kurikulum sekolah."}
             </p>
           </div>
 
-          <div className="shrink-0 flex flex-col sm:flex-row gap-3">
+          <div className="shrink-0 flex flex-col sm:flex-row gap-2.5 sm:gap-3">
             {isTracerDone ? (
               <>
                 <Button
                   onClick={onOpenReceipt}
                   variant="yellow"
                   size="md"
-                  className="font-bold text-slate-950"
+                  className="font-bold text-slate-950 w-full sm:w-auto"
                 >
                   <FileSpreadsheet className="w-4 h-4 mr-2" />
                   <span>Lihat Bukti Pengisian</span>
                 </Button>
                 <Button
-                  onClick={() => onNavigateTab('tracer_study')}
+                  onClick={() => onNavigateTab("tracer_study")}
                   variant="outline"
                   size="md"
-                  className="bg-white/10 text-white hover:bg-white/20 border-white/30"
+                  className="bg-white/10 text-white hover:bg-white/20 border-white/30 w-full sm:w-auto"
                 >
                   <span>Update Data</span>
                 </Button>
               </>
             ) : (
               <Button
-                onClick={() => onNavigateTab('tracer_study')}
+                onClick={() => onNavigateTab("tracer_study")}
                 variant="yellow"
                 size="lg"
-                className="font-bold text-slate-950 shadow-lg"
+                className="font-bold text-slate-950 shadow-lg w-full sm:w-auto"
               >
                 <span>Isi Kuesioner Sekarang</span>
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -101,60 +95,73 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
 
       {/* 2. Bagian Statistik matching Wireframe (3 Cards in a row) */}
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-600">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-600">
             Statistik & Status Akun
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-5">
           {/* Stat Card 1: Status Tracer Study */}
-          <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold text-slate-500">Status Tracer Study</span>
-              <div className={`p-2 rounded-xl ${isTracerDone ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-100 text-amber-600'}`}>
-                {isTracerDone ? <CheckCircle2 className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+          <div className="bg-white rounded-xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <span className="text-xs font-semibold text-slate-500">
+                Status Tracer Study
+              </span>
+              <div
+                className={`p-1.5 sm:p-2 rounded-lg sm:rounded-xl ${isTracerDone ? "bg-emerald-100 text-emerald-600" : "bg-amber-100 text-amber-600"}`}
+              >
+                {isTracerDone ? (
+                  <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                ) : (
+                  <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+                )}
               </div>
             </div>
             <div>
-              <div className="text-xl font-bold text-slate-900">
-                {isTracerDone ? 'Sudah Diisi (Lengkap)' : 'Belum Terisi'}
+              <div className="text-base sm:text-xl font-bold text-slate-900">
+                {isTracerDone ? "Sudah Diisi (Lengkap)" : "Belum Terisi"}
               </div>
               <p className="text-xs text-slate-500 mt-1">
-                {isTracerDone ? 'Tervalidasi di sistem BKK' : 'Wajib diisi sebelum ambil ijazah'}
+                {isTracerDone
+                  ? "Tervalidasi di sistem BKK"
+                  : "Wajib diisi sebelum ambil ijazah"}
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-100">
+            <div className="mt-3.5 sm:mt-4 pt-3 border-t border-slate-100">
               <button
-                onClick={() => onNavigateTab('tracer_study')}
+                onClick={() => onNavigateTab("tracer_study")}
                 className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
               >
-                <span>{isTracerDone ? 'Buka Form Tracer' : 'Lengkapi Sekarang'}</span>
+                <span>
+                  {isTracerDone ? "Buka Form Tracer" : "Lengkapi Sekarang"}
+                </span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
 
           {/* Stat Card 2: Status Ijazah */}
-          <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold text-slate-500">Status Fisik Ijazah</span>
-              <div className="p-2 rounded-xl bg-blue-100 text-blue-600">
-                <FileCheck2 className="w-5 h-5" />
+          <div className="bg-white rounded-xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <span className="text-xs font-semibold text-slate-500">
+                Status Fisik Ijazah
+              </span>
+              <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-blue-100 text-blue-600">
+                <FileCheck2 className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
             <div>
-              <div className="text-xl font-bold text-slate-900">
+              <div className="text-base sm:text-xl font-bold text-slate-900">
                 Siap Diambil di TU
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 No. Ijazah: M-SMK/24/0048291
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-100">
+            <div className="mt-3.5 sm:mt-4 pt-3 border-t border-slate-100">
               <button
-                onClick={() => onNavigateTab('cek_ijazah')}
+                onClick={() => onNavigateTab("cek_ijazah")}
                 className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
               >
                 <span>Cek Alur Pengambilan</span>
@@ -164,24 +171,26 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
           </div>
 
           {/* Stat Card 3: Info Loker Terbuka */}
-          <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold text-slate-500">Lowongan BKK Aktif</span>
-              <div className="p-2 rounded-xl bg-purple-100 text-purple-600">
-                <Briefcase className="w-5 h-5" />
+          <div className="bg-white rounded-xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <span className="text-xs font-semibold text-slate-500">
+                Lowongan BKK Aktif
+              </span>
+              <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-purple-100 text-purple-600">
+                <Briefcase className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
             <div>
-              <div className="text-xl font-bold text-slate-900">
+              <div className="text-base sm:text-xl font-bold text-slate-900">
                 28 Lowongan Baru
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 Kemitraan DUDI Tangerang Selatan & Jabodetabek
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-100">
+            <div className="mt-3.5 sm:mt-4 pt-3 border-t border-slate-100">
               <button
-                onClick={() => onNavigateTab('loker')}
+                onClick={() => onNavigateTab("loker")}
                 className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
               >
                 <span>Eksplor Lowongan</span>
@@ -189,7 +198,6 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
               </button>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -200,12 +208,9 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
             <h3 className="text-base font-bold text-slate-900">
               Info Loker & Magang Rekomendasi
             </h3>
-            <p className="text-xs text-slate-500">
-              Lowongan terverifikasi langsung dari mitra industri BKK SMK Sasmita Jaya 2
-            </p>
           </div>
           <button
-            onClick={() => onNavigateTab('loker')}
+            onClick={() => onNavigateTab("loker")}
             className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
           >
             <span>Lihat semua</span>
@@ -245,9 +250,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
                     <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                     <span className="truncate">{job.location}</span>
                   </p>
-                  <p className="font-semibold text-emerald-600">
-                    {job.salary}
-                  </p>
+                  <p className="font-semibold text-emerald-600">{job.salary}</p>
                 </div>
               </div>
 
@@ -263,7 +266,6 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
           ))}
         </div>
       </div>
-
     </div>
   );
 };
