@@ -1,4 +1,4 @@
-# 🎓 Sistem Informasi Alumni & Tracer Study — SMK Sasmita Jaya 2 Pamulang
+# Sistem Informasi Alumni & Tracer Study — SMK Sasmita Jaya 2 Pamulang
 
 [![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -10,7 +10,7 @@ Platform resmi penelusuran lulusan (*Tracer Study*) dan pengelolaan data alumni 
 
 ---
 
-## 📌 Daftar Isi
+## Daftar Isi
 - [Fitur Utama](#-fitur-utama)
 - [Tech Stack](#-tech-stack)
 - [Kredensial Awal & Akun Demo](#-kredensial-awal--akun-demo)
@@ -22,9 +22,9 @@ Platform resmi penelusuran lulusan (*Tracer Study*) dan pengelolaan data alumni 
 
 ---
 
-## 🚀 Fitur Utama
+## Fitur Utama
 
-### 1. 🌐 Landing Page Interaktif & Responsif
+### 1. Landing Page Interaktif & Responsif
 - **Hero Section**: Desain modern dengan visual siswa, statistik keterserapan kerja, dan tombol aksi langsung ke kuesioner.
 - **Navigasi Responsif**: Sidebar drawer khusus tampilan mobile dan tablet/iPad (< 1024px) dengan logo dan tombol login resmi.
 - **6 Layanan Utama Alumni**: Tracer study, statistik karir, forum alumni, bursa kerja khusus (BKK), legalisir ijazah, dan helpdesk.
@@ -33,26 +33,26 @@ Platform resmi penelusuran lulusan (*Tracer Study*) dan pengelolaan data alumni 
 - **FAQ Accordion Smooth**: Tanya jawab umum seputar kuesioner tracer study dengan transisi CSS Grid yang mulus.
 - **Footer Komprehensif**: Kontak resmi, alamat Google Maps, dan tautan sosial media SMK Sasmita Jaya 2.
 
-### 2. 📖 Halaman Detail Tentang (`/tentang`)
+### 2. Halaman Detail Tentang (`/tentang`)
 - Penjelasan mendalam mengenai urgensi dan tujuan tracer study.
 - Rincian **5 Langkah Alur Pengisian Kuesioner**.
 - Jaminan Kerahasiaan & Keamanan Data berstandar enkripsi.
 - Quick highlights statistik alumni dan akses cepat chat WhatsApp Helpdesk BKK.
 
-### 3. 📝 Formulir 5 Langkah Kuesioner Tracer Study (`/tracer-study`)
+### 3. Formulir 5 Langkah Kuesioner Tracer Study (`/tracer-study`)
 - **Langkah 1**: Validasi Identitas & Kontak Alumni (Nama, NISN, NIK, Jurusan, Tahun Lulus, WhatsApp).
 - **Langkah 2**: Pemilihan Status Kegiatan Utama (*Bekerja*, *Melanjutkan Kuliah*, *Wirausaha*, *Mencari Kerja*).
 - **Langkah 3**: Rincian Informasi Profesi / Kampus / Bidang Usaha & Tingkat Kesesuaian Jurusan.
 - **Langkah 4**: Evaluasi Relevansi Kurikulum & Masukan untuk Sekolah.
 - **Langkah 5**: Konfirmasi Ringkasan & Cetak/Unduh **Tanda Bukti Resmi Pengisian (PDF & QR Code)** sebagai syarat pengambilan ijazah.
 
-### 4. 📊 Dashboard Alumni & Manajemen BKK (`/dashboard`)
+### 4. Dashboard Alumni & Manajemen BKK (`/dashboard`)
 - **Dashboard Alumni**: Memantau status pengisian, riwayat karir, dan unduh ulang kartu bukti pengisian.
 - **Dashboard Admin BKK**: Rekapitulasi statistik serapan lulusan, analisis gaji/pendapatan, filter jurusan/tahun, serta ekspor data laporan ke Excel/PDF.
 
 ---
 
-## 💻 Tech Stack
+## Tech Stack
 
 | Kategori | Teknologi |
 |---|---|
@@ -67,7 +67,7 @@ Platform resmi penelusuran lulusan (*Tracer Study*) dan pengelolaan data alumni 
 
 ---
 
-## 🔑 Kredensial Awal & Akun Demo
+## Kredensial Awal & Akun Demo
 
 Untuk mempermudah pengujian di lingkungan development atau staging, Anda dapat menggunakan akun demo berikut pada halaman [Login (`/login`)](http://localhost:5173/login):
 
@@ -84,7 +84,7 @@ Untuk mempermudah pengujian di lingkungan development atau staging, Anda dapat m
 
 ---
 
-## ⚙️ Prasyarat Sistem
+## Prasyarat Sistem
 
 Sebelum menjalankan proyek, pastikan perangkat Anda telah terpasang:
 - **Node.js**: Versi `18.x` atau lebih baru ([Unduh Node.js](https://nodejs.org/))
@@ -93,7 +93,7 @@ Sebelum menjalankan proyek, pastikan perangkat Anda telah terpasang:
 
 ---
 
-## 📦 Langkah Instalasi & Menjalankan Proyek
+## Langkah Instalasi & Menjalankan Proyek
 
 Ikuti langkah-langkah berikut secara berurutan:
 
@@ -145,7 +145,7 @@ npm run preview
 
 ---
 
-## 📂 Struktur Direktori Proyek
+## Struktur Direktori Proyek
 
 ```text
 web_alumni/
@@ -182,7 +182,7 @@ web_alumni/
 
 ---
 
-## 🌿 Panduan Git & Branch Staging
+## Panduan Git & Branch Staging
 
 ### Menyiapkan Remote & Push ke Branch `staging`:
 
@@ -210,7 +210,7 @@ web_alumni/
 
 ---
 
-## 🔒 Kebijakan Keamanan & Privasi
+## Kebijakan Keamanan & Privasi
 
 1. **Data Dummy / Mock**: Seluruh data NIK, nomor kontak, dan identitas yang digunakan dalam kode demo adalah data fiktif untuk keperluan pengujian.
 2. **Kerahasiaan Kredensial**: File `.env`, certificate, token API, dan `node_modules/` **secara ketat diabaikan** melalui berkas `.gitignore` dan dilarang di-push ke repository publik.
