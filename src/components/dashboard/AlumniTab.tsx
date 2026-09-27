@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MOCK_ALUMNI_LIST } from '@/lib/mockData';
 import { Input } from '@/components/ui/Input';
+import { CustomSelect } from '@/components/ui/CustomSelect';
 import { UserAvatar } from '@/components/ui/UserAvatar';
 import { Users, Search, GraduationCap, Building, MapPin, Sparkles } from 'lucide-react';
 
@@ -42,17 +43,18 @@ export const AlumniTab: React.FC = () => {
             leftIcon={<Search className="w-4 h-4" />}
           />
         </div>
-        <select
+        <CustomSelect
           value={jurusanFilter}
-          onChange={(e) => setJurusanFilter(e.target.value)}
-          className="rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-600/20"
-        >
-          <option value="ALL">Semua Keahlian</option>
-          <option value="Komputer">TKJ & RPL</option>
-          <option value="Otomotif">TKRO & TBSM</option>
-          <option value="Akuntansi">Akuntansi (AKL)</option>
-          <option value="Bisnis">Bisnis & Perkantoran</option>
-        </select>
+          onChange={(val) => setJurusanFilter(val)}
+          className="w-full sm:w-56"
+          options={[
+            { value: 'ALL', label: 'Semua Keahlian' },
+            { value: 'Komputer', label: 'TKJ & RPL' },
+            { value: 'Otomotif', label: 'TKRO & TBSM' },
+            { value: 'Akuntansi', label: 'Akuntansi (AKL)' },
+            { value: 'Bisnis', label: 'Bisnis & Perkantoran' },
+          ]}
+        />
       </div>
 
       {/* Alumni Cards Grid */}

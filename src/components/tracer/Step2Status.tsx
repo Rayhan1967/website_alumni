@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTracerStore } from '@/store/tracerStore';
 import { StatusKegiatan, MasaTunggu } from '@/types/tracer';
 import {
@@ -6,7 +6,8 @@ import {
   MASA_TUNGGU_OPTIONS,
 } from '@/schemas/tracerSchema';
 import { Button } from '@/components/ui/Button';
-import { Select } from '@/components/ui/Select';
+import { CustomSelect } from '@/components/ui/CustomSelect';
+import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import {
   Briefcase,
   GraduationCap,
@@ -26,6 +27,7 @@ interface Step2Props {
 
 export const Step2Status: React.FC<Step2Props> = ({ onNext, onPrev }) => {
   const { status_kegiatan, masa_tunggu, updateStatusKegiatan } = useTracerStore();
+  const [showWarningModal, setShowWarningModal] = useState(false);
 
   const getIcon = (val: string) => {
     switch (val) {
@@ -48,17 +50,17 @@ export const Step2Status: React.FC<Step2Props> = ({ onNext, onPrev }) => {
     updateStatusKegiatan(status, masa_tunggu);
   };
 
-  const handleMasaTungguChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleMasaTungguChange = (val: string) => {
     updateStatusKegiatan(
       (status_kegiatan as StatusKegiatan) || 'KERJA',
-      e.target.value as MasaTunggu
+      val as MasaTunggu
     );
   };
 
   const handleContinue = (e: React.FormEvent) => {
     e.preventDefault();
     if (!status_kegiatan) {
-      alert('Silakan pilih salah satu status kegiatan Anda saat ini.');
+      setShowWarningModal(true);
       return;
     }
     onNext();
@@ -138,18 +140,16 @@ export const Step2Status: React.FC<Step2Props> = ({ onNext, onPrev }) => {
         status_kegiatan === 'WIRAUSAHA' ||
         status_kegiatan === 'WIRAUSAHA_KULIAH') && (
         <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-          <Select
+          <CustomSelect
             label="Masa Tunggu Memperoleh Pekerjaan / Usaha Pertama"
             helperText="Berapa lama waktu yang dibutuhkan sejak dinyatakan lulus hingga mulai bekerja / berwirausaha?"
             value={masa_tunggu || '1 - 3 bulan'}
             onChange={handleMasaTungguChange}
-          >
-            {MASA_TUNGGU_OPTIONS.map((mt) => (
-              <option key={mt} value={mt}>
-                {mt}
-              </option>
-            ))}
-          </Select>
+            options={MASA_TUNGGU_OPTIONS.map((mt) => ({
+              value: mt,
+              label: mt,
+            }))}
+          />
         </div>
       )}
 
@@ -170,6 +170,16 @@ export const Step2Status: React.FC<Step2Props> = ({ onNext, onPrev }) => {
           <ArrowRight className="w-4 h-4 ml-1" />
         </Button>
       </div>
+
+      {/* Warning Modal */}
+      <ConfirmModal
+        isOpen={showWarningModal}
+        onClose={() => setShowWarningModal(false)}
+        title="Pilih Status Kegiatan"
+        message="Silakan pilih salah satu status kegiatan utama Anda saat ini (Bekerja, Kuliah, Wirausaha, dsb) sebelum melanjutkan."
+        confirmText="Mengerti"
+        type="warning"
+      />
     </form>
   );
 };

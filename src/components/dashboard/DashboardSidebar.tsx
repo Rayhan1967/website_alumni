@@ -74,7 +74,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         {/* Desktop Collapse / Expand Toggle Button at Top-Right Border */}
         <button
           onClick={() => setIsCollapsed((prev) => !prev)}
-          className="hidden lg:flex absolute top-6 -right-3 w-6 h-6 rounded-full bg-[#163b6d] hover:bg-blue-600 text-white border border-[#29528d] items-center justify-center shadow-md transition-all cursor-pointer z-50 hover:scale-105 active:scale-95"
+          className="hidden lg:flex absolute top-6 -right-3 w-6 h-6 rounded-full bg-[#163b6d] hover:bg-blue-600 text-white border border-white items-center justify-center shadow-md transition-all cursor-pointer z-50 hover:scale-110 active:scale-95"
           title={isCollapsed ? "Perluas Sidebar" : "Ciutkan Sidebar"}
           aria-label={isCollapsed ? "Perluas Sidebar" : "Ciutkan Sidebar"}
         >
@@ -97,7 +97,8 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
           </button>
         )}
 
-        <div className={`p-4 space-y-5 ${isCollapsed ? "lg:px-2.5 px-5" : "px-5"}`}>
+        {/* Scrollable Navigation Body */}
+        <div className={`p-4 space-y-5 flex-1 overflow-y-auto overflow-x-hidden ${isCollapsed ? "lg:px-2.5 px-5" : "px-5"}`}>
           
           {/* Top Logo Section */}
           <div className="relative pb-4 border-b border-blue-900/60 flex flex-col items-center justify-center text-center">
@@ -158,7 +159,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         </div>
 
         {/* User Profile Footer & Logout */}
-        <div className={`p-3.5 border-t border-blue-900/60 bg-[#08172f]/80 ${isCollapsed ? "lg:px-2 px-4" : "px-4"}`}>
+        <div className={`p-3.5 border-t border-blue-900/60 bg-[#08172f]/80 shrink-0 ${isCollapsed ? "lg:px-2 px-4" : "px-4"}`}>
           <div
             className={`flex items-center gap-2.5 mb-3 px-1 ${
               isCollapsed ? "lg:justify-center" : ""

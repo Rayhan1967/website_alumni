@@ -29,11 +29,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
   React.useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     }
     return () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     };
   }, [mobileMenuOpen]);
 
@@ -146,16 +149,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
 
       {/* Standard Mobile & Tablet Sidebar Drawer & Dimmed Backdrop (Visible on < 1024px) */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop Overlay */}
+        <div className="fixed inset-0 z-50 lg:hidden touch-none select-none overscroll-none">
+          {/* Backdrop Overlay - Blocks all background touches & interactions */}
           <div
-            className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-300"
+            className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-300 touch-none select-none"
             onClick={() => setMobileMenuOpen(false)}
+            onTouchMove={(e) => e.preventDefault()}
+            onWheel={(e) => e.preventDefault()}
             aria-hidden="true"
           />
 
           {/* Slide-in Sidebar Panel from Right */}
-          <aside className="fixed inset-y-0 right-0 z-50 w-[300px] max-w-[85vw] bg-white shadow-2xl flex flex-col justify-between p-5 sm:p-6 border-l border-slate-100 transform transition-transform duration-300 ease-in-out">
+          <aside className="fixed inset-y-0 right-0 z-50 w-[300px] max-w-[85vw] bg-white shadow-2xl flex flex-col justify-between p-5 sm:p-6 border-l border-slate-100 transform transition-transform duration-300 ease-in-out overflow-y-auto overscroll-contain">
             
             {/* Top Header */}
             <div>

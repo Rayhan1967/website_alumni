@@ -52,6 +52,21 @@ export const DashboardLayout: React.FC = () => {
   const [receiptModalOpen, setReceiptModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState<JobVacancy | null>(null);
 
+  // Lock body & html scroll when mobile sidebar drawer is open
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [isMobileOpen]);
+
   const handleToggleCollapse = (val: boolean | ((prev: boolean) => boolean)) => {
     setIsCollapsed((prev) => {
       const next = typeof val === 'function' ? val(prev) : val;
@@ -87,11 +102,14 @@ export const DashboardLayout: React.FC = () => {
         setIsCollapsed={handleToggleCollapse}
       />
 
-      {/* Mobile Backdrop */}
+      {/* Mobile Backdrop Overlay - Fully blocks touches, scrolls, & interactions outside sidebar */}
       {isMobileOpen && (
         <div
-          className="fixed inset-0 bg-slate-950/60 z-40 lg:hidden backdrop-blur-xs transition-opacity duration-300"
+          className="fixed inset-0 bg-slate-950/60 z-40 lg:hidden backdrop-blur-xs transition-opacity duration-300 touch-none select-none overscroll-none"
           onClick={() => setIsMobileOpen(false)}
+          onTouchMove={(e) => e.preventDefault()}
+          onWheel={(e) => e.preventDefault()}
+          aria-hidden="true"
         />
       )}
 

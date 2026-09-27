@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTracerStore } from '@/store/tracerStore';
 import {
   DetailKerja,
@@ -20,6 +20,7 @@ import {
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
+import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import {
   Building2,
   GraduationCap,
@@ -45,6 +46,8 @@ export const Step3Details: React.FC<Step3Props> = ({ onNext, onPrev }) => {
     updateDetailKuliah,
     updateDetailUsaha,
   } = useTracerStore();
+
+  const [warningModal, setWarningModal] = useState<{ title: string; message: string } | null>(null);
 
   const isKerja =
     status_kegiatan === 'KERJA' || status_kegiatan === 'KERJA_KULIAH';
@@ -83,19 +86,28 @@ export const Step3Details: React.FC<Step3Props> = ({ onNext, onPrev }) => {
     // Basic Validation Check
     if (isKerja) {
       if (!detail_kerja?.nama_perusahaan || !detail_kerja?.jabatan) {
-        alert('Mohon lengkapi data nama perusahaan dan jabatan kerja Anda.');
+        setWarningModal({
+          title: 'Lengkapi Data Pekerjaan',
+          message: 'Mohon lengkapi data nama perusahaan dan jabatan kerja Anda sebelum melanjutkan.',
+        });
         return;
       }
     }
     if (isKuliah) {
       if (!detail_kuliah?.nama_kampus || !detail_kuliah?.program_studi) {
-        alert('Mohon lengkapi data nama kampus dan program studi kuliah Anda.');
+        setWarningModal({
+          title: 'Lengkapi Data Kuliah',
+          message: 'Mohon lengkapi data nama kampus dan program studi kuliah Anda sebelum melanjutkan.',
+        });
         return;
       }
     }
     if (isUsaha) {
       if (!detail_usaha?.nama_usaha || !detail_usaha?.alamat_usaha) {
-        alert('Mohon lengkapi data nama usaha dan alamat bisnis Anda.');
+        setWarningModal({
+          title: 'Lengkapi Data Wirausaha',
+          message: 'Mohon lengkapi data nama usaha dan alamat bisnis Anda sebelum melanjutkan.',
+        });
         return;
       }
     }
@@ -368,6 +380,16 @@ export const Step3Details: React.FC<Step3Props> = ({ onNext, onPrev }) => {
           <ArrowRight className="w-4 h-4 ml-1" />
         </Button>
       </div>
+
+      {/* Warning Modal */}
+      <ConfirmModal
+        isOpen={Boolean(warningModal)}
+        onClose={() => setWarningModal(null)}
+        title={warningModal?.title || 'Perhatian'}
+        message={warningModal?.message || ''}
+        confirmText="Mengerti"
+        type="warning"
+      />
     </form>
   );
 };

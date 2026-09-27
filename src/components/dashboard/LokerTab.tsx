@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MOCK_JOBS } from '@/lib/mockData';
 import { JobVacancy } from '@/types/tracer';
 import { Input } from '@/components/ui/Input';
+import { CustomSelect } from '@/components/ui/CustomSelect';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
@@ -81,20 +82,21 @@ export const LokerTab: React.FC<LokerTabProps> = ({
               leftIcon={<Search className="w-4 h-4" />}
             />
           </div>
-          <select
+          <CustomSelect
             value={selectedMajor}
-            onChange={(e) => setSelectedMajor(e.target.value)}
-            className="rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-600/20"
-          >
-            <option value="ALL">Semua Jurusan</option>
-            <option value="Teknik Komputer dan Jaringan">TKJ</option>
-            <option value="Rekayasa Perangkat Lunak">RPL</option>
-            <option value="Teknik Kendaraan Ringan Otomotif">TKRO</option>
-            <option value="Teknik Bisnis Sepeda Motor">TBSM</option>
-            <option value="Akuntansi">Akuntansi (AKL)</option>
-            <option value="Otomatisasi">OTKP</option>
-            <option value="Bisnis Daring">BDP</option>
-          </select>
+            onChange={(val) => setSelectedMajor(val)}
+            className="w-full sm:w-56"
+            options={[
+              { value: 'ALL', label: 'Semua Jurusan' },
+              { value: 'Teknik Komputer dan Jaringan', label: 'TKJ' },
+              { value: 'Rekayasa Perangkat Lunak', label: 'RPL' },
+              { value: 'Teknik Kendaraan Ringan Otomotif', label: 'TKRO' },
+              { value: 'Teknik Bisnis Sepeda Motor', label: 'TBSM' },
+              { value: 'Akuntansi', label: 'Akuntansi (AKL)' },
+              { value: 'Otomatisasi', label: 'OTKP' },
+              { value: 'Bisnis Daring', label: 'BDP' },
+            ]}
+          />
         </div>
       </div>
 

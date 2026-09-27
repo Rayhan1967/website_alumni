@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTracerStore } from '@/store/tracerStore';
 import { KOMPETENSI_OPTIONS } from '@/schemas/tracerSchema';
 import { Button } from '@/components/ui/Button';
+import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { Star, CheckSquare, MessageSquare, ArrowRight, ArrowLeft } from 'lucide-react';
 
 interface Step4Props {
@@ -11,6 +12,7 @@ interface Step4Props {
 
 export const Step4Evaluation: React.FC<Step4Props> = ({ onNext, onPrev }) => {
   const { evaluasi, updateEvaluasi } = useTracerStore();
+  const [warningModal, setWarningModal] = useState<{ title: string; message: string } | null>(null);
 
   const handleRating = (score: number) => {
     updateEvaluasi({ skor_relevansi: score });
@@ -32,14 +34,20 @@ export const Step4Evaluation: React.FC<Step4Props> = ({ onNext, onPrev }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!evaluasi.skor_relevansi) {
-      alert('Silakan berikan skor penilaian relevansi kurikulum (1 - 5 bintang).');
+      setWarningModal({
+        title: 'Penilaian Relevansi',
+        message: 'Silakan berikan skor penilaian relevansi kurikulum (1 - 5 bintang) sebelum melanjutkan.',
+      });
       return;
     }
     if (
       !evaluasi.kompetensi_bermanfaat ||
       evaluasi.kompetensi_bermanfaat.length === 0
     ) {
-      alert('Pilih minimal 1 kompetensi yang paling bermanfaat bagi Anda.');
+      setWarningModal({
+        title: 'Pilih Kompetensi Bermanfaat',
+        message: 'Pilih minimal 1 kompetensi yang paling bermanfaat bagi Anda dalam dunia kerja / perkuliahan.',
+      });
       return;
     }
     onNext();
@@ -165,6 +173,16 @@ export const Step4Evaluation: React.FC<Step4Props> = ({ onNext, onPrev }) => {
           <ArrowRight className="w-4 h-4 ml-1" />
         </Button>
       </div>
+
+      {/* Warning Modal */}
+      <ConfirmModal
+        isOpen={Boolean(warningModal)}
+        onClose={() => setWarningModal(null)}
+        title={warningModal?.title || 'Perhatian'}
+        message={warningModal?.message || ''}
+        confirmText="Mengerti"
+        type="warning"
+      />
     </form>
   );
 };

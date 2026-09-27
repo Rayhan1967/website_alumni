@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MOCK_FAQS } from '@/lib/mockData';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
+import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import {
   Headphones,
   Phone,
@@ -18,6 +19,7 @@ export const HelpdeskTab: React.FC = () => {
   const [ticketSubject, setTicketSubject] = useState('');
   const [ticketMessage, setTicketMessage] = useState('');
   const [submittedTicket, setSubmittedTicket] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleTicketSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,8 +30,8 @@ export const HelpdeskTab: React.FC = () => {
       setSubmittedTicket(false);
       setTicketSubject('');
       setTicketMessage('');
-      alert('Tiket bantuan Anda telah dikirim ke Tim BKK Sasmita Jaya 2!');
-    }, 1000);
+      setShowSuccessModal(true);
+    }, 800);
   };
 
   return (
@@ -182,6 +184,16 @@ export const HelpdeskTab: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Friendly Success Modal */}
+      <ConfirmModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        title="Tiket Bantuan Terkirim!"
+        message="Tiket pengaduan Anda telah berhasil dikirim ke Tim BKK SMK Sasmita Jaya 2. Tim kami akan segera menindaklanjuti dan menghubungi Anda via WhatsApp atau Email."
+        confirmText="Selesai"
+        type="success"
+      />
     </div>
   );
 };

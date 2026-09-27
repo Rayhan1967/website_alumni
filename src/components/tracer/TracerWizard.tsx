@@ -8,6 +8,7 @@ import { Step3Details } from './Step3Details';
 import { Step4Evaluation } from './Step4Evaluation';
 import { Step5Review } from './Step5Review';
 import { SubmissionReceiptModal } from './SubmissionReceiptModal';
+import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { Card } from '@/components/ui/Card';
 import { RotateCcw, Sparkles, ArrowLeft } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -25,6 +26,7 @@ export const TracerWizard: React.FC = () => {
   }, [isAuthenticated, navigate]);
 
   const [receiptModalOpen, setReceiptModalOpen] = useState(false);
+  const [resetModalOpen, setResetModalOpen] = useState(false);
   const [activeSubmissionId, setActiveSubmissionId] = useState<string>(
     lastSubmissionId || 'TRC-2026-0001'
   );
@@ -54,11 +56,7 @@ export const TracerWizard: React.FC = () => {
 
           <button
             type="button"
-            onClick={() => {
-              if (window.confirm('Apakah Anda yakin ingin mengatur ulang formulir?')) {
-                resetForm();
-              }
-            }}
+            onClick={() => setResetModalOpen(true)}
             className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-rose-600 transition cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -82,7 +80,7 @@ export const TracerWizard: React.FC = () => {
 
         {/* Stepper Progress Bar */}
         <Card className="p-3.5 sm:p-6 shadow-sm border-slate-200/80">
-          <Stepper currentStep={currentStep} onStepClick={(step) => setStep(step)} />
+          <Stepper currentStep={currentStep} />
         </Card>
 
         {/* Form Container Card */}
@@ -117,6 +115,18 @@ export const TracerWizard: React.FC = () => {
         isOpen={receiptModalOpen}
         onClose={() => setReceiptModalOpen(false)}
         submissionId={activeSubmissionId}
+      />
+
+      {/* Reset Form Confirmation Modal */}
+      <ConfirmModal
+        isOpen={resetModalOpen}
+        onClose={() => setResetModalOpen(false)}
+        onConfirm={resetForm}
+        title="Atur Ulang Formulir Tracer Study?"
+        message="Semua isian formulir yang tersimpan sementara di perangkat Anda akan dihapus dan dikembalikan ke awal."
+        confirmText="Ya, Reset Isian"
+        cancelText="Batal"
+        type="warning"
       />
     </div>
   );
