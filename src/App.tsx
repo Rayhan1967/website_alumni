@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { LandingPage } from '@/components/landing/LandingPage';
-import { LoginPage } from '@/components/auth/LoginPage';
-import { TracerWizard } from '@/components/tracer/TracerWizard';
-import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
-import { NewsDetailPage } from '@/components/news/NewsDetailPage';
-import { AboutDetailPage } from '@/components/about/AboutDetailPage';
+import { LandingPage } from './components/landing/LandingPage';
+import { LoginPage } from './components/auth/LoginPage';
+import { TracerWizard } from './components/tracer/TracerWizard';
+import { DashboardLayout } from './components/dashboard/DashboardLayout';
+import { NewsDetailPage } from './components/news/NewsDetailPage';
+import { AboutDetailPage } from './components/about/AboutDetailPage';
 
 export const App: React.FC = () => {
   return (
