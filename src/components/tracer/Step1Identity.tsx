@@ -6,7 +6,6 @@ import { useTracerStore } from '@/store/tracerStore';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
-import { ArrowRight, UserCheck, Phone, Mail, Sparkles } from 'lucide-react';
 import { z } from 'zod';
 
 type Step1FormData = z.infer<typeof step1Schema>;
@@ -58,9 +57,8 @@ export const Step1Identity: React.FC<Step1Props> = ({ onNext }) => {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="flex items-center justify-between pb-3 border-b border-slate-100">
         <div>
-          <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-            <UserCheck className="w-5 h-5 text-blue-600" />
-            <span>Langkah 1: Identifikasi Diri Alumni</span>
+          <h2 className="text-lg font-bold text-slate-900">
+            Langkah 1: Identifikasi Diri Alumni
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
             Lengkapi data identitas alumni SMK Sasmita Jaya 2 dengan valid
@@ -70,10 +68,9 @@ export const Step1Identity: React.FC<Step1Props> = ({ onNext }) => {
         <button
           type="button"
           onClick={handleFillDemo}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 transition cursor-pointer"
+          className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 transition cursor-pointer"
         >
-          <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-          <span>Isi Contoh Data</span>
+          Isi Contoh Data
         </button>
       </div>
 
@@ -150,7 +147,6 @@ export const Step1Identity: React.FC<Step1Props> = ({ onNext }) => {
           label="Nomor WhatsApp Aktif"
           placeholder="081234567890"
           requiredStar
-          leftIcon={<Phone className="w-4 h-4" />}
           error={errors.no_whatsapp?.message}
           {...register('no_whatsapp')}
         />
@@ -161,7 +157,6 @@ export const Step1Identity: React.FC<Step1Props> = ({ onNext }) => {
           type="email"
           placeholder="nama@email.com"
           requiredStar
-          leftIcon={<Mail className="w-4 h-4" />}
           error={errors.email?.message}
           {...register('email')}
         />
@@ -170,8 +165,7 @@ export const Step1Identity: React.FC<Step1Props> = ({ onNext }) => {
       {/* Navigation Buttons */}
       <div className="pt-6 border-t border-slate-100 flex items-center justify-end">
         <Button type="submit" variant="primary" size="md" className="bg-blue-600 hover:bg-blue-700">
-          <span>Lanjut ke Status Kegiatan</span>
-          <ArrowRight className="w-4 h-4 ml-1" />
+          Lanjut ke Status Kegiatan
         </Button>
       </div>
     </form>

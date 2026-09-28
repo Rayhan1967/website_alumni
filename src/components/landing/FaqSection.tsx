@@ -21,12 +21,11 @@ export const FaqSection: React.FC = () => {
             Pertanyaan yang Sering Diajukan
           </h2>
           <p className="mt-2 text-sm text-slate-600">
-            Informasi praktis seputar pengisian Tracer Study, status ijazah, dan
+            Informasi seputar Tracer Study, status ijazah, dan
             layanan BKK
           </p>
         </div>
 
-        {/* FAQ Accordion with smooth animation, border-bottom only, and no border-radius */}
         <div className="divide-y divide-slate-200 border-t border-slate-200">
           {MOCK_FAQS.map((faq, idx) => {
             const isOpen = openIdx === idx;

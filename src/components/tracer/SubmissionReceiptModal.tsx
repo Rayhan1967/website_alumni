@@ -2,7 +2,6 @@ import React from 'react';
 import { Modal } from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
 import { useTracerStore } from '@/store/tracerStore';
-import { CheckCircle2, Printer, Download, ArrowRight, QrCode } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface SubmissionReceiptModalProps {
@@ -35,11 +34,6 @@ export const SubmissionReceiptModal: React.FC<SubmissionReceiptModalProps> = ({
       maxWidth="xl"
     >
       <div className="space-y-6 text-center">
-        {/* Success Icon Badge */}
-        <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
-          <CheckCircle2 className="w-10 h-10 stroke-[2.5]" />
-        </div>
-
         <div>
           <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
             Pengisian Tracer Study Berhasil!
@@ -66,7 +60,7 @@ export const SubmissionReceiptModal: React.FC<SubmissionReceiptModalProps> = ({
                 <h4 className="font-bold text-slate-900 text-xs sm:text-sm">
                   SMK Sasmita Jaya 2 Pamulang
                 </h4>
-                <p className="text-[10px] text-slate-500 uppercase tracking-wider">
+                <p className="text-[10px] text-slate-500 tracking-wider">
                   Bukti Resmi Pengisian Tracer Study
                 </p>
               </div>
@@ -112,16 +106,11 @@ export const SubmissionReceiptModal: React.FC<SubmissionReceiptModalProps> = ({
             </div>
           </div>
 
-          {/* QR Verification Box */}
+          {/* Verification Box */}
           <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-white border border-slate-300 rounded p-1 flex items-center justify-center">
-                <QrCode className="w-8 h-8 text-slate-800" />
-              </div>
-              <span className="text-[10px] leading-tight">
-                Scan QR ini di loket Tata Usaha / BKK untuk verifikasi pengambilan Ijazah & Sertifikat BNSP.
-              </span>
-            </div>
+            <span className="text-[10px] leading-tight">
+              Tunjukkan bukti ini di loket Tata Usaha / BKK untuk verifikasi pengambilan Ijazah & Sertifikat BNSP.
+            </span>
             <div className="text-right shrink-0">
               <span className="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold text-[10px]">
                 TERVALIDASI
@@ -139,8 +128,7 @@ export const SubmissionReceiptModal: React.FC<SubmissionReceiptModalProps> = ({
             size="md"
             className="w-full sm:w-auto"
           >
-            <Printer className="w-4 h-4 mr-2" />
-            <span>Cetak Bukti (Print / PDF)</span>
+            Cetak Bukti (Print / PDF)
           </Button>
 
           <Button
@@ -150,8 +138,7 @@ export const SubmissionReceiptModal: React.FC<SubmissionReceiptModalProps> = ({
             size="md"
             className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700"
           >
-            <span>Buka Dashboard Alumni</span>
-            <ArrowRight className="w-4 h-4 ml-2" />
+            Buka Dashboard Alumni
           </Button>
         </div>
       </div>

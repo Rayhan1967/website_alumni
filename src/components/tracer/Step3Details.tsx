@@ -21,15 +21,6 @@ import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
-import {
-  Building2,
-  GraduationCap,
-  Store,
-  ArrowRight,
-  ArrowLeft,
-  Sparkles,
-  Info,
-} from 'lucide-react';
 
 interface Step3Props {
   onNext: () => void;
@@ -118,9 +109,8 @@ export const Step3Details: React.FC<Step3Props> = ({ onNext, onPrev }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       <div className="pb-3 border-b border-slate-100">
-        <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <Building2 className="w-5 h-5 text-blue-600" />
-          <span>Langkah 3: Detail Informasi Kegiatan</span>
+        <h2 className="text-lg font-bold text-slate-900">
+          Langkah 3: Detail Informasi Kegiatan
         </h2>
         <p className="text-xs text-slate-500 mt-0.5">
           Formulir menyesuaikan otomatis berdasarkan status yang Anda pilih (
@@ -131,9 +121,8 @@ export const Step3Details: React.FC<Step3Props> = ({ onNext, onPrev }) => {
       {/* 1. Formulir Blok Bekerja */}
       {isKerja && (
         <div className="rounded-xl border border-blue-200 bg-blue-50/20 p-5 sm:p-6 space-y-5">
-          <div className="flex items-center gap-2 text-blue-900 font-bold text-sm border-b border-blue-100 pb-3">
-            <Building2 className="w-4 h-4 text-blue-600" />
-            <span>A. Detail Pekerjaan & Informasi Perusahaan</span>
+          <div className="text-blue-900 font-bold text-sm border-b border-blue-100 pb-3">
+            A. Detail Pekerjaan & Informasi Perusahaan
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -253,9 +242,8 @@ export const Step3Details: React.FC<Step3Props> = ({ onNext, onPrev }) => {
       {/* 2. Formulir Blok Melanjutkan Studi / Kuliah */}
       {isKuliah && (
         <div className="rounded-xl border border-purple-200 bg-purple-50/20 p-5 sm:p-6 space-y-5">
-          <div className="flex items-center gap-2 text-purple-900 font-bold text-sm border-b border-purple-100 pb-3">
-            <GraduationCap className="w-4 h-4 text-purple-600" />
-            <span>B. Detail Pendidikan Tinggi / Perguruan Tinggi</span>
+          <div className="text-purple-900 font-bold text-sm border-b border-purple-100 pb-3">
+            B. Detail Pendidikan Tinggi / Perguruan Tinggi
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -303,9 +291,8 @@ export const Step3Details: React.FC<Step3Props> = ({ onNext, onPrev }) => {
       {/* 3. Formulir Blok Wirausaha */}
       {isUsaha && (
         <div className="rounded-xl border border-amber-200 bg-amber-50/20 p-5 sm:p-6 space-y-5">
-          <div className="flex items-center gap-2 text-amber-900 font-bold text-sm border-b border-amber-100 pb-3">
-            <Store className="w-4 h-4 text-amber-600" />
-            <span>C. Detail Usaha Mandiri / Bisnis</span>
+          <div className="text-slate-900 font-bold text-sm border-b border-amber-100 pb-3">
+            C. Detail Usaha Mandiri / Bisnis
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -355,10 +342,7 @@ export const Step3Details: React.FC<Step3Props> = ({ onNext, onPrev }) => {
 
       {/* 4. Blok Belum Bekerja */}
       {isBelumKerja && (
-        <div className="p-6 rounded-xl bg-slate-50 border border-slate-200 text-center space-y-3">
-          <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mx-auto">
-            <Info className="w-6 h-6" />
-          </div>
+        <div className="p-6 rounded-xl bg-slate-50 border border-slate-200 text-center space-y-2">
           <h3 className="font-bold text-slate-800 text-base">
             BKK SMK Sasmita Jaya 2 Siap Membantu Anda
           </h3>
@@ -371,13 +355,11 @@ export const Step3Details: React.FC<Step3Props> = ({ onNext, onPrev }) => {
       {/* Navigation Buttons */}
       <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
         <Button type="button" onClick={onPrev} variant="outline" size="md">
-          <ArrowLeft className="w-4 h-4 mr-1" />
-          <span>Kembali</span>
+          Kembali
         </Button>
 
         <Button type="submit" variant="primary" size="md" className="bg-blue-600 hover:bg-blue-700">
-          <span>Lanjut ke Evaluasi Kurikulum</span>
-          <ArrowRight className="w-4 h-4 ml-1" />
+          Lanjut ke Evaluasi Kurikulum
         </Button>
       </div>
 

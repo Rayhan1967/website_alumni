@@ -48,42 +48,42 @@ export const HelpdeskTab: React.FC = () => {
 
       {/* Direct Contact Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
-        <div className="p-4 sm:p-5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+        <div className="p-4 sm:p-5 flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-full bg-blue-900 text-white flex items-center justify-center shrink-0">
             <Phone className="w-5 h-5" />
           </div>
           <div className="space-y-1">
             <h3 className="font-bold text-sm text-emerald-950">WhatsApp BKK Hotline</h3>
-            <p className="text-xs text-emerald-700">Pelayanan Senin - Jumat (08.00 - 16.00)</p>
+            <p className="text-xs text-slate-700">Pelayanan Senin - Jumat (08.00 - 16.00)</p>
             <a
               href="https://wa.me/6281298765432"
               target="_blank"
               rel="noreferrer"
-              className="inline-block pt-1 text-xs font-bold text-emerald-800 hover:underline"
+              className="inline-block pt-1 text-xs font-bold text-slate-800 hover:underline"
             >
-              +62 812-9876-5432 ➜
+              +62 812-9876-5432
             </a>
           </div>
         </div>
 
-        <div className="p-5 rounded-xl bg-blue-50 border border-blue-200 flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
+        <div className="p-5 flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-full bg-blue-900 text-white flex items-center justify-center shrink-0">
             <Mail className="w-5 h-5" />
           </div>
           <div className="space-y-1">
             <h3 className="font-bold text-sm text-blue-950">Email Resmi BKK</h3>
-            <p className="text-xs text-blue-700">Untuk kemitraan DUDI & sertifikasi</p>
+            <p className="text-xs text-slate-700">Untuk kemitraan DUDI & sertifikasi</p>
             <a
               href="mailto:bkk@smksasmitajaya2.sch.id"
-              className="inline-block pt-1 text-xs font-bold text-blue-800 hover:underline"
+              className="inline-block pt-1 text-xs font-bold text-slate-800 hover:underline"
             >
-              bkk@smksasmitajaya2.sch.id ➜
+              bkk@smksasmitajaya2.sch.id
             </a>
           </div>
         </div>
 
-        <div className="p-5 rounded-xl bg-slate-100 border border-slate-200 flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center shrink-0">
+        <div className="p-5 flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-full bg-blue-900 text-white flex items-center justify-center shrink-0">
             <MapPin className="w-5 h-5" />
           </div>
           <div className="space-y-1">
@@ -102,12 +102,11 @@ export const HelpdeskTab: React.FC = () => {
         {/* Ticket Form (Left) */}
         <div className="lg:col-span-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
           <div className="border-b border-slate-100 pb-3">
-            <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-              <MessageSquare className="w-4 h-4 text-blue-600" />
+            <h3 className="font-bold text-m text-slate-900 flex items-center gap-2">
               <span>Kirim Pengaduan / Tiket Bantuan</span>
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
-              Tim admin BKK akan merespons pertanyaan Anda via WhatsApp atau Email
+              Tim admin akan merespons pertanyaan Anda via WhatsApp atau Email
             </p>
           </div>
 
@@ -121,7 +120,7 @@ export const HelpdeskTab: React.FC = () => {
             />
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700">
+              <label className="block text-xs font-semibold tracking-wider text-slate-700">
                 Isi Pesan / Pertanyaan
               </label>
               <textarea
@@ -149,7 +148,7 @@ export const HelpdeskTab: React.FC = () => {
         {/* FAQs (Right) */}
         <div className="lg:col-span-6 space-y-3">
           <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2 mb-2">
-            <HelpCircle className="w-4 h-4 text-amber-500" />
+            <HelpCircle className="w-4 h-4 text-slate-900" />
             <span>Pertanyaan Umum Alumni (FAQ)</span>
           </h3>
 

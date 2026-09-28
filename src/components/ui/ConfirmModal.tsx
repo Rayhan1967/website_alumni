@@ -47,13 +47,13 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
       confirmBtn: 'bg-rose-600 hover:bg-rose-700 text-white',
     },
     warning: {
-      icon: <AlertTriangle className="w-5 h-5 text-amber-600" />,
-      iconBg: 'bg-amber-50 border-amber-200',
-      confirmBtn: 'bg-amber-600 hover:bg-amber-700 text-white',
+      icon: <AlertTriangle className="w-5 h-5 text-slate-600" />,
+      iconBg: 'bg-slate-50 border-slate-200',
+      confirmBtn: 'bg-[#132238] hover:bg-[#1c3355] text-white',
     },
     info: {
-      icon: <Info className="w-5 h-5 text-blue-600" />,
-      iconBg: 'bg-blue-50 border-blue-200',
+      icon: <Info className="w-5 h-5 text-slate-600" />,
+      iconBg: 'bg-slate-50 border-slate-200',
       confirmBtn: 'bg-[#132238] hover:bg-[#1c3355] text-white',
     },
     success: {

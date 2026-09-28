@@ -1,16 +1,15 @@
 import React from 'react';
-import { Check, User, Activity, FileSpreadsheet, Star, Send } from 'lucide-react';
 
 interface StepperProps {
   currentStep: number;
 }
 
 const STEPS = [
-  { id: 1, title: 'Identitas Diri', icon: User, desc: 'NIK, NISN, Biodata' },
-  { id: 2, title: 'Status Utama', icon: Activity, desc: 'Kerja, Kuliah, Usaha' },
-  { id: 3, title: 'Detail Spesifik', icon: FileSpreadsheet, desc: 'Form Kondisional' },
-  { id: 4, title: 'Evaluasi Kurikulum', icon: Star, desc: 'Relevansi & Saran' },
-  { id: 5, title: 'Tinjauan & Submit', icon: Send, desc: 'Ringkasan & Kirim' },
+  { id: 1, title: 'Identitas Diri', desc: 'NIK, NISN, Biodata' },
+  { id: 2, title: 'Status Utama', desc: 'Kerja, Kuliah, Usaha' },
+  { id: 3, title: 'Detail Spesifik', desc: 'Form Kondisional' },
+  { id: 4, title: 'Evaluasi Kurikulum', desc: 'Relevansi & Saran' },
+  { id: 5, title: 'Tinjauan & Submit', desc: 'Ringkasan & Kirim' },
 ];
 
 export const Stepper: React.FC<StepperProps> = ({ currentStep }) => {
@@ -33,14 +32,13 @@ export const Stepper: React.FC<StepperProps> = ({ currentStep }) => {
           {STEPS.map((step) => {
             const isDone = currentStep > step.id;
             const isCurrent = currentStep === step.id;
-            const Icon = step.icon;
 
             return (
               <div
                 key={step.id}
                 className="relative z-10 flex flex-col items-center text-center px-1 select-none"
               >
-                {/* Circle Icon Badge */}
+                {/* Circle Number Badge */}
                 <div
                   className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 shadow-xs ${
                     isDone
@@ -50,11 +48,7 @@ export const Stepper: React.FC<StepperProps> = ({ currentStep }) => {
                       : 'bg-white border-2 border-slate-300 text-slate-400'
                   }`}
                 >
-                  {isDone ? (
-                    <Check className="w-5 h-5 stroke-[2.5]" />
-                  ) : (
-                    <Icon className="w-4.5 h-4.5" />
-                  )}
+                  {isDone ? '✓' : step.id}
                 </div>
 
                 {/* Step Title & Subtitle */}

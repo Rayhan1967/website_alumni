@@ -10,7 +10,6 @@ import { Step5Review } from './Step5Review';
 import { SubmissionReceiptModal } from './SubmissionReceiptModal';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { Card } from '@/components/ui/Card';
-import { RotateCcw, Sparkles, ArrowLeft } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const TracerWizard: React.FC = () => {
@@ -48,19 +47,17 @@ export const TracerWizard: React.FC = () => {
         <div className="flex items-center justify-between">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-blue-600 transition"
+            className="text-xs font-semibold text-slate-500 hover:text-blue-600 transition"
           >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Kembali ke Beranda</span>
+            ← Kembali ke Beranda
           </Link>
 
           <button
             type="button"
             onClick={() => setResetModalOpen(true)}
-            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-rose-600 transition cursor-pointer"
+            className="text-xs text-slate-400 hover:text-rose-600 transition cursor-pointer"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset Isian</span>
+            Reset Isian
           </button>
         </div>
 

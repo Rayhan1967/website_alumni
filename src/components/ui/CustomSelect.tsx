@@ -85,7 +85,7 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
       {label && (
         <label
           htmlFor={selectId}
-          className="block text-xs font-semibold uppercase tracking-wider text-slate-700"
+          className="block text-xs font-semibold  tracking-wider text-slate-700"
         >
           {label}
           {requiredStar && <span className="text-rose-500 ml-1">*</span>}

@@ -5,8 +5,6 @@ import { MOCK_JOBS } from "@/lib/mockData";
 import { DashboardTab } from "./DashboardSidebar";
 import {
   FileSpreadsheet,
-  CheckCircle2,
-  AlertCircle,
   Briefcase,
   GraduationCap,
   Building,
@@ -15,7 +13,6 @@ import {
   Calendar,
   Clock,
   Sparkles,
-  FileCheck2,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
@@ -97,106 +94,113 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
       {/* 2. Bagian Statistik matching Wireframe (3 Cards in a row) */}
       <div>
         <div className="flex items-center justify-between mb-3 sm:mb-4">
-          <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-600">
+          <h3 className="text-2xl sm:text-2xl font-bold tracking-wider text-slate-600">
             Statistik & Status Akun
           </h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-5">
           {/* Stat Card 1: Status Tracer Study */}
-          <div className="bg-white rounded-xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-2 sm:mb-3">
-              <span className="text-xs font-semibold text-slate-500">
+          <div
+            onClick={() => onNavigateTab("tracer_study")}
+            className="uiverse-stat-card group"
+            role="button"
+            tabIndex={0}
+          >
+            {/* 100% In-Bounds Ripple Overlay */}
+            <div className="card-ripple-bg" />
+
+            <div className="card-content">
+              <span className="stat-tag text-xs font-semibold text-slate-500 block mb-2 transition-colors">
                 Status Tracer Study
               </span>
-              <div
-                className={`p-1.5 sm:p-2 rounded-lg sm:rounded-xl ${isTracerDone ? "bg-emerald-100 text-emerald-600" : "bg-amber-100 text-amber-600"}`}
-              >
-                {isTracerDone ? (
-                  <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
-                ) : (
-                  <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-                )}
-              </div>
-            </div>
-            <div>
-              <div className="text-base sm:text-xl font-bold text-slate-900">
+              <h4 className="stat-heading text-lg sm:text-xl font-bold text-slate-900 leading-snug transition-colors">
                 {isTracerDone ? "Sudah Diisi (Lengkap)" : "Belum Terisi"}
-              </div>
-              <p className="text-xs text-slate-500 mt-1">
+              </h4>
+              <p className="stat-desc text-xs text-slate-600 mt-1.5 transition-colors">
                 {isTracerDone
                   ? "Tervalidasi di sistem BKK"
                   : "Wajib diisi sebelum ambil ijazah"}
               </p>
             </div>
-            <div className="mt-3.5 sm:mt-4 pt-3 border-t border-slate-100">
-              <button
-                onClick={() => onNavigateTab("tracer_study")}
-                className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
-              >
-                <span>
-                  {isTracerDone ? "Buka Form Tracer" : "Lengkapi Sekarang"}
-                </span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+
+            <div className="card-content mt-4 pt-3 border-t border-slate-200/60 group-hover:border-white/20 transition-colors">
+              <div className="stat-action text-xs font-bold text-[#0d2346] flex items-center gap-1.5 transition-colors">
+                <span>{isTracerDone ? "Buka Form Tracer" : "Lengkapi Sekarang"}</span>
+                <span className="font-mono">→</span>
+              </div>
+            </div>
+
+            <div className="go-corner" title="Tracer Study">
+              <FileSpreadsheet className="go-icon" />
             </div>
           </div>
 
           {/* Stat Card 2: Status Ijazah */}
-          <div className="bg-white rounded-xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-2 sm:mb-3">
-              <span className="text-xs font-semibold text-slate-500">
+          <div
+            onClick={() => onNavigateTab("cek_ijazah")}
+            className="uiverse-stat-card group"
+            role="button"
+            tabIndex={0}
+          >
+            {/* 100% In-Bounds Ripple Overlay */}
+            <div className="card-ripple-bg" />
+
+            <div className="card-content">
+              <span className="stat-tag text-xs font-semibold text-slate-500 block mb-2 transition-colors">
                 Status Fisik Ijazah
               </span>
-              <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-blue-100 text-blue-600">
-                <FileCheck2 className="w-4 h-4 sm:w-5 sm:h-5" />
-              </div>
-            </div>
-            <div>
-              <div className="text-base sm:text-xl font-bold text-slate-900">
+              <h4 className="stat-heading text-lg sm:text-xl font-bold text-slate-900 leading-snug transition-colors">
                 Siap Diambil di TU
-              </div>
-              <p className="text-xs text-slate-500 mt-1">
+              </h4>
+              <p className="stat-desc text-xs text-slate-600 mt-1.5 transition-colors">
                 No. Ijazah: M-SMK/24/0048291
               </p>
             </div>
-            <div className="mt-3.5 sm:mt-4 pt-3 border-t border-slate-100">
-              <button
-                onClick={() => onNavigateTab("cek_ijazah")}
-                className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
-              >
+
+            <div className="card-content mt-4 pt-3 border-t border-slate-200/60 group-hover:border-white/20 transition-colors">
+              <div className="stat-action text-xs font-bold text-[#0d2346] flex items-center gap-1.5 transition-colors">
                 <span>Cek Alur Pengambilan</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+                <span className="font-mono">→</span>
+              </div>
+            </div>
+
+            <div className="go-corner" title="Ijazah Alumni">
+              <GraduationCap className="go-icon" />
             </div>
           </div>
 
           {/* Stat Card 3: Info Loker Terbuka */}
-          <div className="bg-white rounded-xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-2 sm:mb-3">
-              <span className="text-xs font-semibold text-slate-500">
+          <div
+            onClick={() => onNavigateTab("loker")}
+            className="uiverse-stat-card group"
+            role="button"
+            tabIndex={0}
+          >
+            {/* 100% In-Bounds Ripple Overlay */}
+            <div className="card-ripple-bg" />
+
+            <div className="card-content">
+              <span className="stat-tag text-xs font-semibold text-slate-500 block mb-2 transition-colors">
                 Lowongan BKK Aktif
               </span>
-              <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-purple-100 text-purple-600">
-                <Briefcase className="w-4 h-4 sm:w-5 sm:h-5" />
-              </div>
-            </div>
-            <div>
-              <div className="text-base sm:text-xl font-bold text-slate-900">
+              <h4 className="stat-heading text-lg sm:text-xl font-bold text-slate-900 leading-snug transition-colors">
                 28 Lowongan Baru
-              </div>
-              <p className="text-xs text-slate-500 mt-1">
+              </h4>
+              <p className="stat-desc text-xs text-slate-600 mt-1.5 transition-colors">
                 Kemitraan DUDI Tangerang Selatan & Jabodetabek
               </p>
             </div>
-            <div className="mt-3.5 sm:mt-4 pt-3 border-t border-slate-100">
-              <button
-                onClick={() => onNavigateTab("loker")}
-                className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
-              >
+
+            <div className="card-content mt-4 pt-3 border-t border-slate-200/60 group-hover:border-white/20 transition-colors">
+              <div className="stat-action text-xs font-bold text-[#0d2346] flex items-center gap-1.5 transition-colors">
                 <span>Eksplor Lowongan</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+                <span className="font-mono">→</span>
+              </div>
+            </div>
+
+            <div className="go-corner" title="Lowongan Kerja">
+              <Briefcase className="go-icon" />
             </div>
           </div>
         </div>

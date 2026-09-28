@@ -3,12 +3,19 @@ import { useTracerStore } from '@/store/tracerStore';
 import { KOMPETENSI_OPTIONS } from '@/schemas/tracerSchema';
 import { Button } from '@/components/ui/Button';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
-import { Star, CheckSquare, MessageSquare, ArrowRight, ArrowLeft } from 'lucide-react';
 
 interface Step4Props {
   onNext: () => void;
   onPrev: () => void;
 }
+
+const RATING_SCALE = [
+  { score: 1, label: 'Tidak Relevan' },
+  { score: 2, label: 'Kurang Relevan' },
+  { score: 3, label: 'Cukup Relevan' },
+  { score: 4, label: 'Relevan' },
+  { score: 5, label: 'Sangat Relevan' },
+];
 
 export const Step4Evaluation: React.FC<Step4Props> = ({ onNext, onPrev }) => {
   const { evaluasi, updateEvaluasi } = useTracerStore();
@@ -36,7 +43,7 @@ export const Step4Evaluation: React.FC<Step4Props> = ({ onNext, onPrev }) => {
     if (!evaluasi.skor_relevansi) {
       setWarningModal({
         title: 'Penilaian Relevansi',
-        message: 'Silakan berikan skor penilaian relevansi kurikulum (1 - 5 bintang) sebelum melanjutkan.',
+        message: 'Silakan pilih skor penilaian relevansi kurikulum (skala 1 - 5) sebelum melanjutkan.',
       });
       return;
     }
@@ -58,54 +65,52 @@ export const Step4Evaluation: React.FC<Step4Props> = ({ onNext, onPrev }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="pb-3 border-b border-slate-100">
-        <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
-          <span>Langkah 4: Evaluasi Pembelajaran & Umpan Balik</span>
+        <h2 className="text-lg font-bold text-slate-900">
+          Langkah 4: Evaluasi Pembelajaran & Umpan Balik
         </h2>
         <p className="text-xs text-slate-500 mt-0.5">
           Masukan Anda menjadi dasar penyusunan program BKK dan kurikulum SMK di masa mendatang
         </p>
       </div>
 
-      {/* 1. Star Rating: Skor Relevansi */}
+      {/* 1. Skor Relevansi: Skala 1 - 5 Sederhana */}
       <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-3">
-        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-          Tingkat Relevansi Pembelajaran SMK dengan Aktivitas Saat Ini (1 - 5) <span className="text-rose-500">*</span>
-        </label>
-        <div className="flex items-center gap-2">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              type="button"
-              onClick={() => handleRating(star)}
-              className="p-1.5 focus:outline-none transition-transform hover:scale-125"
-            >
-              <Star
-                className={`w-8 h-8 ${
-                  star <= currentScore
-                    ? 'text-amber-400 fill-amber-400 drop-shadow-sm'
-                    : 'text-slate-300 hover:text-amber-200'
-                }`}
-              />
-            </button>
-          ))}
-          <span className="ml-3 text-sm font-bold text-slate-700">
-            {currentScore === 5
-              ? '⭐⭐⭐⭐⭐ Sangat Relevan (5/5)'
-              : currentScore === 4
-              ? '⭐⭐⭐⭐ Relevan (4/5)'
-              : currentScore === 3
-              ? '⭐⭐⭐ Cukup Relevan (3/5)'
-              : currentScore === 2
-              ? '⭐⭐ Kurang Relevan (2/5)'
-              : '⭐ Tidak Relevan (1/5)'}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+          <label className="block text-xs font-bold  tracking-wider text-slate-700">
+            Tingkat Relevansi Pembelajaran SMK dengan Aktivitas Saat Ini (1 - 5) <span className="text-rose-500">*</span>
+          </label>
+          <span className="text-xs font-semibold text-blue-700">
+            {currentScore ? `${currentScore} / 5 (${RATING_SCALE.find(r => r.score === currentScore)?.label})` : 'Pilih skor'}
           </span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-1">
+          {RATING_SCALE.map((item) => {
+            const isSelected = currentScore === item.score;
+            return (
+              <button
+                key={item.score}
+                type="button"
+                onClick={() => handleRating(item.score)}
+                className={`py-3 px-2 rounded-xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1 ${
+                  isSelected
+                    ? 'border-blue-600 bg-blue-600 text-white font-bold shadow-sm'
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-100/70'
+                }`}
+              >
+                <span className="text-base font-bold">{item.score}</span>
+                <span className={`text-[11px] leading-tight text-center ${isSelected ? 'text-blue-100 font-medium' : 'text-slate-500'}`}>
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* 2. Multi-Select Kompetensi Paling Bermanfaat */}
       <div className="space-y-3">
-        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+        <label className="block text-xs font-bold  tracking-wider text-slate-700">
           Keahlian / Kompetensi yang Paling Bermanfaat di Lapangan <span className="text-rose-500">*</span>
         </label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -135,7 +140,7 @@ export const Step4Evaluation: React.FC<Step4Props> = ({ onNext, onPrev }) => {
 
       {/* 3. Saran & Masukan untuk BKK */}
       <div className="space-y-1.5">
-        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+        <label className="block text-xs font-bold  tracking-wider text-slate-700">
           Saran / Rekomendasi untuk Pengembangan BKK & Sekolah
         </label>
         <textarea
@@ -164,13 +169,11 @@ export const Step4Evaluation: React.FC<Step4Props> = ({ onNext, onPrev }) => {
       {/* Navigation Buttons */}
       <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
         <Button type="button" onClick={onPrev} variant="outline" size="md">
-          <ArrowLeft className="w-4 h-4 mr-1" />
-          <span>Kembali</span>
+          Kembali
         </Button>
 
         <Button type="submit" variant="primary" size="md" className="bg-blue-600 hover:bg-blue-700">
-          <span>Lanjut ke Tinjauan & Submit</span>
-          <ArrowRight className="w-4 h-4 ml-1" />
+          Lanjut ke Tinjauan & Submit
         </Button>
       </div>
 

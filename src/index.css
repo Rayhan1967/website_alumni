@@ -57,3 +57,94 @@
     display: block !important;
   }
 }
+
+/* Modern Bulletproof Uiverse Stat Card (Clip-Path Ripple Effect - Zero Leak) */
+.uiverse-stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  background-color: #f8fafc;
+  border-radius: 14px;
+  padding: 24px;
+  text-decoration: none;
+  z-index: 1;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  min-height: 165px;
+}
+
+.uiverse-stat-card:hover {
+  border-color: #0d2346;
+  box-shadow: 0 10px 25px -5px rgba(13, 35, 70, 0.2);
+}
+
+/* Expanding ripple background - 100% constrained to card boundaries (impossible to leak) */
+.uiverse-stat-card .card-ripple-bg {
+  position: absolute;
+  inset: 0;
+  background-color: #0d2346; /* Deep Navy Blue from user reference */
+  -webkit-clip-path: circle(0% at 100% 0%);
+  clip-path: circle(0% at 100% 0%);
+  transition: -webkit-clip-path 0.38s cubic-bezier(0.4, 0, 0.2, 1), clip-path 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.uiverse-stat-card:hover .card-ripple-bg {
+  -webkit-clip-path: circle(160% at 100% 0%);
+  clip-path: circle(160% at 100% 0%);
+}
+
+.uiverse-stat-card .go-corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  background-color: #0d2346; /* Deep Navy Blue */
+  border-radius: 0 14px 0 36px;
+  padding-left: 6px;
+  padding-bottom: 6px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.uiverse-stat-card .go-icon {
+  color: white;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.25s ease-out;
+  pointer-events: none;
+}
+
+.uiverse-stat-card:hover .go-icon {
+  transform: scale(1.15);
+}
+
+.uiverse-stat-card .card-content {
+  position: relative;
+  z-index: 5;
+}
+
+.uiverse-stat-card:hover .stat-heading {
+  color: #ffffff !important;
+  transition: color 0.25s ease-out;
+}
+
+.uiverse-stat-card:hover .stat-desc,
+.uiverse-stat-card:hover .stat-tag {
+  color: rgba(255, 255, 255, 0.88) !important;
+  transition: color 0.25s ease-out;
+}
+
+.uiverse-stat-card:hover .stat-action {
+  color: #ffffff !important;
+  transition: color 0.25s ease-out;
+}
