@@ -10,38 +10,103 @@ export const JURUSAN_OPTIONS = [
   'Bisnis Daring & Pemasaran',
 ] as const;
 
-export const STATUS_KEGIATAN_OPTIONS = [
-  { value: 'KERJA', label: 'Bekerja (Full Time / Part Time / Kontrak)' },
-  { value: 'KULIAH', label: 'Melanjutkan Studi / Kuliah' },
-  { value: 'WIRAUSAHA', label: 'Wirausaha / Membuka Usaha Mandiri' },
-  { value: 'KERJA_KULIAH', label: 'Bekerja Sambil Kuliah' },
-  { value: 'WIRAUSAHA_KULIAH', label: 'Wirausaha Sambil Kuliah' },
-  { value: 'BELUM_KERJA', label: 'Sedang Mencari Kerja / Belum Bekerja' },
+export const JENIS_KELAMIN_OPTIONS = [
+  'Laki-laki',
+  'Perempuan',
 ] as const;
 
-export const SUMBER_INFO_KERJA_OPTIONS = [
-  'BKK',
-  'Alumni',
-  'Website',
-  'Mandiri',
+export const STATUS_KEGIATAN_OPTIONS = [
+  { value: 'KERJA', label: 'Bekerja', desc: 'Bekerja di instansi / perusahaan / kantor' },
+  { value: 'KULIAH', label: 'Melanjutkan kuliah', desc: 'Melanjutkan studi perguruan tinggi (D3, D4, S1)' },
+  { value: 'WIRAUSAHA', label: 'Berwirausaha', desc: 'Membuka usaha mandiri / menjalankan bisnis' },
+  { value: 'KERJA_KULIAH', label: 'Bekerja sambil kuliah', desc: 'Menjalani pekerjaan sekaligus studi' },
+  { value: 'BELUM_KERJA', label: 'Belum bekerja', desc: 'Sedang mencari pekerjaan / persiapan' },
+  { value: 'LAINNYA', label: 'Lainnya', desc: 'Aktivitas di luar kategori di atas' },
+] as const;
+
+export const MASA_TUNGGU_OPTIONS = [
+  '< 3 bulan',
+  '3–6 bulan',
+  '6–12 bulan',
+  '> 12 bulan',
+  'Belum mendapatkan pekerjaan',
+] as const;
+
+export const STATUS_PEKERJAAN_OPTIONS = [
+  'Tetap',
+  'Kontrak',
+  'Freelance',
+  'Magang',
+] as const;
+
+export const KESESUAIAN_KERJA_OPTIONS = [
+  'Sangat sesuai',
+  'Sesuai',
+  'Kurang sesuai',
+  'Tidak sesuai',
+] as const;
+
+export const PENGHASILAN_OPTIONS = [
+  '< Rp 2.000.000',
+  'Rp 2.000.000 – Rp 4.000.000',
+  'Rp 4.000.000 – Rp 7.000.000',
+  '> Rp 7.000.000',
+] as const;
+
+export const JENJANG_KULIAH_OPTIONS = [
+  'D3',
+  'D4',
+  'S1',
   'Lainnya',
 ] as const;
 
-export const JENIS_SERTIFIKAT_OPTIONS = [
-  { value: 'BNSP', label: 'Sertifikat Kompetensi BNSP' },
-  { value: 'SEKOLAH', label: 'Sertifikat Keahlian Sekolah / Industri' },
-  { value: 'TIDAK_ADA', label: 'Tidak Ada Sertifikat Khusus' },
+export const STATUS_KULIAH_OPTIONS = [
+  'Aktif',
+  'Lulus',
+  'Tidak melanjutkan',
 ] as const;
 
-export const KESESUAIAN_JURUSAN_OPTIONS = [
-  { value: 'SANGAT_SESUAI', label: 'Sangat Sesuai (100% Selaras)' },
-  { value: 'SESUAI', label: 'Sesuai (Cukup Selaras)' },
-  { value: 'KURANG', label: 'Kurang Sesuai' },
-  { value: 'TIDAK', label: 'Tidak Sesuai (Beda Bidang)' },
+export const LAMA_USAHA_OPTIONS = [
+  '< 6 bulan',
+  '6–12 bulan',
+  '1–2 tahun',
+  '> 2 tahun',
 ] as const;
 
+export const JUMLAH_KARYAWAN_OPTIONS = [
+  'Belum ada (Dijalankan sendiri)',
+  '1 – 3 orang',
+  '4 – 10 orang',
+  '> 10 orang',
+] as const;
+
+export const KESESUAIAN_USAHA_OPTIONS = [
+  'Sangat berkaitan',
+  'Berkaitan',
+  'Kurang berkaitan',
+  'Tidak berkaitan',
+] as const;
+
+export const KOMPETENSI_BERMANFAAT_OPTIONS = [
+  'Kompetensi teknis',
+  'Komputer/TIK',
+  'Komunikasi',
+  'Kerja sama',
+  'Kedisiplinan',
+  'Kewirausahaan',
+  'Lainnya',
+] as const;
+
+export const BANTU_DUNIA_KERJA_OPTIONS = [
+  'Sangat membantu',
+  'Membantu',
+  'Kurang membantu',
+  'Tidak membantu',
+] as const;
+
+// Backward-compatible aliases for legacy imports
+export const KOMPETENSI_OPTIONS = KOMPETENSI_BERMANFAAT_OPTIONS;
 export const JENJANG_OPTIONS = ['D3', 'D4', 'S1'] as const;
-
 export const KATEGORI_USAHA_OPTIONS = [
   'Jasa',
   'Kuliner',
@@ -50,43 +115,38 @@ export const KATEGORI_USAHA_OPTIONS = [
   'Teknologi',
   'Lainnya',
 ] as const;
-
-export const MASA_TUNGGU_OPTIONS = [
-  'Kurang dari 1 bulan',
-  '1 - 3 bulan',
-  '3 - 6 bulan',
-  'Lebih dari 6 bulan',
+export const SUMBER_INFO_KERJA_OPTIONS = [
+  'BKK',
+  'Alumni',
+  'Website',
+  'Mandiri',
+  'Lainnya',
+] as const;
+export const JENIS_SERTIFIKAT_OPTIONS = [
+  { value: 'BNSP', label: 'Sertifikat Kompetensi BNSP' },
+  { value: 'SEKOLAH', label: 'Sertifikat Keahlian Sekolah / Industri' },
+  { value: 'TIDAK_ADA', label: 'Tidak Ada Sertifikat Khusus' },
+] as const;
+export const KESESUAIAN_JURUSAN_OPTIONS = [
+  { value: 'SANGAT_SESUAI', label: 'Sangat Sesuai' },
+  { value: 'SESUAI', label: 'Sesuai' },
+  { value: 'KURANG', label: 'Kurang Sesuai' },
+  { value: 'TIDAK', label: 'Tidak Sesuai' },
 ] as const;
 
-export const KOMPETENSI_OPTIONS = [
-  'Keahlian Teknis / Hard Skills Kejuruan',
-  'Jaringan & Troubleshooting',
-  'Pemrograman & Desain Digital',
-  'Mesin Otomotif & Diagnostik',
-  'Administrasi Perkantoran & Kearsipan',
-  'Akuntansi Keuangan & Pembukuan',
-  'Pemasaran Digital & Negosiasi',
-  'Komunikasi & Kerjasama Tim',
-  'Kedisiplinan & Budaya Kerja 5R/5S',
-  'Bahasa Inggris / Komunikasi Global',
-  'Pemecahan Masalah & Kreativitas',
-];
-
-// Step 1: Identitas Schema
+// Step 1: Identitas Schema (Items 1-8)
 export const step1Schema = z
   .object({
-    nik: z
-      .string()
-      .min(1, 'NIK wajib diisi')
-      .regex(/^\d{16}$/, 'NIK harus tepat 16 digit angka'),
-    nisn: z
-      .string()
-      .min(1, 'NISN wajib diisi')
-      .regex(/^\d{10}$/, 'NISN harus tepat 10 digit angka'),
     nama_lengkap: z
       .string()
       .min(3, 'Nama lengkap minimal 3 karakter')
       .max(100, 'Nama terlalu panjang'),
+    nisn: z
+      .string()
+      .min(4, 'NIS / NISN wajib diisi'),
+    nik: z
+      .string()
+      .optional(),
     tahun_masuk: z
       .number()
       .min(2000, 'Tahun masuk minimal 2000')
@@ -108,13 +168,16 @@ export const step1Schema = z
       .string()
       .min(1, 'Nomor WhatsApp wajib diisi')
       .regex(
-        /^(\+62|62|0)8[1-9][0-9]{6,10}$/,
+        /^(\+62|62|0)8[0-9]{7,11}$/,
         'Format nomor WhatsApp tidak valid (contoh: 081234567890)'
       ),
     email: z
       .string()
       .min(1, 'Email wajib diisi')
       .email('Format alamat email tidak valid'),
+    jenis_kelamin: z
+      .enum(['Laki-laki', 'Perempuan'])
+      .optional(),
   })
   .refine((data) => data.tahun_lulus >= data.tahun_masuk, {
     message: 'Tahun lulus tidak boleh lebih awal dari tahun masuk',
@@ -123,7 +186,7 @@ export const step1Schema = z
 
 export type Step1FormData = z.infer<typeof step1Schema>;
 
-// Step 2: Status Kegiatan Schema
+// Step 2: Status Kegiatan Schema (Items 9-10)
 export const step2Schema = z.object({
   status_kegiatan: z.enum([
     'KERJA',
@@ -132,73 +195,51 @@ export const step2Schema = z.object({
     'KERJA_KULIAH',
     'WIRAUSAHA_KULIAH',
     'BELUM_KERJA',
+    'LAINNYA',
   ]),
-  masa_tunggu: z
-    .enum(['Kurang dari 1 bulan', '1 - 3 bulan', '3 - 6 bulan', 'Lebih dari 6 bulan'])
-    .optional(),
+  masa_tunggu: z.string().optional(),
 });
 
-// Detail Kerja Schema
-export const detailKerjaSchema = z
-  .object({
-    nama_perusahaan: z.string().min(2, 'Nama perusahaan/instansi wajib diisi'),
-    jabatan: z.string().min(2, 'Posisi / Jabatan wajib diisi'),
-    alamat_perusahaan: z.string().min(5, 'Alamat perusahaan wajib diisi'),
-    nama_atasan: z.string().min(2, 'Nama atasan langsung wajib diisi'),
-    kontak_atasan: z
-      .string()
-      .min(8, 'Kontak atasan wajib diisi')
-      .regex(/^[0-9+\-\s]{8,18}$/, 'Format nomor kontak atasan tidak valid'),
-    sumber_info_kerja: z.enum(['BKK', 'Alumni', 'Website', 'Mandiri', 'Lainnya']),
-    tanggal_mulai_kerja: z
-      .string()
-      .min(4, 'Bulan/Tahun mulai bekerja wajib diisi (YYYY-MM)'),
-    jenis_sertifikat: z.enum(['BNSP', 'SEKOLAH', 'TIDAK_ADA']),
-    nama_sertifikat: z.string().optional(),
-    kesesuaian_jurusan: z.enum(['SANGAT_SESUAI', 'SESUAI', 'KURANG', 'TIDAK']),
-  })
-  .refine(
-    (data) => {
-      if (
-        data.jenis_sertifikat !== 'TIDAK_ADA' &&
-        (!data.nama_sertifikat || data.nama_sertifikat.trim() === '')
-      ) {
-        return false;
-      }
-      return true;
-    },
-    {
-      message: 'Nama sertifikat wajib diisi bila memilih sertifikat BNSP/Sekolah',
-      path: ['nama_sertifikat'],
-    }
-  );
+// Detail Kerja Schema (Items 11-17)
+export const detailKerjaSchema = z.object({
+  nama_perusahaan: z.string().min(2, 'Nama perusahaan/instansi wajib diisi'),
+  jabatan: z.string().min(2, 'Jabatan/posisi pekerjaan wajib diisi'),
+  bidang_pekerjaan: z.string().optional(),
+  kota_kabupaten: z.string().optional(),
+  status_pekerjaan: z.string().optional(),
+  kesesuaian_jurusan: z.string(),
+  kisaran_penghasilan: z.string().optional(),
+  alamat_perusahaan: z.string().optional(),
+  nama_atasan: z.string().optional(),
+  kontak_atasan: z.string().optional(),
+  sumber_info_kerja: z.string().optional(),
+  tanggal_mulai_kerja: z.string().optional(),
+  jenis_sertifikat: z.string().optional(),
+  nama_sertifikat: z.string().optional(),
+});
 
-// Detail Kuliah Schema
+// Detail Kuliah Schema (Items 18-21)
 export const detailKuliahSchema = z.object({
-  nama_kampus: z.string().min(3, 'Nama perguruan tinggi / kampus wajib diisi'),
+  nama_kampus: z.string().min(2, 'Nama perguruan tinggi wajib diisi'),
+  program_studi: z.string().min(2, 'Program studi wajib diisi'),
+  jenjang: z.string(),
+  status_kuliah: z.string().optional(),
   alamat_kampus: z.string().optional(),
-  jenjang: z.enum(['D3', 'D4', 'S1']),
-  program_studi: z.string().min(2, 'Program studi / jurusan kuliah wajib diisi'),
 });
 
-// Detail Usaha Schema
+// Detail Usaha Schema (Items 22-26)
 export const detailUsahaSchema = z.object({
-  nama_usaha: z.string().min(2, 'Nama usaha/bisnis wajib diisi'),
-  kategori_usaha: z.enum([
-    'Jasa',
-    'Kuliner',
-    'Properti',
-    'Ritel',
-    'Teknologi',
-    'Lainnya',
-  ]),
-  alamat_usaha: z.string().min(5, 'Alamat / domisili usaha wajib diisi'),
-  tanggal_mulai_usaha: z
-    .string()
-    .min(4, 'Bulan/Tahun mulai usaha wajib diisi (YYYY-MM)'),
+  nama_usaha: z.string().min(2, 'Nama/usaha yang dijalankan wajib diisi'),
+  bidang_usaha: z.string().optional(),
+  lama_usaha: z.string().optional(),
+  jumlah_karyawan: z.string().optional(),
+  kesesuaian_kompetensi: z.string().optional(),
+  kategori_usaha: z.string().optional(),
+  alamat_usaha: z.string().optional(),
+  tanggal_mulai_usaha: z.string().optional(),
 });
 
-// Step 4: Evaluasi Schema
+// Step 4: Evaluasi Schema (Items 27-30)
 export const step4Schema = z.object({
   skor_relevansi: z
     .number()
@@ -207,26 +248,19 @@ export const step4Schema = z.object({
   kompetensi_bermanfaat: z
     .array(z.string())
     .min(1, 'Pilih minimal satu kompetensi yang paling bermanfaat'),
-  saran_bkk: z
-    .string()
-    .min(5, 'Berikan saran dan masukan untuk kemajuan BKK SMK Sasmita Jaya 2'),
+  kompetensi_ditingkatkan: z.string().optional(),
+  bantu_dunia_kerja: z.string().optional(),
+  saran_bkk: z.string().optional(),
+  saran_pembelajaran: z.string().optional(),
+  saran_industri: z.string().optional(),
   kesediaan_dihubungi: z.boolean().default(true),
 });
 
 // Full Combined Form Schema
 export const completeTracerFormSchema = z.object({
   identitas: step1Schema,
-  status_kegiatan: z.enum([
-    'KERJA',
-    'KULIAH',
-    'WIRAUSAHA',
-    'KERJA_KULIAH',
-    'WIRAUSAHA_KULIAH',
-    'BELUM_KERJA',
-  ]),
-  masa_tunggu: z
-    .enum(['Kurang dari 1 bulan', '1 - 3 bulan', '3 - 6 bulan', 'Lebih dari 6 bulan'])
-    .optional(),
+  status_kegiatan: z.string(),
+  masa_tunggu: z.string().optional(),
   detail_kerja: detailKerjaSchema.nullable().optional(),
   detail_kuliah: detailKuliahSchema.nullable().optional(),
   detail_usaha: detailUsahaSchema.nullable().optional(),

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTracerStore } from '@/store/tracerStore';
 import { useAuthStore } from '@/store/authStore';
+import { TracerIntro } from './TracerIntro';
 import { Stepper } from './Stepper';
 import { Step1Identity } from './Step1Identity';
 import { Step2Status } from './Step2Status';
@@ -12,9 +13,20 @@ import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { Card } from '@/components/ui/Card';
 import { Link, useNavigate } from 'react-router-dom';
 
-export const TracerWizard: React.FC = () => {
-  const { currentStep, setStep, resetForm, isSubmitted, lastSubmissionId } =
-    useTracerStore();
+interface TracerWizardProps {
+  onBackToOverview?: () => void;
+}
+
+export const TracerWizard: React.FC<TracerWizardProps> = ({ onBackToOverview }) => {
+  const {
+    currentStep,
+    setStep,
+    hasStartedSurvey,
+    setHasStartedSurvey,
+    resetForm,
+    isSubmitted,
+    lastSubmissionId,
+  } = useTracerStore();
   const { isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
 
@@ -39,66 +51,98 @@ export const TracerWizard: React.FC = () => {
     return null;
   }
 
+  // Tampilkan Pengantar bagi Alumni SMK sebelum user mengklik MULAI SURVEY
+  if (!hasStartedSurvey) {
+    return (
+      <div className="min-h-screen bg-slate-50/50 py-5 sm:py-10 px-3.5 sm:px-6 lg:px-8">
+        <TracerIntro
+          onStart={() => {
+            setHasStartedSurvey(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          onBack={onBackToOverview}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50/50 py-5 sm:py-10 px-3.5 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
         
-        {/* Top Breadcrumb & Return to Home */}
+        {/* Top Breadcrumb & Actions */}
         <div className="flex items-center justify-between">
-          <Link
-            to="/"
-            className="text-xs font-semibold text-slate-500 hover:text-blue-600 transition"
-          >
-            ← Kembali ke Beranda
-          </Link>
+          {onBackToOverview ? (
+            <button
+              type="button"
+              onClick={onBackToOverview}
+              className="text-xs font-semibold text-slate-500 hover:text-blue-600 transition cursor-pointer"
+            >
+              ← Kembali ke Beranda
+            </button>
+          ) : (
+            <Link
+              to="/dashboard"
+              className="text-xs font-semibold text-slate-500 hover:text-blue-600 transition"
+            >
+              ← Kembali ke Beranda
+            </Link>
+          )}
 
-          <button
-            type="button"
-            onClick={() => setResetModalOpen(true)}
-            className="text-xs text-slate-400 hover:text-rose-600 transition cursor-pointer"
-          >
-            Reset Isian
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                setHasStartedSurvey(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="text-xs font-medium text-slate-500 hover:text-blue-600 transition cursor-pointer"
+              title="Lihat teks pengantar tracer study"
+            >
+              Baca Pengantar
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setResetModalOpen(true)}
+              className="text-xs text-slate-400 hover:text-rose-600 transition cursor-pointer"
+            >
+              Reset Isian
+            </button>
+          </div>
         </div>
 
-        {/* Wizard Header Banner */}
-        <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-[#0b192e] rounded-md p-4 sm:p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
-          <div className="relative z-10">
-            <h1 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight">
-              Tracer Study SMK Sasmita Jaya 2
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1.5 sm:mt-2 max-w-2xl leading-relaxed">
-              Bantu sekolah melakukan pemetaan karir lulusan dan penyelarasan kurikulum DUDI. Formulir tersimpan otomatis di perangkat Anda.
-            </p>
+        {/* Unified Portal Container Card matching Dapodik screenshot */}
+        <div className="border border-slate-300 rounded-lg overflow-hidden bg-white shadow-sm">
+          {/* Step Tabs Bar */}
+          <Stepper currentStep={currentStep} />
+
+          {/* Dark Header Banner Strip */}
+          <div className="bg-[#1e293b] text-white px-4 py-2.5 font-bold text-xs uppercase tracking-wider flex items-center justify-between">
+            <span>DAPODIK ALUMNI - DATA UMUM (2026)</span>
+            <span className="text-[11px] text-slate-300 font-normal hidden sm:inline">SMK Sasmita Jaya 2 Pamulang</span>
           </div>
 
-          <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-blue-500/10 blur-3xl pointer-events-none" />
+          {/* Form Step Body */}
+          <div className="p-4 sm:p-6 bg-white">
+            {currentStep === 1 && <Step1Identity onNext={() => setStep(2)} />}
+            {currentStep === 2 && (
+              <Step2Status onNext={() => setStep(3)} onPrev={() => setStep(1)} />
+            )}
+            {currentStep === 3 && (
+              <Step3Details onNext={() => setStep(4)} onPrev={() => setStep(2)} />
+            )}
+            {currentStep === 4 && (
+              <Step4Evaluation onNext={() => setStep(5)} onPrev={() => setStep(3)} />
+            )}
+            {currentStep === 5 && (
+              <Step5Review
+                onPrev={() => setStep(4)}
+                onSuccess={(subId) => handleSuccess(subId)}
+              />
+            )}
+          </div>
         </div>
-
-        {/* Stepper Progress Bar */}
-        <Card className="p-3.5 sm:p-6 shadow-sm border-slate-200/80">
-          <Stepper currentStep={currentStep} />
-        </Card>
-
-        {/* Form Container Card */}
-        <Card className="p-4 sm:p-8 shadow-md border-slate-200/80 bg-white">
-          {currentStep === 1 && <Step1Identity onNext={() => setStep(2)} />}
-          {currentStep === 2 && (
-            <Step2Status onNext={() => setStep(3)} onPrev={() => setStep(1)} />
-          )}
-          {currentStep === 3 && (
-            <Step3Details onNext={() => setStep(4)} onPrev={() => setStep(2)} />
-          )}
-          {currentStep === 4 && (
-            <Step4Evaluation onNext={() => setStep(5)} onPrev={() => setStep(3)} />
-          )}
-          {currentStep === 5 && (
-            <Step5Review
-              onPrev={() => setStep(4)}
-              onSuccess={(subId) => handleSuccess(subId)}
-            />
-          )}
-        </Card>
 
         {/* Footer Note */}
         <p className="text-center text-xs text-slate-400">

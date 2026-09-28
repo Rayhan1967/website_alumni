@@ -7,7 +7,8 @@ export type StatusKegiatan =
   | 'WIRAUSAHA'
   | 'KERJA_KULIAH'
   | 'WIRAUSAHA_KULIAH'
-  | 'BELUM_KERJA';
+  | 'BELUM_KERJA'
+  | 'LAINNYA';
 
 export type JurusanSMK =
   | 'Teknik Komputer dan Jaringan'
@@ -41,57 +42,81 @@ export type KesesuaianJurusan =
   | 'SANGAT_SESUAI'
   | 'SESUAI'
   | 'KURANG'
-  | 'TIDAK';
+  | 'TIDAK'
+  | 'Sangat sesuai'
+  | 'Sesuai'
+  | 'Kurang sesuai'
+  | 'Tidak sesuai';
 
 export type MasaTunggu =
+  | '< 3 bulan'
+  | '3–6 bulan'
+  | '6–12 bulan'
+  | '> 12 bulan'
+  | 'Belum mendapatkan pekerjaan'
   | 'Kurang dari 1 bulan'
   | '1 - 3 bulan'
   | '3 - 6 bulan'
   | 'Lebih dari 6 bulan';
 
 export interface IdentitasAlumni {
-  nik: string;
-  nisn: string;
-  nama_lengkap: string;
-  tahun_masuk: number;
-  tahun_lulus: number;
-  jurusan: JurusanSMK;
-  no_whatsapp: string;
-  email: string;
+  nama_lengkap: string; // 1
+  nisn: string; // 2 (NIS / NISN)
+  nik?: string;
+  tahun_lulus: number; // 3
+  jurusan: JurusanSMK; // 4
+  tahun_masuk: number; // 5
+  no_whatsapp: string; // 6
+  email: string; // 7
+  jenis_kelamin?: 'Laki-laki' | 'Perempuan'; // 8
 }
 
 export interface DetailKerja {
-  nama_perusahaan: string;
-  jabatan: string;
-  alamat_perusahaan: string;
-  nama_atasan: string;
-  kontak_atasan: string;
-  sumber_info_kerja: SumberInfoKerja;
-  tanggal_mulai_kerja: string; // YYYY-MM
-  jenis_sertifikat: JenisSertifikat;
+  nama_perusahaan: string; // 11
+  jabatan: string; // 12
+  bidang_pekerjaan?: string; // 13
+  kota_kabupaten?: string; // 14
+  status_pekerjaan?: 'Tetap' | 'Kontrak' | 'Freelance' | 'Magang' | string; // 15
+  kesesuaian_jurusan: KesesuaianJurusan; // 16
+  kisaran_penghasilan?: string; // 17 (opsional)
+  // Optional backward-compatible fields:
+  alamat_perusahaan?: string;
+  nama_atasan?: string;
+  kontak_atasan?: string;
+  sumber_info_kerja?: SumberInfoKerja;
+  tanggal_mulai_kerja?: string; // YYYY-MM
+  jenis_sertifikat?: JenisSertifikat;
   nama_sertifikat?: string;
-  kesesuaian_jurusan: KesesuaianJurusan;
 }
 
 export interface DetailKuliah {
-  nama_kampus: string;
+  nama_kampus: string; // 18
+  program_studi: string; // 19
+  jenjang: JenjangKuliah | 'D3' | 'D4' | 'S1' | 'Lainnya'; // 20
+  status_kuliah?: 'Aktif' | 'Lulus' | 'Tidak melanjutkan' | string; // 21
   alamat_kampus?: string;
-  jenjang: JenjangKuliah;
-  program_studi: string;
 }
 
 export interface DetailUsaha {
-  nama_usaha: string;
-  kategori_usaha: KategoriUsaha;
-  alamat_usaha: string;
-  tanggal_mulai_usaha: string; // YYYY-MM
+  nama_usaha: string; // 22
+  bidang_usaha?: string; // 23
+  kategori_usaha?: KategoriUsaha;
+  lama_usaha?: string; // 24
+  jumlah_karyawan?: string; // 25
+  kesesuaian_kompetensi?: 'Sangat berkaitan' | 'Berkaitan' | 'Kurang berkaitan' | 'Tidak berkaitan' | string; // 26
+  alamat_usaha?: string;
+  tanggal_mulai_usaha?: string; // YYYY-MM
 }
 
 export interface EvaluasiPembelajaran {
-  skor_relevansi: number; // 1 - 5
-  kompetensi_bermanfaat: string[];
-  saran_bkk: string;
-  kesediaan_dihubungi: boolean;
+  skor_relevansi: number; // 27 (1 - 5)
+  kompetensi_bermanfaat: string[]; // 28
+  kompetensi_ditingkatkan?: string; // 29
+  bantu_dunia_kerja?: 'Sangat membantu' | 'Membantu' | 'Kurang membantu' | 'Tidak membantu' | string; // 30
+  saran_pembelajaran?: string; // 31
+  saran_bkk: string; // 32
+  saran_industri?: string; // 33
+  kesediaan_dihubungi: boolean; // 34
 }
 
 // Full Tracer Study Submission Payload as specified in PRD Section 5.1

@@ -139,7 +139,7 @@ export const DashboardLayout: React.FC = () => {
 
           {activeTab === 'tracer_study' && (
             <div className="-mx-4 -my-4 sm:-mx-8 sm:-my-8">
-              <TracerWizard />
+              <TracerWizard onBackToOverview={() => setActiveTab('beranda')} />
             </div>
           )}
 

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useTracerStore } from '@/store/tracerStore';
-import { KOMPETENSI_OPTIONS } from '@/schemas/tracerSchema';
+import {
+  KOMPETENSI_BERMANFAAT_OPTIONS,
+  BANTU_DUNIA_KERJA_OPTIONS,
+} from '@/schemas/tracerSchema';
 import { Button } from '@/components/ui/Button';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
 
@@ -9,17 +12,17 @@ interface Step4Props {
   onPrev: () => void;
 }
 
-const RATING_SCALE = [
-  { score: 1, label: 'Tidak Relevan' },
-  { score: 2, label: 'Kurang Relevan' },
-  { score: 3, label: 'Cukup Relevan' },
-  { score: 4, label: 'Relevan' },
-  { score: 5, label: 'Sangat Relevan' },
+const RATING_OPTIONS = [
+  { score: 1, label: '1 - Sangat Tidak Relevan' },
+  { score: 2, label: '2 - Kurang Relevan' },
+  { score: 3, label: '3 - Cukup Relevan' },
+  { score: 4, label: '4 - Relevan' },
+  { score: 5, label: '5 - Sangat Relevan' },
 ];
 
 export const Step4Evaluation: React.FC<Step4Props> = ({ onNext, onPrev }) => {
   const { evaluasi, updateEvaluasi } = useTracerStore();
-  const [warningModal, setWarningModal] = useState<{ title: string; message: string } | null>(null);
+  const [warningModal, setWarningModal] = useState<string | null>(null);
 
   const handleRating = (score: number) => {
     updateEvaluasi({ skor_relevansi: score });
@@ -38,23 +41,22 @@ export const Step4Evaluation: React.FC<Step4Props> = ({ onNext, onPrev }) => {
     }
   };
 
+  const handleBantuDuniaKerja = (val: string) => {
+    updateEvaluasi({ bantu_dunia_kerja: val });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!evaluasi.skor_relevansi) {
-      setWarningModal({
-        title: 'Penilaian Relevansi',
-        message: 'Silakan pilih skor penilaian relevansi kurikulum (skala 1 - 5) sebelum melanjutkan.',
-      });
+      setWarningModal('Silakan tentukan penilaian relevansi kompetensi.');
       return;
     }
-    if (
-      !evaluasi.kompetensi_bermanfaat ||
-      evaluasi.kompetensi_bermanfaat.length === 0
-    ) {
-      setWarningModal({
-        title: 'Pilih Kompetensi Bermanfaat',
-        message: 'Pilih minimal 1 kompetensi yang paling bermanfaat bagi Anda dalam dunia kerja / perkuliahan.',
-      });
+    if (!evaluasi.kompetensi_bermanfaat || evaluasi.kompetensi_bermanfaat.length === 0) {
+      setWarningModal('Pilih minimal 1 kompetensi yang paling bermanfaat.');
+      return;
+    }
+    if (!evaluasi.bantu_dunia_kerja) {
+      setWarningModal('Silakan pilih salah satu opsi manfaat pembelajaran di dunia kerja.');
       return;
     }
     onNext();
@@ -64,72 +66,52 @@ export const Step4Evaluation: React.FC<Step4Props> = ({ onNext, onPrev }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="pb-3 border-b border-slate-100">
-        <h2 className="text-lg font-bold text-slate-900">
-          Langkah 4: Evaluasi Pembelajaran & Umpan Balik
-        </h2>
-        <p className="text-xs text-slate-500 mt-0.5">
-          Masukan Anda menjadi dasar penyusunan program BKK dan kurikulum SMK di masa mendatang
-        </p>
+      {/* Blue Section Header Bar matching Dapodik screenshot */}
+      <div className="bg-[#1d4ed8] text-white px-4 py-2 font-bold text-xs uppercase tracking-wider rounded-t-sm">
+        PENILAIAN TERHADAP SMK
       </div>
 
-      {/* 1. Skor Relevansi: Skala 1 - 5 Sederhana */}
-      <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-          <label className="block text-xs font-bold  tracking-wider text-slate-700">
-            Tingkat Relevansi Pembelajaran SMK dengan Aktivitas Saat Ini (1 - 5) <span className="text-rose-500">*</span>
-          </label>
-          <span className="text-xs font-semibold text-blue-700">
-            {currentScore ? `${currentScore} / 5 (${RATING_SCALE.find(r => r.score === currentScore)?.label})` : 'Pilih skor'}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-1">
-          {RATING_SCALE.map((item) => {
-            const isSelected = currentScore === item.score;
-            return (
-              <button
-                key={item.score}
-                type="button"
-                onClick={() => handleRating(item.score)}
-                className={`py-3 px-2 rounded-xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1 ${
-                  isSelected
-                    ? 'border-blue-600 bg-blue-600 text-white font-bold shadow-sm'
-                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-100/70'
-                }`}
-              >
-                <span className="text-base font-bold">{item.score}</span>
-                <span className={`text-[11px] leading-tight text-center ${isSelected ? 'text-blue-100 font-medium' : 'text-slate-500'}`}>
-                  {item.label}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 2. Multi-Select Kompetensi Paling Bermanfaat */}
-      <div className="space-y-3">
-        <label className="block text-xs font-bold  tracking-wider text-slate-700">
-          Keahlian / Kompetensi yang Paling Bermanfaat di Lapangan <span className="text-rose-500">*</span>
+      {/* Seberapa relevan kompetensi yang dipelajari di SMK */}
+      <div className="space-y-2.5">
+        <label className="block text-xs sm:text-sm font-semibold text-slate-800">
+          Seberapa relevan kompetensi yang dipelajari di SMK dengan kegiatan Anda saat ini? <span className="text-rose-500">*</span>
         </label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          {KOMPETENSI_OPTIONS.map((item) => {
+        <div className="space-y-2 pt-1 pl-1">
+          {RATING_OPTIONS.map((item) => (
+            <label key={item.score} className="flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm text-slate-800 hover:text-blue-600">
+              <input
+                type="radio"
+                name="skor_relevansi"
+                value={item.score}
+                checked={currentScore === item.score}
+                onChange={() => handleRating(item.score)}
+                className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer"
+              />
+              <span>{item.label}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="border-t border-slate-200" />
+
+      {/* Kompetensi yang paling bermanfaat setelah lulus */}
+      <div className="space-y-2.5">
+        <label className="block text-xs sm:text-sm font-semibold text-slate-800">
+          Kompetensi yang paling bermanfaat setelah lulus: <span className="text-rose-500">*</span>
+          <span className="text-slate-400 font-normal ml-1">(dapat memilih lebih dari satu)</span>
+        </label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 pl-1">
+          {KOMPETENSI_BERMANFAAT_OPTIONS.map((item) => {
             const isChecked = (evaluasi.kompetensi_bermanfaat || []).includes(item);
             return (
-              <label
-                key={item}
-                className={`flex items-center gap-3 p-3 rounded-xl border text-xs cursor-pointer transition-all ${
-                  isChecked
-                    ? 'border-blue-600 bg-blue-50/60 font-semibold text-blue-900 shadow-sm'
-                    : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
-                }`}
-              >
+              <label key={item} className="flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm text-slate-800 hover:text-blue-600">
                 <input
                   type="checkbox"
                   checked={isChecked}
                   onChange={() => handleToggleKompetensi(item)}
-                  className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4"
+                  className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                 />
                 <span>{item}</span>
               </label>
@@ -138,51 +120,79 @@ export const Step4Evaluation: React.FC<Step4Props> = ({ onNext, onPrev }) => {
         </div>
       </div>
 
-      {/* 3. Saran & Masukan untuk BKK */}
+      {/* Divider */}
+      <div className="border-t border-slate-200" />
+
+      {/* Kompetensi yang masih perlu ditingkatkan oleh sekolah */}
       <div className="space-y-1.5">
-        <label className="block text-xs font-bold  tracking-wider text-slate-700">
-          Saran / Rekomendasi untuk Pengembangan BKK & Sekolah
+        <label className="block text-xs sm:text-sm font-semibold text-slate-800">
+          Kompetensi yang masih perlu ditingkatkan oleh sekolah
         </label>
         <textarea
           rows={3}
-          value={evaluasi.saran_bkk || ''}
-          onChange={(e) => updateEvaluasi({ saran_bkk: e.target.value })}
-          placeholder="Tuliskan saran Anda mengenai program magang, relasi industri, atau sarana laboratorium..."
-          className="w-full rounded-xl border border-slate-200 bg-white p-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+          value={evaluasi.kompetensi_ditingkatkan || ''}
+          onChange={(e) => updateEvaluasi({ kompetensi_ditingkatkan: e.target.value })}
+          placeholder="Contoh : Bahasa Inggris, sertifikasi industri, kurikulum terkini..."
+          className="w-full rounded border border-slate-300 bg-white p-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
         />
       </div>
 
-      {/* 4. Kesediaan Dihubungi */}
-      <div className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200 flex items-start gap-3">
-        <input
-          id="kesediaan"
-          type="checkbox"
-          checked={evaluasi.kesediaan_dihubungi !== false}
-          onChange={(e) => updateEvaluasi({ kesediaan_dihubungi: e.target.checked })}
-          className="rounded border-emerald-400 text-emerald-600 focus:ring-emerald-500 w-4 h-4 mt-0.5"
-        />
-        <label htmlFor="kesediaan" className="text-xs text-emerald-900 cursor-pointer">
-          <span className="font-bold">Bersedia dihubungi oleh tim BKK / Sekolah</span> untuk konfirmasi data atau penawaran peluang kerjasama & lowongan kerja lanjutan.
+      {/* Divider */}
+      <div className="border-t border-slate-200" />
+
+      {/* Apakah pembelajaran di SMK membantu Anda menghadapi dunia kerja? */}
+      <div className="space-y-2.5">
+        <label className="block text-xs sm:text-sm font-semibold text-slate-800">
+          Apakah pembelajaran di SMK membantu Anda menghadapi dunia kerja? <span className="text-rose-500">*</span>
         </label>
+        <div className="flex flex-wrap items-center gap-5 pt-1 pl-1">
+          {BANTU_DUNIA_KERJA_OPTIONS.map((opsi) => {
+            const isSelected = (evaluasi.bantu_dunia_kerja || 'Sangat membantu') === opsi;
+            return (
+              <label key={opsi} className="flex items-center gap-2 cursor-pointer text-xs sm:text-sm text-slate-800">
+                <input
+                  type="radio"
+                  name="bantu_dunia_kerja"
+                  value={opsi}
+                  checked={isSelected}
+                  onChange={() => handleBantuDuniaKerja(opsi)}
+                  className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer"
+                />
+                <span>{opsi}</span>
+              </label>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
-        <Button type="button" onClick={onPrev} variant="outline" size="md">
+      {/* Bottom Bar with 'Simpan dan lanjut' matching screenshot */}
+      <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
+        <Button
+          type="button"
+          onClick={onPrev}
+          variant="outline"
+          size="md"
+          className="text-xs sm:text-sm"
+        >
           Kembali
         </Button>
 
-        <Button type="submit" variant="primary" size="md" className="bg-blue-600 hover:bg-blue-700">
-          Lanjut ke Tinjauan & Submit
+        <Button
+          type="submit"
+          variant="primary"
+          size="md"
+          className="bg-blue-600 hover:bg-blue-700 font-medium text-xs sm:text-sm px-6 py-2 rounded shadow-none"
+        >
+          Simpan dan lanjut
         </Button>
       </div>
 
       {/* Warning Modal */}
       <ConfirmModal
-        isOpen={Boolean(warningModal)}
+        isOpen={!!warningModal}
         onClose={() => setWarningModal(null)}
-        title={warningModal?.title || 'Perhatian'}
-        message={warningModal?.message || ''}
+        title="Lengkapi Penilaian SMK"
+        message={warningModal || ''}
         confirmText="Mengerti"
         type="warning"
       />

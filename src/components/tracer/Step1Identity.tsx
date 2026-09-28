@@ -21,20 +21,24 @@ export const Step1Identity: React.FC<Step1Props> = ({ onNext }) => {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<Step1FormData>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      nik: identitas.nik || '',
-      nisn: identitas.nisn || '',
       nama_lengkap: identitas.nama_lengkap || '',
-      tahun_masuk: identitas.tahun_masuk || 2021,
+      nisn: identitas.nisn || '',
+      nik: identitas.nik || '',
       tahun_lulus: identitas.tahun_lulus || 2024,
       jurusan: (identitas.jurusan as any) || 'Teknik Komputer dan Jaringan',
+      tahun_masuk: identitas.tahun_masuk || 2021,
       no_whatsapp: identitas.no_whatsapp || '',
       email: identitas.email || '',
+      jenis_kelamin: (identitas.jenis_kelamin as any) || 'Laki-laki',
     },
   });
+
+  const selectedGender = watch('jenis_kelamin');
 
   const onSubmit = (data: Step1FormData) => {
     updateIdentitas(data as any);
@@ -43,90 +47,63 @@ export const Step1Identity: React.FC<Step1Props> = ({ onNext }) => {
 
   const handleFillDemo = () => {
     loadSampleData();
-    setValue('nik', '3674012345670001');
-    setValue('nisn', '0051234567');
     setValue('nama_lengkap', 'Ahmad Dani');
-    setValue('tahun_masuk', 2021);
+    setValue('nisn', '0051234567');
+    setValue('nik', '3674012345670001');
     setValue('tahun_lulus', 2024);
     setValue('jurusan', 'Teknik Komputer dan Jaringan');
+    setValue('tahun_masuk', 2021);
     setValue('no_whatsapp', '081298765432');
     setValue('email', 'ahmaddani@example.com');
+    setValue('jenis_kelamin', 'Laki-laki');
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-        <div>
-          <h2 className="text-lg font-bold text-slate-900">
-            Langkah 1: Identifikasi Diri Alumni
-          </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Lengkapi data identitas alumni SMK Sasmita Jaya 2 dengan valid
-          </p>
-        </div>
-
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      {/* Blue Section Header Bar matching Dapodik screenshot */}
+      <div className="bg-[#1d4ed8] text-white px-4 py-2 font-bold text-xs uppercase tracking-wider flex items-center justify-between rounded-t-sm">
+        <span>UPDATE DATA PRIBADI</span>
         <button
           type="button"
           onClick={handleFillDemo}
-          className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 transition cursor-pointer"
+          className="text-[11px] underline hover:text-blue-100 transition cursor-pointer"
         >
           Isi Contoh Data
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        {/* NIK */}
-        <Input
-          label="Nomor Induk Kependudukan (NIK)"
-          placeholder="16 digit sesuai KTP/KK"
-          maxLength={16}
-          requiredStar
-          error={errors.nik?.message}
-          {...register('nik')}
-        />
-
-        {/* NISN */}
-        <Input
-          label="Nomor Induk Siswa Nasional (NISN)"
-          placeholder="10 digit NISN sekolah"
-          maxLength={10}
-          requiredStar
-          error={errors.nisn?.message}
-          {...register('nisn')}
-        />
-
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Nama Lengkap */}
         <div className="sm:col-span-2">
           <Input
             label="Nama Lengkap Alumni"
-            placeholder="Sesuai ijazah sekolah"
+            placeholder="Contoh : Ahmad Dani"
             requiredStar
             error={errors.nama_lengkap?.message}
             {...register('nama_lengkap')}
           />
         </div>
 
-        {/* Tahun Masuk */}
+        {/* NIS / NISN */}
         <Input
-          label="Tahun Masuk Sekolah"
-          type="number"
-          placeholder="2021"
+          label="Nomor Induk Siswa (NIS / NISN)"
+          placeholder="Contoh : 0051234567"
           requiredStar
-          error={errors.tahun_masuk?.message}
-          {...register('tahun_masuk', { valueAsNumber: true })}
+          error={errors.nisn?.message}
+          {...register('nisn')}
         />
 
         {/* Tahun Lulus */}
         <Input
-          label="Tahun Lulus Sekolah"
+          label="Tahun Lulus"
           type="number"
-          placeholder="2024"
+          placeholder="Contoh : 2024"
           requiredStar
           error={errors.tahun_lulus?.message}
           {...register('tahun_lulus', { valueAsNumber: true })}
         />
 
-        {/* Jurusan / Kompetensi Keahlian */}
+        {/* Kompetensi Keahlian / Jurusan */}
         <div className="sm:col-span-2">
           <Select
             label="Kompetensi Keahlian / Jurusan SMK"
@@ -142,10 +119,20 @@ export const Step1Identity: React.FC<Step1Props> = ({ onNext }) => {
           </Select>
         </div>
 
-        {/* No WhatsApp */}
+        {/* Tahun Masuk */}
         <Input
-          label="Nomor WhatsApp Aktif"
-          placeholder="081234567890"
+          label="Tahun Masuk"
+          type="number"
+          placeholder="Contoh : 2021"
+          requiredStar
+          error={errors.tahun_masuk?.message}
+          {...register('tahun_masuk', { valueAsNumber: true })}
+        />
+
+        {/* Nomor WhatsApp */}
+        <Input
+          label="No.HP / WhatsApp"
+          placeholder="contoh: 08123455"
           requiredStar
           error={errors.no_whatsapp?.message}
           {...register('no_whatsapp')}
@@ -153,19 +140,66 @@ export const Step1Identity: React.FC<Step1Props> = ({ onNext }) => {
 
         {/* Email */}
         <Input
-          label="Alamat Email Aktif"
+          label="Email"
           type="email"
-          placeholder="nama@email.com"
+          placeholder="Contoh : contoh.email@gmail.com"
           requiredStar
           error={errors.email?.message}
           {...register('email')}
         />
+
+        {/* Jenis Kelamin */}
+        <div>
+          <label className="block text-xs font-semibold text-slate-700 mb-2">
+            Jenis Kelamin <span className="text-rose-500">*</span>
+          </label>
+          <div className="flex items-center gap-6 mt-1">
+            <label className="flex items-center gap-2 cursor-pointer text-xs sm:text-sm text-slate-800">
+              <input
+                type="radio"
+                name="jenis_kelamin"
+                value="Laki-laki"
+                checked={selectedGender === 'Laki-laki'}
+                onChange={() => setValue('jenis_kelamin', 'Laki-laki')}
+                className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-slate-300"
+              />
+              <span>Laki-laki</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer text-xs sm:text-sm text-slate-800">
+              <input
+                type="radio"
+                name="jenis_kelamin"
+                value="Perempuan"
+                checked={selectedGender === 'Perempuan'}
+                onChange={() => setValue('jenis_kelamin', 'Perempuan')}
+                className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-slate-300"
+              />
+              <span>Perempuan</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Optional NIK for Dapodik / Dukcapil */}
+        <div className="sm:col-span-2 pt-2 border-t border-slate-100">
+          <Input
+            label="Nomor Induk Kependudukan (NIK - Opsional)"
+            placeholder="Contoh : 3674012345670001 (opsional)"
+            maxLength={16}
+            error={errors.nik?.message}
+            {...register('nik')}
+          />
+        </div>
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="pt-6 border-t border-slate-100 flex items-center justify-end">
-        <Button type="submit" variant="primary" size="md" className="bg-blue-600 hover:bg-blue-700">
-          Lanjut ke Status Kegiatan
+      {/* Bottom Bar with 'Simpan dan lanjut' matching screenshot */}
+      <div className="pt-4 border-t border-slate-200 flex items-center justify-end">
+        <Button
+          type="submit"
+          variant="primary"
+          size="md"
+          className="bg-blue-600 hover:bg-blue-700 font-medium text-xs sm:text-sm px-6 py-2 rounded shadow-none"
+        >
+          Simpan dan lanjut
         </Button>
       </div>
     </form>
