@@ -13,6 +13,14 @@ import { useTracerStore } from '@/store/tracerStore';
 import { useAuthStore } from '@/store/authStore';
 import { JobVacancy } from '@/types/tracer';
 
+import {
+  OverviewTabSkeleton,
+  CekIjazahTabSkeleton,
+  LokerTabSkeleton,
+  AlumniTabSkeleton,
+  HelpdeskTabSkeleton,
+} from './skeletons';
+
 const VALID_TABS: DashboardTab[] = [
   'beranda',
   'cek_ijazah',
@@ -36,6 +44,9 @@ export const DashboardLayout: React.FC = () => {
   const tabParam = (searchParams.get('tab') as DashboardTab) || 'beranda';
   const activeTab: DashboardTab = VALID_TABS.includes(tabParam) ? tabParam : 'beranda';
 
+  // Purposeful tab-level loading state to avoid layout shifts during transitions
+  const [isTabLoading, setIsTabLoading] = useState(false);
+
   const setActiveTab = (tab: DashboardTab) => {
     setSearchParams((prev) => {
       const nextParams = new URLSearchParams(prev);
@@ -51,6 +62,17 @@ export const DashboardLayout: React.FC = () => {
       return nextParams;
     });
   };
+
+  // Brief initial/tab-switch simulated data load for perceptual performance
+  useEffect(() => {
+    setIsTabLoading(true);
+    const timer = setTimeout(() => {
+      setIsTabLoading(false);
+    }, 280);
+
+    return () => clearTimeout(timer);
+  }, [activeTab]);
+
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(() => {
     try {
@@ -135,17 +157,23 @@ export const DashboardLayout: React.FC = () => {
           onOpenReceipt={() => setReceiptModalOpen(true)}
         />
 
-        {/* Dynamic Tab Body */}
+        {/* Dynamic Tab Body with Accurate Skeleton Loaders */}
         <main className="p-3.5 sm:p-6 lg:p-8 flex-1 max-w-7xl w-full mx-auto">
           {activeTab === 'beranda' && (
-            <OverviewTab
-              onNavigateTab={(tab) => setActiveTab(tab)}
-              onOpenReceipt={() => setReceiptModalOpen(true)}
-              onSelectJob={handleSelectJobFromOverview}
-            />
+            isTabLoading ? (
+              <OverviewTabSkeleton />
+            ) : (
+              <OverviewTab
+                onNavigateTab={(tab) => setActiveTab(tab)}
+                onOpenReceipt={() => setReceiptModalOpen(true)}
+                onSelectJob={handleSelectJobFromOverview}
+              />
+            )
           )}
 
-          {activeTab === 'cek_ijazah' && <CekIjazahTab />}
+          {activeTab === 'cek_ijazah' && (
+            isTabLoading ? <CekIjazahTabSkeleton /> : <CekIjazahTab />
+          )}
 
           {activeTab === 'tracer_study' && (
             <div className="-mx-4 -my-4 sm:-mx-8 sm:-my-8">
@@ -154,15 +182,23 @@ export const DashboardLayout: React.FC = () => {
           )}
 
           {activeTab === 'loker' && (
-            <LokerTab
-              selectedJobFromOverview={selectedJob}
-              onClearSelectedJob={() => setSelectedJob(null)}
-            />
+            isTabLoading ? (
+              <LokerTabSkeleton />
+            ) : (
+              <LokerTab
+                selectedJobFromOverview={selectedJob}
+                onClearSelectedJob={() => setSelectedJob(null)}
+              />
+            )
           )}
 
-          {activeTab === 'alumni' && <AlumniTab />}
+          {activeTab === 'alumni' && (
+            isTabLoading ? <AlumniTabSkeleton /> : <AlumniTab />
+          )}
 
-          {activeTab === 'helpdesk' && <HelpdeskTab />}
+          {activeTab === 'helpdesk' && (
+            isTabLoading ? <HelpdeskTabSkeleton /> : <HelpdeskTab />
+          )}
         </main>
       </div>
 

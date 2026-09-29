@@ -23,6 +23,7 @@ export const CekIjazahTab: React.FC = () => {
     MOCK_IJAZAH_DATABASE[user?.nisn || '0051234567'] || MOCK_IJAZAH_DATABASE['0051234567']
   );
   const [error, setError] = useState<string | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,30 +33,34 @@ export const CekIjazahTab: React.FC = () => {
       return;
     }
 
-    const found = MOCK_IJAZAH_DATABASE[searchNisn.trim()];
-    if (found) {
-      setIjazahData(found);
-    } else {
-      // Create dynamic fallback record for demonstration
-      setIjazahData({
-        nisn: searchNisn.trim(),
-        nama: user?.nama || 'Alumni SMK Sasmita',
-        jurusan: user?.jurusan || 'Teknik Komputer dan Jaringan',
-        tahunLulus: user?.tahun_lulus || 2024,
-        statusPengambilan: 'SIAP_DIAMBIL',
-        nomorIjazah: `M-SMK/K13/24/${Math.floor(1000000 + Math.random() * 9000000)}`,
-        nomorSertifikatBnsp: `BNSP-LSP-${Math.floor(10000 + Math.random() * 90000)}`,
-        tanggalSiap: '15 Juli 2024',
-        lokasiPengambilan: 'Ruang Tata Usaha (TU) SMK Sasmita Jaya 2 Pamulang',
-        persyaratan: [
-          'Bebas Administrasi Keuangan (Lengkap)',
-          'Bebas Pustaka Perpustakaan (Lengkap)',
-          'Sidik Jari 3 Jari Tengah (Datang Langsung)',
-          'Menunjukkan Bukti Pengisian Tracer Study',
-        ],
-        barcode: `IJZ-SASMITA-${searchNisn}`,
-      });
-    }
+    setIsSearching(true);
+    setTimeout(() => {
+      setIsSearching(false);
+      const found = MOCK_IJAZAH_DATABASE[searchNisn.trim()];
+      if (found) {
+        setIjazahData(found);
+      } else {
+        // Create dynamic fallback record for demonstration
+        setIjazahData({
+          nisn: searchNisn.trim(),
+          nama: user?.nama || 'Alumni SMK Sasmita',
+          jurusan: user?.jurusan || 'Teknik Komputer dan Jaringan',
+          tahunLulus: user?.tahun_lulus || 2024,
+          statusPengambilan: 'SIAP_DIAMBIL',
+          nomorIjazah: `M-SMK/K13/24/${Math.floor(1000000 + Math.random() * 9000000)}`,
+          nomorSertifikatBnsp: `BNSP-LSP-${Math.floor(10000 + Math.random() * 90000)}`,
+          tanggalSiap: '15 Juli 2024',
+          lokasiPengambilan: 'Ruang Tata Usaha (TU) SMK Sasmita Jaya 2 Pamulang',
+          persyaratan: [
+            'Bebas Administrasi Keuangan (Lengkap)',
+            'Bebas Pustaka Perpustakaan (Lengkap)',
+            'Sidik Jari 3 Jari Tengah (Datang Langsung)',
+            'Menunjukkan Bukti Pengisian Tracer Study',
+          ],
+          barcode: `IJZ-SASMITA-${searchNisn}`,
+        });
+      }
+    }, 350);
   };
 
   const isSiap = ijazahData?.statusPengambilan === 'SIAP_DIAMBIL' || ijazahData?.statusPengambilan === 'SUDAH_DIAMBIL';
@@ -79,7 +84,12 @@ export const CekIjazahTab: React.FC = () => {
             leftIcon={<Search className="w-4 h-4" />}
           />
         </div>
-        <Button type="submit" variant="primary" className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto">
+        <Button
+          type="submit"
+          variant="primary"
+          isLoading={isSearching}
+          className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
+        >
           <span>Lacak Status</span>
         </Button>
       </form>
@@ -90,7 +100,40 @@ export const CekIjazahTab: React.FC = () => {
         </div>
       )}
 
-      {ijazahData && (
+      {isSearching ? (
+        <div className="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-sm space-y-5 sm:space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <div className="space-y-1.5">
+              <div className="h-3 w-24 bg-slate-200/60 rounded-md animate-pulse animate-shimmer" />
+              <div className="h-5 sm:h-6 w-52 bg-slate-200 rounded-md animate-pulse animate-shimmer" />
+              <div className="h-3.5 w-64 bg-slate-200/70 rounded-md animate-pulse animate-shimmer" />
+            </div>
+            <div className="h-7 w-32 rounded-full bg-slate-100 animate-pulse animate-shimmer" />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            {[1, 2, 3, 4].map((step) => (
+              <div key={step} className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-center space-y-2">
+                <div className="w-5 h-5 mx-auto rounded-full bg-slate-200 animate-pulse animate-shimmer" />
+                <div className="h-3.5 w-24 mx-auto bg-slate-200 rounded-md animate-pulse animate-shimmer" />
+                <div className="h-2.5 w-16 mx-auto bg-slate-200/60 rounded-md animate-pulse animate-shimmer" />
+              </div>
+            ))}
+          </div>
+
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="space-y-2 w-full sm:w-auto">
+              <div className="h-3.5 w-60 bg-slate-200 rounded-md animate-pulse animate-shimmer" />
+              <div className="h-3.5 w-52 bg-slate-200 rounded-md animate-pulse animate-shimmer" />
+              <div className="h-3 w-64 bg-slate-200/70 rounded-md animate-pulse animate-shimmer" />
+            </div>
+            <div className="flex items-center gap-3 shrink-0">
+              <div className="w-14 h-14 bg-slate-200 rounded-xl animate-pulse animate-shimmer" />
+              <div className="h-8 w-36 bg-slate-200 rounded-xl animate-pulse animate-shimmer" />
+            </div>
+          </div>
+        </div>
+      ) : ijazahData && (
         <div className="space-y-4 sm:space-y-6">
           {/* Main Status Tracker Card */}
           <div className="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-sm space-y-5 sm:space-y-6">
