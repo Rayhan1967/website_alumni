@@ -4,6 +4,7 @@ import { useTracerStore } from "@/store/tracerStore";
 import { MOCK_JOBS } from "@/lib/mockData";
 import { DashboardTab } from "./DashboardSidebar";
 import {
+  Check,
   FileSpreadsheet,
   Briefcase,
   GraduationCap,
@@ -132,7 +133,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
             </div>
 
             <div className="go-corner" title="Tracer Study">
-              <FileSpreadsheet className="go-icon" />
+              <Check className="go-icon" strokeWidth={2.5} />
             </div>
           </div>
 

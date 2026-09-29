@@ -43,7 +43,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     try {
       await login(identifier, 'alumni');
       onClose();
-      navigate('/dashboard');
+      navigate('/dashboard', { replace: true });
     } catch {
       setError('Data tidak cocok. Silakan coba lagi atau gunakan tombol demo di bawah.');
     } finally {

@@ -7,6 +7,7 @@ import { DashboardLayout } from './components/dashboard/DashboardLayout';
 import { NewsDetailPage } from './components/news/NewsDetailPage';
 import { AboutDetailPage } from './components/about/AboutDetailPage';
 import { SessionTracker } from './components/common/SessionTracker';
+import { ScrollToTopOrHash } from './components/common/ScrollToTopOrHash';
 
 import { useAuthStore } from './store/authStore';
 
@@ -17,10 +18,15 @@ export const App: React.FC = () => {
     <Router>
       {/* Auto-logout & session tracker: logs out if user is outside dashboard for > 1 hour */}
       <SessionTracker />
+      {/* Scroll restoration and hash anchor navigation handler */}
+      <ScrollToTopOrHash />
 
       <Routes>
-        {/* Landing Page */}
-        <Route path="/" element={<LandingPage />} />
+        {/* Landing Page - Guest Only: If already logged in, redirect directly to /dashboard */}
+        <Route
+          path="/"
+          element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LandingPage />}
+        />
 
         {/* Dedicated Login Page - Guest Only: If already logged in, redirect directly to /dashboard */}
         <Route

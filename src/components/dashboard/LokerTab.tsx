@@ -66,9 +66,6 @@ export const LokerTab: React.FC<LokerTabProps> = ({
         <h2 className="text-base sm:text-xl font-bold text-slate-900">
           Bursa Kerja Khusus (BKK) & Info Lowongan
         </h2>
-        <p className="text-xs text-slate-500 mt-1">
-          Daftar lowongan kerja, magang bersertifikat, dan penempatan industri mitra resmi SMK Sasmita Jaya 2
-        </p>
       </div>
 
       {/* Filter and Search Bar */}
@@ -134,10 +131,6 @@ export const LokerTab: React.FC<LokerTabProps> = ({
                   {job.salary}
                 </p>
               </div>
-
-              <p className="mt-3 text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                {job.description}
-              </p>
 
               {/* Target Majors Tags */}
               <div className="mt-3 flex flex-wrap gap-1.5">

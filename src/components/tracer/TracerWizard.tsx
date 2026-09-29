@@ -11,7 +11,7 @@ import { Step5Review } from './Step5Review';
 import { SubmissionReceiptModal } from './SubmissionReceiptModal';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { Card } from '@/components/ui/Card';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 interface TracerWizardProps {
   onBackToOverview?: () => void;
@@ -29,12 +29,59 @@ export const TracerWizard: React.FC<TracerWizardProps> = ({ onBackToOverview }) 
   } = useTracerStore();
   const { isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login', { replace: true });
     }
   }, [isAuthenticated, navigate]);
+
+  const stepParam = searchParams.get('step');
+
+  // Synchronize step with URL search param so browser Back (<) and Forward (>) work seamlessly
+  useEffect(() => {
+    if (stepParam) {
+      const parsed = parseInt(stepParam, 10);
+      if (parsed >= 1 && parsed <= 5) {
+        setStep(parsed);
+        setHasStartedSurvey(true);
+      }
+    } else {
+      setHasStartedSurvey(false);
+    }
+  }, [stepParam, setStep, setHasStartedSurvey]);
+
+  const goToStep = (newStep: number) => {
+    setStep(newStep);
+    setSearchParams((prev) => {
+      const nextParams = new URLSearchParams(prev);
+      nextParams.set('step', String(newStep));
+      return nextParams;
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleStartSurvey = () => {
+    setHasStartedSurvey(true);
+    setStep(1);
+    setSearchParams((prev) => {
+      const nextParams = new URLSearchParams(prev);
+      nextParams.set('step', '1');
+      return nextParams;
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleShowIntro = () => {
+    setHasStartedSurvey(false);
+    setSearchParams((prev) => {
+      const nextParams = new URLSearchParams(prev);
+      nextParams.delete('step');
+      return nextParams;
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const [receiptModalOpen, setReceiptModalOpen] = useState(false);
   const [resetModalOpen, setResetModalOpen] = useState(false);
@@ -56,10 +103,7 @@ export const TracerWizard: React.FC<TracerWizardProps> = ({ onBackToOverview }) 
     return (
       <div className="min-h-screen bg-slate-50/50 py-5 sm:py-10 px-3.5 sm:px-6 lg:px-8">
         <TracerIntro
-          onStart={() => {
-            setHasStartedSurvey(true);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
+          onStart={handleStartSurvey}
           onBack={onBackToOverview}
         />
       </div>
@@ -92,10 +136,7 @@ export const TracerWizard: React.FC<TracerWizardProps> = ({ onBackToOverview }) 
           <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={() => {
-                setHasStartedSurvey(false);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
+              onClick={handleShowIntro}
               className="text-xs font-medium text-slate-500 hover:text-blue-600 transition cursor-pointer"
               title="Lihat teks pengantar tracer study"
             >
@@ -125,19 +166,19 @@ export const TracerWizard: React.FC<TracerWizardProps> = ({ onBackToOverview }) 
 
           {/* Form Step Body */}
           <div className="p-4 sm:p-6 bg-white">
-            {currentStep === 1 && <Step1Identity onNext={() => setStep(2)} />}
+            {currentStep === 1 && <Step1Identity onNext={() => goToStep(2)} />}
             {currentStep === 2 && (
-              <Step2Status onNext={() => setStep(3)} onPrev={() => setStep(1)} />
+              <Step2Status onNext={() => goToStep(3)} onPrev={() => goToStep(1)} />
             )}
             {currentStep === 3 && (
-              <Step3Details onNext={() => setStep(4)} onPrev={() => setStep(2)} />
+              <Step3Details onNext={() => goToStep(4)} onPrev={() => goToStep(2)} />
             )}
             {currentStep === 4 && (
-              <Step4Evaluation onNext={() => setStep(5)} onPrev={() => setStep(3)} />
+              <Step4Evaluation onNext={() => goToStep(5)} onPrev={() => goToStep(3)} />
             )}
             {currentStep === 5 && (
               <Step5Review
-                onPrev={() => setStep(4)}
+                onPrev={() => goToStep(4)}
                 onSuccess={(subId) => handleSuccess(subId)}
               />
             )}

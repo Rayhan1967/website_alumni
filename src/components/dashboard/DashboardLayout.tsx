@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { DashboardSidebar, DashboardTab } from './DashboardSidebar';
 import { DashboardHeader } from './DashboardHeader';
 import { OverviewTab } from './OverviewTab';
@@ -13,9 +13,19 @@ import { useTracerStore } from '@/store/tracerStore';
 import { useAuthStore } from '@/store/authStore';
 import { JobVacancy } from '@/types/tracer';
 
+const VALID_TABS: DashboardTab[] = [
+  'beranda',
+  'cek_ijazah',
+  'tracer_study',
+  'loker',
+  'alumni',
+  'helpdesk',
+];
+
 export const DashboardLayout: React.FC = () => {
   const { isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -23,24 +33,24 @@ export const DashboardLayout: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  // Lock browser history back button on dashboard while session is active
-  useEffect(() => {
-    if (!isAuthenticated) return;
+  const tabParam = (searchParams.get('tab') as DashboardTab) || 'beranda';
+  const activeTab: DashboardTab = VALID_TABS.includes(tabParam) ? tabParam : 'beranda';
 
-    window.history.pushState(null, '', window.location.href);
-
-    const handlePopState = () => {
-      // Re-push state so pressing back stays safely on dashboard
-      window.history.pushState(null, '', window.location.href);
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [isAuthenticated]);
-
-  const [activeTab, setActiveTab] = useState<DashboardTab>('beranda');
+  const setActiveTab = (tab: DashboardTab) => {
+    setSearchParams((prev) => {
+      const nextParams = new URLSearchParams(prev);
+      if (tab === 'beranda') {
+        nextParams.delete('tab');
+        nextParams.delete('step');
+      } else {
+        nextParams.set('tab', tab);
+        if (tab !== 'tracer_study') {
+          nextParams.delete('step');
+        }
+      }
+      return nextParams;
+    });
+  };
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(() => {
     try {

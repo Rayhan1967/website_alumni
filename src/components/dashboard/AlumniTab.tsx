@@ -28,9 +28,6 @@ export const AlumniTab: React.FC = () => {
         <h2 className="text-base sm:text-xl font-bold text-slate-900">
           Direktori & Jejaring Alumni Sasmita Jaya
         </h2>
-        <p className="text-xs text-slate-500 mt-1">
-          Terhubung dengan rekan alumni lintas angkatan dan kompetensi keahlian
-        </p>
       </div>
 
       {/* Filter Bar */}
@@ -74,7 +71,7 @@ export const AlumniTab: React.FC = () => {
                 <h3 className="font-bold text-sm text-slate-900 truncate">
                   {alumni.nama}
                 </h3>
-                <p className="text-[11px] text-blue-600 font-medium truncate">
+                <p className="text-[11px] text-slate-600 font-medium truncate">
                   {alumni.jurusan}
                 </p>
                 <span className="inline-block text-[10px] text-slate-400 font-medium">
@@ -90,7 +87,7 @@ export const AlumniTab: React.FC = () => {
               </p>
 
               {alumni.kampus !== '-' && (
-                <p className="flex items-start gap-1.5 leading-snug text-purple-700">
+                <p className="flex items-start gap-1.5 leading-snug text-slate-400">
                   <GraduationCap className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                   <span>{alumni.kampus}</span>
                 </p>

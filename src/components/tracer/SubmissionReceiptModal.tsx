@@ -49,7 +49,7 @@ export const SubmissionReceiptModal: React.FC<SubmissionReceiptModalProps> = ({
           <div className="flex items-center justify-between border-b border-slate-200 pb-3">
             <div className="flex items-center gap-2.5">
               <img
-                src="/logo-smk.png"
+                src="/logo sasmita.png"
                 alt="Logo SMK"
                 className="w-10 h-10 object-contain"
                 onError={(e) => {
@@ -94,13 +94,13 @@ export const SubmissionReceiptModal: React.FC<SubmissionReceiptModalProps> = ({
             </div>
             <div>
               <span className="text-slate-400 block text-[10px]">Status Terdata</span>
-              <span className="inline-block px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold text-[10px]">
+              <span className="inline-block px-2 py-0.5 rounded text-slate-800 font-bold text-[10px]">
                 {status_kegiatan}
               </span>
             </div>
             <div>
               <span className="text-slate-400 block text-[10px]">Waktu Pengiriman</span>
-              <span className="text-slate-700 text-[11px]">
+              <span className="text-slate-800 text-[11px]">
                 {lastSubmittedAt ? new Date(lastSubmittedAt).toLocaleString('id-ID') : new Date().toLocaleString('id-ID')}
               </span>
             </div>
@@ -124,11 +124,13 @@ export const SubmissionReceiptModal: React.FC<SubmissionReceiptModalProps> = ({
           <Button
             type="button"
             onClick={handlePrint}
-            variant="outline"
             size="md"
-            className="w-full sm:w-auto"
+            className="w-full sm:w-auto flex items-center justify-center gap-2"
           >
-            Cetak Bukti (Print / PDF)
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 shrink-0">
+              <path fillRule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v11.69l3.22-3.22a.75.75 0 1 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 1 1 1.06-1.06l3.22 3.22V3a.75.75 0 0 1 .75-.75Zm-9 13.5a.75.75 0 0 1 .75.75v2.25a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V16.5a.75.75 0 0 1 1.5 0v2.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V16.5a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
+            </svg>
+            Download PDF
           </Button>
 
           <Button

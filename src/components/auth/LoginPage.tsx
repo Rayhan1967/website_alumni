@@ -1,67 +1,66 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuthStore } from '@/store/authStore';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/store/authStore";
 import {
   ShieldCheck,
   ArrowRight,
   ChevronLeft,
   Info,
   Sparkles,
-} from 'lucide-react';
+} from "lucide-react";
 
 export const LoginPage: React.FC = () => {
-  const [loginMethod, setLoginMethod] = useState<'nisn' | 'nik'>('nisn');
-  const [identifier, setIdentifier] = useState('0061234567');
+  const [loginMethod, setLoginMethod] = useState<"nisn" | "nik">("nisn");
+  const [identifier, setIdentifier] = useState("0061234567");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const { login, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
 
   React.useEffect(() => {
     if (isAuthenticated) {
-      navigate('/dashboard', { replace: true });
+      navigate("/dashboard", { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
-  const handleLoginMethodChange = (method: 'nisn' | 'nik') => {
+  const handleLoginMethodChange = (method: "nisn" | "nik") => {
     setLoginMethod(method);
-    setIdentifier(method === 'nisn' ? '0061234567' : '3274012304050001');
+    setIdentifier(method === "nisn" ? "0061234567" : "3274012304050001");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!identifier.trim()) {
-      setError('Harap masukkan NISN atau NIK Anda.');
+      setError("Harap masukkan NISN atau NIK Anda.");
       return;
     }
 
     setLoading(true);
     try {
-      await login(identifier, 'alumni');
-      navigate('/dashboard', { replace: true });
+      await login(identifier, "alumni");
+      navigate("/dashboard", { replace: true });
     } catch {
-      setError('Data tidak ditemukan. Silakan periksa kembali NISN/NIK Anda.');
+      setError("Data tidak ditemukan. Silakan periksa kembali NISN/NIK Anda.");
     } finally {
       setLoading(false);
     }
   };
 
   const handleQuickDemo = () => {
-    setLoginMethod('nisn');
-    setIdentifier('0051234567');
+    setLoginMethod("nisn");
+    setIdentifier("0051234567");
   };
 
   const handleAdminDemo = () => {
-    setLoginMethod('nisn');
-    setIdentifier('admin@smksasmitajaya2.sch.id');
+    setLoginMethod("nisn");
+    setIdentifier("admin@smksasmitajaya2.sch.id");
   };
 
   return (
     <div className="min-h-screen bg-[#edf2f7] flex items-center justify-center p-4 sm:p-6 lg:p-10 relative overflow-hidden">
-      
       {/* Static Background Ornaments */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-300/30 rounded-full blur-3xl" />
@@ -75,17 +74,20 @@ export const LoginPage: React.FC = () => {
 
       {/* Main Split Login Card without animations */}
       <div className="relative z-10 w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200/90 grid grid-cols-1 lg:grid-cols-12">
-        
         {/* LEFT COLUMN: Dark Navy Branding & Guarantee Panel (5 cols) */}
         <div className="lg:col-span-5 bg-[#122e5d] text-white p-8 sm:p-10 lg:p-11 flex flex-col justify-between relative overflow-hidden">
-          
           {/* Seigaiha Wave Pattern Overlay */}
           <svg
             className="absolute inset-0 w-full h-full opacity-[0.14] pointer-events-none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
-              <pattern id="login-seigaiha" width="60" height="30" patternUnits="userSpaceOnUse">
+              <pattern
+                id="login-seigaiha"
+                width="60"
+                height="30"
+                patternUnits="userSpaceOnUse"
+              >
                 <g stroke="#ffffff" strokeWidth="1.2" fill="none">
                   <circle cx="30" cy="0" r="30" />
                   <circle cx="30" cy="0" r="24" />
@@ -110,21 +112,21 @@ export const LoginPage: React.FC = () => {
 
           {/* Top Brand Logo */}
           <div className="relative z-10">
-            <Link to="/" className="flex items-center gap-3 cursor-pointer group">
+            <div className="flex items-center gap-3 group">
               <img
                 src="/favicon.png"
                 alt="Logo SMK Sasmita Jaya 2"
                 className="w-10 h-10 object-contain drop-shadow-md"
               />
               <div>
-                <h3 className="text-xs sm:text-sm font-extrabold text-white leading-none tracking-tight group-hover:text-blue-200 transition-colors">
+                <h3 className="text-xs sm:text-sm font-extrabold text-white leading-none tracking-tight">
                   SMK SASMITA JAYA 2
                 </h3>
                 <p className="text-[9px] text-slate-300 font-medium tracking-wider uppercase mt-1">
                   TRACER STUDY & ALUMNI
                 </p>
               </div>
-            </Link>
+            </div>
           </div>
 
           {/* Middle Content */}
@@ -134,7 +136,8 @@ export const LoginPage: React.FC = () => {
             </h1>
 
             <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-normal">
-              Masuk menggunakan NISN atau NIK untuk memulai atau melanjutkan pengisian tracer study alumni tahun 2026.
+              Masuk menggunakan NISN atau NIK untuk memulai atau melanjutkan
+              pengisian tracer study alumni.
             </p>
 
             {/* Privacy callout box */}
@@ -143,21 +146,20 @@ export const LoginPage: React.FC = () => {
                 <span>Data Anda aman</span>
               </div>
               <p className="text-[11px] text-slate-300 leading-relaxed">
-                Seluruh jawaban tidak dipublikasikan & dilindungi sesuai UU Perlindungan Data.
+                Seluruh jawaban tidak dipublikasikan & dilindungi sesuai UU
+                Perlindungan Data.
               </p>
             </div>
           </div>
 
           {/* Bottom Copyright */}
           <div className="relative z-10 text-[10px] text-slate-400">
-            © Direktorat SMK • SMK Sasmita Jaya 2
+            © SMK Sasmita Jaya 2
           </div>
-
         </div>
 
         {/* RIGHT COLUMN: Interactive Login Form (7 cols) */}
         <div className="lg:col-span-7 p-8 sm:p-10 lg:p-12 flex flex-col justify-between bg-white">
-          
           <div>
             {/* Top Back Link */}
             <div className="flex items-center justify-between mb-6">
@@ -187,11 +189,11 @@ export const LoginPage: React.FC = () => {
             <div className="grid grid-cols-2 gap-3 mb-5">
               <button
                 type="button"
-                onClick={() => handleLoginMethodChange('nisn')}
+                onClick={() => handleLoginMethodChange("nisn")}
                 className={`py-2 px-3 rounded-xl text-xs font-bold text-center cursor-pointer ${
-                  loginMethod === 'nisn'
-                    ? 'border-2 border-[#182a4a] text-[#182a4a] bg-blue-50/40 shadow-xs'
-                    : 'border border-slate-200 text-slate-600 hover:bg-slate-50'
+                  loginMethod === "nisn"
+                    ? "border-2 border-[#182a4a] text-[#182a4a] bg-blue-50/40 shadow-xs"
+                    : "border border-slate-200 text-slate-600 hover:bg-slate-50"
                 }`}
               >
                 Login pakai NISN
@@ -199,11 +201,11 @@ export const LoginPage: React.FC = () => {
 
               <button
                 type="button"
-                onClick={() => handleLoginMethodChange('nik')}
+                onClick={() => handleLoginMethodChange("nik")}
                 className={`py-2 px-3 rounded-xl text-xs font-bold text-center cursor-pointer ${
-                  loginMethod === 'nik'
-                    ? 'border-2 border-[#182a4a] text-[#182a4a] bg-blue-50/40 shadow-xs'
-                    : 'border border-slate-200 text-slate-600 hover:bg-slate-50'
+                  loginMethod === "nik"
+                    ? "border-2 border-[#182a4a] text-[#182a4a] bg-blue-50/40 shadow-xs"
+                    : "border border-slate-200 text-slate-600 hover:bg-slate-50"
                 }`}
               >
                 Login pakai NIK
@@ -221,18 +223,23 @@ export const LoginPage: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-slate-800 mb-1.5">
-                  {loginMethod === 'nisn' ? 'NISN (10 digit)' : 'NIK KTP (16 digit)'}
+                  {loginMethod === "nisn"
+                    ? "NISN (10 digit)"
+                    : "NIK KTP (16 digit)"}
                 </label>
                 <input
                   type="text"
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder={loginMethod === 'nisn' ? 'Contoh: 0061234567' : 'Contoh: 3274012304050001'}
+                  placeholder={
+                    loginMethod === "nisn"
+                      ? "Contoh: 0061234567"
+                      : "Contoh: 3274012304050001"
+                  }
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#182a4a] focus:border-transparent"
                   required
                 />
               </div>
-
 
               {/* Submit Button */}
               <button
@@ -256,16 +263,12 @@ export const LoginPage: React.FC = () => {
           <div className="mt-8 pt-4 border-t border-slate-100 space-y-3 text-center">
             {/* 1-Click Demo Shortcut */}
             <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
-              <span className="text-slate-400 text-[11px] flex items-center gap-1">
-                <Sparkles className="w-3 h-3 text-amber-500" />
-                1-Click Demo:
-              </span>
               <button
                 type="button"
                 onClick={handleQuickDemo}
-                className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 font-semibold text-[11px]"
+                className="px-2.5 py-1 rounded-lg bg-slate-50 text-slate-700 hover:bg-slate-100 font-semibold text-[11px]"
               >
-                Alumni (Ahmad Dani)
+                Alumni (DEMO)
               </button>
               <button
                 type="button"
@@ -278,7 +281,7 @@ export const LoginPage: React.FC = () => {
 
             {/* WA Helpdesk Link */}
             <p className="text-xs text-slate-500">
-              Butuh bantuan?{' '}
+              Butuh bantuan?{" "}
               <a
                 href="https://wa.me/6281298765432?text=Halo%20BKK%20SMK%20Sasmita%20Jaya%202,%20saya%20butuh%20bantuan%20login%20Tracer%20Study"
                 target="_blank"
@@ -289,11 +292,8 @@ export const LoginPage: React.FC = () => {
               </a>
             </p>
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 };

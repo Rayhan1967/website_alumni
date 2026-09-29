@@ -93,7 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
               Berita
             </a>
             <a
-              href="#"
+              href="#dasar-hukum"
               className="hover:text-blue-600 transition-colors"
             >
               Hasil & Laporan

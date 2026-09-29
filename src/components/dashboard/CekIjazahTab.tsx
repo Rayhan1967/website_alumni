@@ -67,9 +67,6 @@ export const CekIjazahTab: React.FC = () => {
         <h2 className="text-base sm:text-xl font-bold text-slate-900">
           Verifikasi & Pelacakan Status Ijazah
         </h2>
-        <p className="text-xs text-slate-500 mt-1">
-          Cek status pencetakan, legalisir, dan persyaratan pengambilan ijazah asli serta sertifikat BNSP
-        </p>
       </div>
 
       {/* Search Bar */}
