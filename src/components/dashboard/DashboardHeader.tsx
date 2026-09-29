@@ -69,7 +69,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             
           </h1>
           <p className="text-xs text-slate-500 hidden sm:block">
-            SMK Sasmita Jaya 2 Pamulang • Tahun Lulus {user?.tahun_lulus || 2024}
+            SMK Sasmita Jaya 2 Pamulang | Tahun Lulus {user?.tahun_lulus || 2024}
           </p>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   Home,
-  FileCheck2,
+  FileCheck,
   FileSpreadsheet,
   Briefcase,
   Users,
@@ -33,13 +33,238 @@ interface DashboardSidebarProps {
   setIsCollapsed: (collapsed: boolean | ((prev: boolean) => boolean)) => void;
 }
 
+const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
+  if (!isActive) {
+    switch (id) {
+      case "beranda":
+        return <Home className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
+      case "cek_ijazah":
+        return <FileCheck className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
+      case "tracer_study":
+        return <FileSpreadsheet className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
+      case "loker":
+        return <Briefcase className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
+      case "alumni":
+        return <Users className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
+      case "helpdesk":
+        return <Headphones className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
+    }
+  }
+
+  // Active state: EXACT Lucide SVG paths with proper solid fill & contrast cutouts
+  switch (id) {
+    case "beranda":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className="w-5 h-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+            fill="white"
+            stroke="white"
+          />
+          <polyline
+            points="9 22 9 12 15 12 15 22"
+            fill="#2563eb"
+            stroke="#2563eb"
+            strokeWidth="2"
+          />
+        </svg>
+      );
+    case "cek_ijazah":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className="w-5 h-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          {/* Main Document Body (Solid White) */}
+          <path
+            d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+            fill="white"
+            stroke="white"
+          />
+          {/* Folded flap top right */}
+          <path d="M14 2v4a2 2 0 0 0 2 2h4" fill="#2563eb" stroke="#2563eb" />
+          {/* Centered Checkmark (Crisp Blue #2563eb) */}
+          <path
+            d="m9 15 2 2 4-4"
+            stroke="#2563eb"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+          />
+        </svg>
+      );
+    case "tracer_study":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className="w-5 h-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+            fill="white"
+            stroke="white"
+          />
+          <path d="M14 2v4a2 2 0 0 0 2 2h4" fill="#2563eb" stroke="#2563eb" />
+          <path d="M8 13h2" stroke="#2563eb" strokeWidth="2" />
+          <path d="M14 13h2" stroke="#2563eb" strokeWidth="2" />
+          <path d="M8 17h2" stroke="#2563eb" strokeWidth="2" />
+          <path d="M14 17h2" stroke="#2563eb" strokeWidth="2" />
+        </svg>
+      );
+    case "loker":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className="w-5 h-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"
+            stroke="white"
+            strokeWidth="2"
+            fill="none"
+          />
+          <rect
+            width="20"
+            height="14"
+            x="2"
+            y="6"
+            rx="2"
+            fill="white"
+            stroke="white"
+          />
+          <path
+            d="M8 6v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6"
+            stroke="#2563eb"
+            strokeWidth="2"
+            fill="#2563eb"
+          />
+          <line x1="2" y1="13" x2="22" y2="13" stroke="#2563eb" strokeWidth="1.5" />
+        </svg>
+      );
+    case "alumni":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className="w-5 h-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <defs>
+            <mask id="users-sidebar-active-mask">
+              <rect width="24" height="24" fill="white" />
+              {/* Gap cutout around front user */}
+              <circle cx="9" cy="7" r="4" fill="black" stroke="black" strokeWidth="4" />
+              <path
+                d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2z"
+                fill="black"
+                stroke="black"
+                strokeWidth="4"
+              />
+            </mask>
+          </defs>
+
+          {/* Back Person (Solid White with Mask Cutout) */}
+          <g mask="url(#users-sidebar-active-mask)">
+            <circle cx="16" cy="7" r="4" fill="white" stroke="white" strokeWidth="1" />
+            <path
+              d="M22 21v-2a4 4 0 0 0-4-4h-2a4 4 0 0 0-2 1v5h8z"
+              fill="white"
+              stroke="white"
+              strokeWidth="1"
+            />
+          </g>
+
+          {/* Front Person (Pure Solid White) */}
+          <circle cx="9" cy="7" r="4" fill="white" stroke="white" strokeWidth="2" />
+          <path
+            d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2z"
+            fill="white"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case "helpdesk":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className="w-5 h-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M3 14v-3a9 9 0 0 1 18 0v3"
+            stroke="white"
+            strokeWidth="2"
+            fill="none"
+          />
+          <path
+            d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+            fill="white"
+            stroke="white"
+            strokeWidth="2"
+          />
+          <path
+            d="M21 14h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2z"
+            fill="white"
+            stroke="white"
+            strokeWidth="2"
+          />
+        </svg>
+      );
+  }
+};
+
 const MENU_ITEMS = [
-  { id: "beranda", label: "Beranda", icon: Home },
-  { id: "cek_ijazah", label: "Cek Ijazah", icon: FileCheck2 },
-  { id: "tracer_study", label: "Tracer Study", icon: FileSpreadsheet },
-  { id: "loker", label: "Info Loker/Magang", icon: Briefcase },
-  { id: "alumni", label: "Alumni", icon: Users },
-  { id: "helpdesk", label: "Helpdesk", icon: Headphones },
+  { id: "beranda", label: "Beranda" },
+  { id: "cek_ijazah", label: "Cek Ijazah" },
+  { id: "tracer_study", label: "Tracer Study" },
+  { id: "loker", label: "Info Loker/Magang" },
+  { id: "alumni", label: "Alumni" },
+  { id: "helpdesk", label: "Helpdesk" },
 ] as const;
 
 export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
@@ -133,7 +358,6 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
           <nav className="space-y-1.5">
             {MENU_ITEMS.map((item) => {
               const isActive = activeTab === item.id;
-              const Icon = item.icon;
 
               return (
                 <button
@@ -148,7 +372,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                       : "text-white/80 hover:bg-white/10 hover:text-white"
                   }`}
                 >
-                  <Icon className="w-4 h-4 shrink-0 text-white" />
+                  {renderMenuIcon(item.id as DashboardTab, isActive)}
                   <span className={`truncate ${isCollapsed ? "lg:hidden block" : "block"}`}>
                     {item.label}
                   </span>

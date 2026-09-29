@@ -58,7 +58,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
               <>
                 <Button
                   onClick={onOpenReceipt}
-                  variant="yellow"
+                  variant="secondary"
                   size="md"
                   className="font-bold text-slate-950 w-full sm:w-auto"
                 >

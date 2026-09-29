@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { LogOut, AlertTriangle, CheckCircle2, Info, X } from 'lucide-react';
 
 export interface ConfirmModalProps {
@@ -65,7 +66,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
 
   const currentConfig = typeConfig[type];
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
@@ -74,7 +75,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
       />
 
       {/* Modal Dialog Card (Uiverse Window Style) */}
-      <div className="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200/80 overflow-hidden">
+      <div className="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200/80 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         {/* Top Window Bar with macOS 3 Dots */}
         <div className="bg-slate-50/90 border-b border-slate-100 px-4 py-3 flex items-center justify-between select-none">
           <div className="flex items-center gap-1.5">
@@ -137,6 +138,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

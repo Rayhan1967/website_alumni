@@ -109,7 +109,7 @@ export const CekIjazahTab: React.FC = () => {
                     ijazahData.statusPengambilan === 'SUDAH_DIAMBIL'
                       ? 'bg-blue-100 text-blue-800'
                       : ijazahData.statusPengambilan === 'SIAP_DIAMBIL'
-                      ? 'bg-emerald-100 text-emerald-800'
+                      ? 'bg-blue-100 text-slate-800'
                       : 'bg-amber-100 text-amber-800'
                   }`}
                 >
@@ -120,29 +120,29 @@ export const CekIjazahTab: React.FC = () => {
 
             {/* Timeline Milestones */}
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-center">
-              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
-                <h4 className="text-xs font-bold text-emerald-900">1. Percetakan Ijazah</h4>
-                <p className="text-[10px] text-emerald-700">Selesai & Valid</p>
+              <div className="p-3 rounded-xl bg-blue-50 border border-blue-200">
+                <CheckCircle2 className="w-5 h-5 text-slate-600 mx-auto mb-1" />
+                <h4 className="text-xs font-bold text-slate-900">1. Percetakan Ijazah</h4>
+                <p className="text-[10px] text-slate-700">Selesai & Valid</p>
               </div>
 
-              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
-                <h4 className="text-xs font-bold text-emerald-900">2. Sertifikat BNSP</h4>
-                <p className="text-[10px] text-emerald-700">Lulus Uji Kompetensi</p>
+              <div className="p-3 rounded-xl bg-blue-50 border border-blue-200">
+                <CheckCircle2 className="w-5 h-5 text-slate-600 mx-auto mb-1" />
+                <h4 className="text-xs font-bold text-slate-900">2. Sertifikat BNSP</h4>
+                <p className="text-[10px] text-slate-700">Lulus Uji Kompetensi</p>
               </div>
 
-              <div className={`p-3 rounded-xl border ${isSiap ? 'bg-emerald-50 border-emerald-200' : 'bg-slate-50 border-slate-200'}`}>
-                <CheckCircle2 className={`w-5 h-5 mx-auto mb-1 ${isSiap ? 'text-emerald-600' : 'text-slate-400'}`} />
-                <h4 className={`text-xs font-bold ${isSiap ? 'text-emerald-900' : 'text-slate-700'}`}>3. Siap di Loket TU</h4>
-                <p className={`text-[10px] ${isSiap ? 'text-emerald-700' : 'text-slate-400'}`}>
+              <div className={`p-3 rounded-xl border ${isSiap ? 'bg-blue-50 border-blue-200' : 'bg-slate-50 border-slate-200'}`}>
+                <CheckCircle2 className={`w-5 h-5 mx-auto mb-1 ${isSiap ? 'text-slate-600' : 'text-slate-400'}`} />
+                <h4 className={`text-xs font-bold ${isSiap ? 'text-slate-900' : 'text-slate-700'}`}>3. Siap di Loket TU</h4>
+                <p className={`text-[10px] ${isSiap ? 'text-slate-700' : 'text-slate-400'}`}>
                   {ijazahData.tanggalSiap || 'Tersedia'}
                 </p>
               </div>
 
-              <div className={`p-3 rounded-xl border ${ijazahData.statusPengambilan === 'SUDAH_DIAMBIL' ? 'bg-blue-50 border-blue-200' : 'bg-slate-50 border-slate-200'}`}>
-                <Clock className={`w-5 h-5 mx-auto mb-1 ${ijazahData.statusPengambilan === 'SUDAH_DIAMBIL' ? 'text-blue-600' : 'text-slate-400'}`} />
-                <h4 className={`text-xs font-bold ${ijazahData.statusPengambilan === 'SUDAH_DIAMBIL' ? 'text-blue-900' : 'text-slate-700'}`}>
+              <div className={`p-3 rounded-xl border ${ijazahData.statusPengambilan === 'SUDAH_DIAMBIL' ? 'bg-slate-50 border-slate-200' : 'bg-slate-50 border-slate-200'}`}>
+                <Clock className={`w-5 h-5 mx-auto mb-1 ${ijazahData.statusPengambilan === 'SUDAH_DIAMBIL' ? 'text-slate-600' : 'text-slate-400'}`} />
+                <h4 className={`text-xs font-bold ${ijazahData.statusPengambilan === 'SUDAH_DIAMBIL' ? 'text-slate-900' : 'text-slate-700'}`}>
                   4. Pengambilan Fisik
                 </h4>
                 <p className="text-[10px] text-slate-500">
@@ -161,7 +161,7 @@ export const CekIjazahTab: React.FC = () => {
                 {ijazahData.nomorSertifikatBnsp && (
                   <p>
                     <strong>Nomor Registrasi BNSP:</strong>{' '}
-                    <span className="font-mono text-purple-700 font-bold">{ijazahData.nomorSertifikatBnsp}</span>
+                    <span className="font-mono text-blue-700 font-bold">{ijazahData.nomorSertifikatBnsp}</span>
                   </p>
                 )}
                 <p className="flex items-center gap-1 text-slate-500">
@@ -188,16 +188,16 @@ export const CekIjazahTab: React.FC = () => {
 
             {/* Checklist Persyaratan */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">
-                Checklist Kelengkapan Berkas Pengambilan
+              <h4 className="text-xs font-bold tracking-wider text-slate-700">
+                Kelengkapan Berkas Pengambilan
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
                 {ijazahData.persyaratan.map((syarat, i) => (
                   <div
                     key={i}
-                    className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2.5 text-slate-700"
+                    className="p-3 flex items-center gap-2.5 text-slate-700"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-slate-600 shrink-0" />
                     <span>{syarat}</span>
                   </div>
                 ))}

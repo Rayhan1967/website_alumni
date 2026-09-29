@@ -35,6 +35,7 @@ export const TracerIntro: React.FC<TracerIntroProps> = ({ onStart, onBack }) => 
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 text-center mb-6 sm:mb-8 tracking-tight">
           Pengantar bagi Alumni SMK
         </h1>
+        <hr />
 
         {/* Content Body */}
         <div className="space-y-6 text-sm sm:text-base leading-relaxed text-slate-700">

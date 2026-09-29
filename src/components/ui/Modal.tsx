@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { cn } from '@/lib/utils';
 import { X } from 'lucide-react';
 
@@ -44,7 +45,7 @@ export const Modal: React.FC<ModalProps> = ({
     '3xl': 'max-w-3xl',
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
       {/* Backdrop */}
       <div
@@ -55,7 +56,7 @@ export const Modal: React.FC<ModalProps> = ({
       {/* Modal Dialog */}
       <div
         className={cn(
-          'relative z-10 w-full rounded-xl bg-white shadow-2xl transition-all border border-slate-100 overflow-hidden my-8',
+          'relative z-10 w-full rounded-xl bg-white shadow-2xl transition-all border border-slate-100 overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-150',
           maxWidths[maxWidth]
         )}
       >
@@ -67,7 +68,7 @@ export const Modal: React.FC<ModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
+            className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition cursor-pointer"
             aria-label="Tutup modal"
           >
             <X className="h-5 w-5" />
@@ -77,6 +78,7 @@ export const Modal: React.FC<ModalProps> = ({
         {/* Content */}
         <div className="px-6 py-5 max-h-[80vh] overflow-y-auto">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
