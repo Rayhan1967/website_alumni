@@ -6,6 +6,7 @@ import { TracerWizard } from './components/tracer/TracerWizard';
 import { DashboardLayout } from './components/dashboard/DashboardLayout';
 import { NewsDetailPage } from './components/news/NewsDetailPage';
 import { AboutDetailPage } from './components/about/AboutDetailPage';
+import { ReportDetailPage } from './components/report/ReportDetailPage';
 import { SessionTracker } from './components/common/SessionTracker';
 import { ScrollToTopOrHash } from './components/common/ScrollToTopOrHash';
 
@@ -37,6 +38,10 @@ export const App: React.FC = () => {
         {/* Dedicated About Tracer Study Detail Page */}
         <Route path="/tentang" element={<AboutDetailPage />} />
         <Route path="/about" element={<AboutDetailPage />} />
+
+        {/* Dedicated Tracer Study Report & Statistics Portal */}
+        <Route path="/laporan" element={<ReportDetailPage />} />
+        <Route path="/hasil-laporan" element={<ReportDetailPage />} />
 
         {/* Dedicated News Article Portal Page */}
         <Route path="/berita/:id" element={<NewsDetailPage />} />

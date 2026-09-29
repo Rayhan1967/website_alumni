@@ -6,7 +6,7 @@ interface FeatureItem {
   title: string;
   description: string;
   iconSrc: string;
-  action?: 'survey' | 'dashboard' | 'contact';
+  action?: 'survey' | 'dashboard' | 'contact' | 'report';
 }
 
 const FEATURES: FeatureItem[] = [
@@ -20,7 +20,7 @@ const FEATURES: FeatureItem[] = [
     title: 'Lihat Hasil',
     description: 'Pantau hasil tracer study secara ringkas dan terpercaya.',
     iconSrc: '/Pie chart.svg',
-    action: 'dashboard',
+    action: 'report',
   },
   {
     title: 'Data Alumni',
@@ -38,7 +38,7 @@ const FEATURES: FeatureItem[] = [
     title: 'Laporan & Statistik',
     description: 'Akses laporan dan data untuk pengembangan sekolah.',
     iconSrc: '/Open book.svg',
-    action: 'dashboard',
+    action: 'report',
   },
   {
     title: 'Hubungi Kami',
@@ -55,6 +55,10 @@ export const FeaturesGrid: React.FC = () => {
   const handleItemClick = (item: FeatureItem) => {
     if (item.action === 'contact') {
       window.location.href = '#kontak';
+      return;
+    }
+    if (item.action === 'report') {
+      navigate('/laporan');
       return;
     }
     if (item.action === 'survey') {

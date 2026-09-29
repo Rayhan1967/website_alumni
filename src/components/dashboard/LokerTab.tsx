@@ -82,16 +82,15 @@ export const LokerTab: React.FC<LokerTabProps> = ({
           <CustomSelect
             value={selectedMajor}
             onChange={(val) => setSelectedMajor(val)}
-            className="w-full sm:w-56"
+            className="w-full sm:w-64"
             options={[
               { value: 'ALL', label: 'Semua Jurusan' },
-              { value: 'Teknik Komputer dan Jaringan', label: 'TKJ' },
-              { value: 'Rekayasa Perangkat Lunak', label: 'RPL' },
-              { value: 'Teknik Kendaraan Ringan Otomotif', label: 'TKRO' },
-              { value: 'Teknik Bisnis Sepeda Motor', label: 'TBSM' },
-              { value: 'Akuntansi', label: 'Akuntansi (AKL)' },
-              { value: 'Otomatisasi', label: 'OTKP' },
-              { value: 'Bisnis Daring', label: 'BDP' },
+              { value: 'Teknik Pemesinan', label: 'Teknik Pemesinan (TPM)' },
+              { value: 'Teknik Instalasi Tenaga Listrik', label: 'Teknik Listrik (TITL)' },
+              { value: 'Teknik Elektronika Industri', label: 'Elektronika Industri (EL)' },
+              { value: 'Teknik Kendaraan Ringan Otomotif', label: 'Otomotif Mobil (TKRO)' },
+              { value: 'Teknik dan Bisnis Sepeda Motor', label: 'Sepeda Motor (TBSM)' },
+              { value: 'Teknik Komputer dan Jaringan', label: 'Komputer & Jaringan (TKJ)' },
             ]}
           />
         </div>

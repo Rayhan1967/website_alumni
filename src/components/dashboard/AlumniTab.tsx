@@ -43,13 +43,15 @@ export const AlumniTab: React.FC = () => {
         <CustomSelect
           value={jurusanFilter}
           onChange={(val) => setJurusanFilter(val)}
-          className="w-full sm:w-56"
+          className="w-full sm:w-64"
           options={[
-            { value: 'ALL', label: 'Semua Keahlian' },
-            { value: 'Komputer', label: 'TKJ & RPL' },
-            { value: 'Otomotif', label: 'TKRO & TBSM' },
-            { value: 'Akuntansi', label: 'Akuntansi (AKL)' },
-            { value: 'Bisnis', label: 'Bisnis & Perkantoran' },
+            { value: 'ALL', label: 'Semua Jurusan' },
+            { value: 'Pemesinan', label: 'Teknik Pemesinan (TPM)' },
+            { value: 'Listrik', label: 'Teknik Listrik (TITL)' },
+            { value: 'Elektronika', label: 'Elektronika Industri (EL)' },
+            { value: 'Ringan', label: 'Otomotif Mobil (TKRO)' },
+            { value: 'Sepeda Motor', label: 'Sepeda Motor (TBSM)' },
+            { value: 'Jaringan', label: 'Komputer & Jaringan (TKJ)' },
           ]}
         />
       </div>

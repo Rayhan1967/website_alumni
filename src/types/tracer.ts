@@ -11,13 +11,12 @@ export type StatusKegiatan =
   | 'LAINNYA';
 
 export type JurusanSMK =
-  | 'Teknik Komputer dan Jaringan'
-  | 'Rekayasa Perangkat Lunak'
+  | 'Teknik Pemesinan'
+  | 'Teknik Instalasi Tenaga Listrik'
+  | 'Teknik Elektronika Industri'
   | 'Teknik Kendaraan Ringan Otomotif'
-  | 'Teknik Bisnis Sepeda Motor'
-  | 'Otomatisasi & Tata Kelola Perkantoran'
-  | 'Akuntansi & Keuangan Lembaga'
-  | 'Bisnis Daring & Pemasaran';
+  | 'Teknik dan Bisnis Sepeda Motor'
+  | 'Teknik Komputer dan Jaringan';
 
 export type JenjangKuliah = 'D3' | 'D4' | 'S1';
 
@@ -213,3 +212,55 @@ export interface LegalBasis {
   badge: string;
   pdfUrl?: string;
 }
+
+// Jurusan Tracer Report
+export interface JurusanReportData {
+  id: 'all' | 'tpm' | 'titl' | 'el' | 'tkro' | 'tbsm' | 'tkj';
+  tabLabel: string;
+  name: string;
+  fullName: string;
+  totalResponden: number;
+  bmw: {
+    bekerja: { percent: number; count: number; note: string };
+    kuliah: { percent: number; count: number; note: string };
+    wirausaha: { percent: number; count: number; note: string };
+  };
+  linearityRate: number;
+  linearityDescription: string;
+  avgWaitingTime: string;
+  avgStartingSalary: string;
+  topPartners: {
+    name: string;
+    sector: string;
+    badge: string;
+    description: string;
+  }[];
+  keyCompetencies: string[];
+}
+
+// Yearly Tracer Statistics Matrix
+export interface JurusanYearlyStat {
+  year: number;
+  jurusanId: 'tpm' | 'titl' | 'el' | 'tkro' | 'tbsm' | 'tkj';
+  jurusanCode: string;
+  jurusanName: string;
+  totalAlumni: number;
+  mengisiTracer: number;
+  bekerja: number;
+  kuliah: number;
+  wirausaha: number;
+  belumKerja: number;
+  kesesuaian: {
+    sangatSesuai: number;
+    sesuai: number;
+    kurangSesuai: number;
+    tidakSesuai: number;
+  };
+  skalaKerja: {
+    lokal: number;
+    nasional: number;
+    multinasional: number;
+    wirausaha: number;
+  };
+}
+

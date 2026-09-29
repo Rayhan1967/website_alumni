@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { MOCK_NEWS } from "@/lib/mockData";
 import { useAuthStore } from "@/store/authStore";
+import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import {
   ArrowLeft,
@@ -50,29 +51,7 @@ export const NewsDetailPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans text-slate-800">
       {/* Top Header / Sticky Navbar */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 cursor-pointer">
-            <img
-              src="/logo-smk.png"
-              alt="Logo SMK Sasmita Jaya 2"
-              className="h-12 sm:h-16 w-auto object-contain"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "/logo smk sasmita.png";
-              }}
-            />
-          </Link>
-
-          <div className="flex items-center gap-3">
-            <Link
-              to={isAuthenticated ? "/tracer-study" : "/login"}
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1c293d] hover:bg-[#111c2c] text-white text-xs sm:text-sm font-semibold transition-all shadow-xs"
-            >
-              <span>Isi Tracer Study</span>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Breadcrumb Navigation */}
       <div className="bg-white border-b border-slate-200/60 py-3">

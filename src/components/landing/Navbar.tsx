@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/Button';
 import { useAuthStore } from '@/store/authStore';
 
 interface NavbarProps {
-  onOpenLogin: () => void;
+  onOpenLogin?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
@@ -66,59 +66,59 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
             />
           </Link>
 
-          {/* Desktop Navigation Links (Visible only on Large Screens 1024px+) */}
+          {/* Desktop Navigation Links (Visible on Large Screens 1024px+) */}
           <nav className="hidden lg:flex items-center gap-7 lg:gap-9 text-sm sm:text-[15px] font-medium text-slate-800">
-            <a
-              href="#beranda"
+            <Link
+              to="/#beranda"
               className="hover:text-blue-600 transition-colors"
             >
               Beranda
-            </a>
-            <a
-              href="#tentang"
+            </Link>
+            <Link
+              to="/#tentang"
               className="hover:text-blue-600 transition-colors"
             >
               Tentang
-            </a>
+            </Link>
             <Link
               to={isAuthenticated ? '/tracer-study' : '/login'}
               className="hover:text-blue-600 transition-colors"
             >
               Tracer Study
             </Link>
-            <a
-              href="#berita"
+            <Link
+              to="/#berita"
               className="hover:text-blue-600 transition-colors"
             >
               Berita
-            </a>
-            <a
-              href="#dasar-hukum"
+            </Link>
+            <Link
+              to="/laporan"
               className="hover:text-blue-600 transition-colors"
             >
               Hasil & Laporan
-            </a>
-            <a
-              href="#kontak"
+            </Link>
+            <Link
+              to="/#kontak"
               className="hover:text-blue-600 transition-colors"
             >
               Kontak Kami
-            </a>
+            </Link>
           </nav>
 
           {/* Action Button: Show Dashboard when authenticated, Login when not authenticated */}
           <div className="hidden lg:flex items-center gap-3">
-            {isAuthenticated ? (
+            {isAuthenticated && user ? (
               <button
                 onClick={() => navigate('/dashboard')}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#132238] hover:bg-[#1a3050] text-white text-sm font-semibold shadow-md transition-all active:scale-95 cursor-pointer"
               >
                 <LayoutDashboard className="w-4 h-4 text-amber-400" />
-                <span>Dashboard</span>
+                <span>Dashboard ({user.nama.split(' ')[0]})</span>
               </button>
             ) : (
               <button
-                onClick={() => navigate('/login')}
+                onClick={() => (onOpenLogin ? onOpenLogin() : navigate('/login'))}
                 className="flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-[#132238] hover:bg-[#1c3355] text-white text-sm font-semibold tracking-wide shadow-md transition-all active:scale-95 cursor-pointer"
               >
                 <img
@@ -150,7 +150,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
       {/* Standard Mobile & Tablet Sidebar Drawer & Dimmed Backdrop (Visible on < 1024px) */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 lg:hidden touch-none select-none overscroll-none">
-          {/* Backdrop Overlay - Blocks all background touches & interactions */}
+          {/* Backdrop Overlay */}
           <div
             className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-300 touch-none select-none"
             onClick={() => setMobileMenuOpen(false)}
@@ -196,8 +196,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
 
               {/* Navigation Links */}
               <nav className="mt-5 space-y-1.5">
-                <a
-                  href="#beranda"
+                <Link
+                  to="/#beranda"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
                 >
@@ -206,10 +206,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
                     <span>Beranda</span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-slate-300" />
-                </a>
+                </Link>
 
-                <a
-                  href="#tentang"
+                <Link
+                  to="/#tentang"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
                 >
@@ -218,7 +218,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
                     <span>Tentang</span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-slate-300" />
-                </a>
+                </Link>
 
                 <Link
                   to={isAuthenticated ? '/tracer-study' : '/login'}
@@ -234,8 +234,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
                   </span>
                 </Link>
 
-                <a
-                  href="#berita"
+                <Link
+                  to="/#berita"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
                 >
@@ -244,10 +244,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
                     <span>Berita</span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-slate-300" />
-                </a>
+                </Link>
 
-                <a
-                  href="#dasar-hukum"
+                <Link
+                  to="/laporan"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
                 >
@@ -256,10 +256,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
                     <span>Hasil & Laporan</span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-slate-300" />
-                </a>
+                </Link>
 
-                <a
-                  href="#kontak"
+                <Link
+                  to="/#kontak"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
                 >
@@ -268,7 +268,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
                     <span>Kontak Kami</span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-slate-300" />
-                </a>
+                </Link>
               </nav>
             </div>
 

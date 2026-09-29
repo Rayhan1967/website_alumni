@@ -1,13 +1,12 @@
 import { z } from 'zod';
 
 export const JURUSAN_OPTIONS = [
-  'Teknik Komputer dan Jaringan',
-  'Rekayasa Perangkat Lunak',
+  'Teknik Pemesinan',
+  'Teknik Instalasi Tenaga Listrik',
+  'Teknik Elektronika Industri',
   'Teknik Kendaraan Ringan Otomotif',
-  'Teknik Bisnis Sepeda Motor',
-  'Otomatisasi & Tata Kelola Perkantoran',
-  'Akuntansi & Keuangan Lembaga',
-  'Bisnis Daring & Pemasaran',
+  'Teknik dan Bisnis Sepeda Motor',
+  'Teknik Komputer dan Jaringan',
 ] as const;
 
 export const JENIS_KELAMIN_OPTIONS = [
@@ -155,15 +154,7 @@ export const step1Schema = z
       .number()
       .min(2003, 'Tahun lulus minimal 2003')
       .max(new Date().getFullYear() + 1, 'Tahun lulus tidak valid'),
-    jurusan: z.enum([
-      'Teknik Komputer dan Jaringan',
-      'Rekayasa Perangkat Lunak',
-      'Teknik Kendaraan Ringan Otomotif',
-      'Teknik Bisnis Sepeda Motor',
-      'Otomatisasi & Tata Kelola Perkantoran',
-      'Akuntansi & Keuangan Lembaga',
-      'Bisnis Daring & Pemasaran',
-    ]),
+    jurusan: z.enum(JURUSAN_OPTIONS),
     no_whatsapp: z
       .string()
       .min(1, 'Nomor WhatsApp wajib diisi')

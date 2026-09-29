@@ -100,8 +100,8 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
           disabled={disabled}
           onClick={() => setIsOpen((prev) => !prev)}
           className={cn(
-            'w-full flex items-center justify-between rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 font-medium shadow-xs transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-600/20 hover:border-slate-300',
-            isOpen && 'border-blue-600 ring-2 ring-blue-600/20',
+            'w-full flex items-center justify-between rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-xs sm:text-sm text-slate-900 font-semibold shadow-xs transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-[#182a4a] hover:bg-white hover:border-slate-400',
+            isOpen && 'border-[#182a4a] bg-white ring-2 ring-slate-400/20',
             error && 'border-rose-500 focus:ring-rose-500/20 text-rose-900',
             disabled && 'cursor-not-allowed bg-slate-50 text-slate-400'
           )}
@@ -113,8 +113,8 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
           </span>
           <ChevronDown
             className={cn(
-              'w-4 h-4 text-slate-400 shrink-0 ml-2 transition-transform duration-200',
-              isOpen && 'rotate-180 text-blue-600'
+              'w-4 h-4 text-slate-500 shrink-0 ml-2 transition-transform duration-200',
+              isOpen && 'rotate-180 text-[#182a4a]'
             )}
           />
         </button>
@@ -136,17 +136,17 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
                     type="button"
                     onClick={() => handleSelect(opt.value)}
                     className={cn(
-                      'w-full px-3.5 py-2.5 text-left text-xs sm:text-sm flex items-center justify-between transition-colors cursor-pointer',
+                      'w-full px-4 py-2.5 text-left text-xs sm:text-sm flex items-center justify-between transition-colors cursor-pointer',
                       isSelected
-                        ? 'bg-blue-50 text-blue-900 font-bold'
-                        : 'text-slate-700 hover:bg-slate-50 hover:text-blue-700'
+                        ? 'bg-slate-100 text-[#182a4a] font-bold'
+                        : 'text-slate-800 hover:bg-slate-50 hover:text-[#182a4a]'
                     )}
                     role="option"
                     aria-selected={isSelected}
                   >
                     <span className="truncate">{opt.label}</span>
                     {isSelected && (
-                      <Check className="w-4 h-4 text-blue-600 shrink-0 ml-2" />
+                      <Check className="w-4 h-4 text-[#182a4a] shrink-0 ml-2" />
                     )}
                   </button>
                 );

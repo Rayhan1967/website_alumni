@@ -3,6 +3,7 @@ import { Navbar } from './Navbar';
 import { HeroSection } from './HeroSection';
 import { FeaturesGrid } from './FeaturesGrid';
 import { AboutTracer } from './AboutTracer';
+import { ReportSection } from './ReportSection';
 import { LegalBases } from './LegalBases';
 import { NewsSection } from './NewsSection';
 import { FaqSection } from './FaqSection';
@@ -40,6 +41,11 @@ export const LandingPage: React.FC = () => {
         {/* About Tracer Study */}
         <ScrollReveal>
           <AboutTracer />
+        </ScrollReveal>
+
+        {/* Interactive Tracer Study Report & Statistics */}
+        <ScrollReveal>
+          <ReportSection />
         </ScrollReveal>
       </div>
 
