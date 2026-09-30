@@ -18,7 +18,7 @@ const JURUSAN_OPTIONS_MAP: { id: string; name: string; code: string }[] = [
 ];
 
 const YEAR_OPTIONS = [
-  { value: "ALL", label: "Semua Tahun (Akumulatif 2022 - 2025)" },
+  { value: "ALL", label: "Semua Tahun (2022 - 2025)" },
   { value: "2025", label: "Tahun Lulus 2025" },
   { value: "2024", label: "Tahun Lulus 2024" },
   { value: "2023", label: "Tahun Lulus 2023" },
@@ -26,7 +26,6 @@ const YEAR_OPTIONS = [
 ];
 
 export const ReportDetailPage: React.FC = () => {
-
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -329,7 +328,7 @@ export const ReportDetailPage: React.FC = () => {
             <span className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-[#182a4a]" />
               <span>
-                Menampilkan data:{" "}
+                Menampilkan data{" "}
                 <strong className="text-slate-900">
                   {activeJurusanObj.name}
                 </strong>{" "}
@@ -353,9 +352,9 @@ export const ReportDetailPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-xs grid grid-cols-1 lg:grid-cols-3 gap-5">
             {/* Chart Card 1: Diagram Laju Serap / Status Aktivitas Lulusan */}
-            <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
+            <div className="p-5 sm:p-6 border-r border-slate-200 flex flex-col justify-between hover:shadow-md transition-all">
               <div>
                 <div className="pb-3 border-b border-slate-100 mb-4">
                   <span className="text-[10px] font-bold text-[#182a4a]  tracking-wider block">
@@ -553,7 +552,7 @@ export const ReportDetailPage: React.FC = () => {
             </div>
 
             {/* Chart Card 2: Diagram Kesesuaian Bidang Kerja / Linieritas */}
-            <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
+            <div className="p-5 sm:p-6 border-r border-r-slate-200 flex flex-col justify-between hover:shadow-md transition-all">
               <div>
                 <div className="pb-3 border-b border-slate-100 mb-4">
                   <span className="text-[10px] font-bold text-[#182a4a]  tracking-wider block">
@@ -565,10 +564,7 @@ export const ReportDetailPage: React.FC = () => {
                 </div>
 
                 {/* Big Linear Badge */}
-                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 text-center my-2">
-                  <span className="text-xs font-bold text-slate-700 block">
-                    Indeks Linieritas Kompetensi
-                  </span>
+                <div className="text-center my-2">
                   <div className="text-3xl sm:text-4xl font-black text-[#182a4a] mt-1">
                     {chartStats.kesesuaian.totalLinear}%
                   </div>
@@ -676,7 +672,7 @@ export const ReportDetailPage: React.FC = () => {
             </div>
 
             {/* Chart Card 3: Diagram Sektor / Skala Tempat Kerja */}
-            <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
+            <div className="p-5 sm:p-6 border-r-slate-200 flex flex-col justify-between hover:shadow-md transition-all">
               <div>
                 <div className="pb-3 border-b border-slate-100 mb-4">
                   <span className="text-[10px] font-bold text-[#182a4a]  tracking-wider block">

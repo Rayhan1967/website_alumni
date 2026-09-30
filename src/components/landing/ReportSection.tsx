@@ -159,53 +159,12 @@ export const ReportSection: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-[#182a4a] text-xs font-bold tracking-wide uppercase mb-3">
-            <span>Hasil & Laporan Tracer Study</span>
-          </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#182a4a] tracking-tight">
             Statistik Keterserapan Lulusan
           </h2>
           <p className="mt-3 text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
             Data ketercapaian alumni SMK Sasmita Jaya 2 dalam dunia kerja, pendidikan tinggi, dan wirausaha mandiri yang diperbarui secara berkala.
           </p>
-        </div>
-
-        {/* 1. Filter Bar Sederhana (2 Dropdown Sejajar) */}
-        <div className="bg-[#f8fafc] rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-sm mb-10">
-          <div className="pb-3.5 border-b border-slate-200/70 mb-4">
-            <h3 className="text-sm font-bold text-slate-900">
-              Filter Tampilan Statistik
-            </h3>
-            <p className="text-xs text-slate-500">
-              Pilih periode dan jurusan untuk menampilkan data yang relevan
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Dropdown 1: Tahun */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                Tahun Lulus / Periode
-              </label>
-              <CustomSelect
-                value={selectedYear}
-                options={YEAR_OPTIONS}
-                onChange={(val) => setSelectedYear(val)}
-              />
-            </div>
-
-            {/* Dropdown 2: Jurusan */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                Jurusan / Program Keahlian
-              </label>
-              <CustomSelect
-                value={selectedJurusan}
-                options={JURUSAN_OPTIONS_MAP.map((j) => ({ value: j.id, label: j.name }))}
-                onChange={(val) => setSelectedJurusan(val)}
-              />
-            </div>
-          </div>
         </div>
 
         {/* 2. Tiga Chart Inti (Baku Standar Tracer Yayasan) */}
@@ -350,9 +309,6 @@ export const ReportSection: React.FC = () => {
               </div>
 
               <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 text-center my-2">
-                <span className="text-xs font-bold text-slate-700 block">
-                  Indeks Linieritas Kompetensi
-                </span>
                 <div className="text-3xl font-black text-[#182a4a] mt-1">
                   {chartStats.kesesuaian.totalLinear}%
                 </div>
@@ -499,9 +455,6 @@ export const ReportSection: React.FC = () => {
         <div className="bg-[#f8fafc] rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
-              <span className="text-xs font-bold text-[#182a4a] uppercase tracking-wider block">
-                Tabel Rekapitulasi
-              </span>
               <h3 className="text-lg sm:text-xl font-extrabold text-[#182a4a]">
                 Rekapitulasi Data Tracer Study per Jurusan
               </h3>
@@ -512,7 +465,7 @@ export const ReportSection: React.FC = () => {
 
             <button
               onClick={() => navigate('/laporan')}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#182a4a] hover:bg-[#122038] text-white font-semibold text-xs shadow-md transition active:scale-95 cursor-pointer self-start sm:self-auto"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#182a4a] hover:bg-[#122038] text-white font-semibold text-xs shadow-md transition active:scale-95 cursor-pointer self-start sm:self-auto hover:scale-105"
             >
               <span>Buka Halaman Laporan Lengkap</span>
               <ArrowRight className="w-3.5 h-3.5" />

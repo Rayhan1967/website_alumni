@@ -194,7 +194,7 @@ export const AboutDetailPage: React.FC = () => {
 
             {/* Quick Summary Highlights */}
             <div className="bg-white rounded-md p-5 border border-slate-200 shadow-xs space-y-3">
-              <h4 className="font-bold text-xs text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
+              <h4 className="font-bold text-xs text-slate-900 tracking-wider border-b border-slate-100 pb-2">
                 Fakta Singkat Alumni
               </h4>
 
