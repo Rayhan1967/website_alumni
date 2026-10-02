@@ -17,6 +17,8 @@ export interface CustomSelectProps {
   onChange: (value: string) => void;
   placeholder?: string;
   className?: string;
+  triggerClassName?: string;
+  triggerSize?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
   id?: string;
 }
@@ -31,6 +33,8 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
   onChange,
   placeholder = 'Pilih opsi...',
   className,
+  triggerClassName,
+  triggerSize = 'md',
   disabled = false,
   id,
 }) => {
@@ -80,12 +84,18 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
 
   const selectId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
 
+  const sizeClasses = {
+    sm: 'px-3 py-2 text-xs font-medium',
+    md: 'px-3.5 py-2.5 text-xs sm:text-sm font-medium',
+    lg: 'px-4 py-3 text-xs sm:text-sm font-semibold',
+  };
+
   return (
     <div className={cn('w-full space-y-1.5', className)} ref={containerRef}>
       {label && (
         <label
           htmlFor={selectId}
-          className="block text-xs font-semibold  tracking-wider text-slate-700"
+          className="block text-xs font-bold text-slate-900"
         >
           {label}
           {requiredStar && <span className="text-rose-500 ml-1">*</span>}
@@ -100,21 +110,23 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
           disabled={disabled}
           onClick={() => setIsOpen((prev) => !prev)}
           className={cn(
-            'w-full flex items-center justify-between rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-xs sm:text-sm text-slate-900 font-semibold shadow-xs transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-[#182a4a] hover:bg-white hover:border-slate-400',
-            isOpen && 'border-[#182a4a] bg-white ring-2 ring-slate-400/20',
+            'w-full flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 shadow-xs transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#0d2346]/10 focus:border-[#0d2346] hover:bg-white hover:border-slate-300',
+            sizeClasses[triggerSize],
+            isOpen && 'border-[#0d2346] bg-white ring-2 ring-[#0d2346]/10',
             error && 'border-rose-500 focus:ring-rose-500/20 text-rose-900',
-            disabled && 'cursor-not-allowed bg-slate-50 text-slate-400'
+            disabled && 'cursor-not-allowed bg-slate-50 text-slate-400',
+            triggerClassName
           )}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
         >
-          <span className={cn('truncate', !selectedOption && 'text-slate-400')}>
+          <span className={cn('truncate text-left', !selectedOption && 'text-slate-400 font-normal')}>
             {selectedOption ? selectedOption.label : placeholder}
           </span>
           <ChevronDown
             className={cn(
               'w-4 h-4 text-slate-500 shrink-0 ml-2 transition-transform duration-200',
-              isOpen && 'rotate-180 text-[#182a4a]'
+              isOpen && 'rotate-180 text-[#0d2346]'
             )}
           />
         </button>
@@ -138,15 +150,15 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
                     className={cn(
                       'w-full px-4 py-2.5 text-left text-xs sm:text-sm flex items-center justify-between transition-colors cursor-pointer',
                       isSelected
-                        ? 'bg-slate-100 text-[#182a4a] font-bold'
-                        : 'text-slate-800 hover:bg-slate-50 hover:text-[#182a4a]'
+                        ? 'bg-slate-100 text-[#0d2346] font-bold'
+                        : 'text-slate-800 hover:bg-slate-50 hover:text-[#0d2346]'
                     )}
                     role="option"
                     aria-selected={isSelected}
                   >
                     <span className="truncate">{opt.label}</span>
                     {isSelected && (
-                      <Check className="w-4 h-4 text-[#182a4a] shrink-0 ml-2" />
+                      <Check className="w-4 h-4 text-[#0d2346] shrink-0 ml-2" />
                     )}
                   </button>
                 );
