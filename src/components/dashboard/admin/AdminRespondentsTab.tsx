@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { CustomSelect } from "@/components/ui/CustomSelect";
+import { Pagination } from "@/components/ui/Pagination";
 
 const SolidFileCheckIcon: React.FC<{ className?: string }> = ({ className = "w-5 h-5 text-[#0d2346]" }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -87,6 +88,8 @@ export const AdminRespondentsTab: React.FC<AdminRespondentsTabProps> = ({
     useState<RespondentRecord | null>(null);
   const [sortField, setSortField] = useState<SortField>("tanggal");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15;
 
   // Handle initial auto-open if explicitly requested from overview, then clear it immediately
   React.useEffect(() => {
@@ -127,6 +130,10 @@ export const AdminRespondentsTab: React.FC<AdminRespondentsTabProps> = ({
     return matchSearch && matchJurusan && matchAktivitas && matchVerification;
   });
 
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [search, jurusanFilter, aktivitasFilter, verificationFilter]);
+
   const sortedRespondents = [...filteredRespondents].sort((a, b) => {
     if (sortField === "nama") {
       const cmp = a.nama.localeCompare(b.nama, "id-ID");
@@ -139,6 +146,12 @@ export const AdminRespondentsTab: React.FC<AdminRespondentsTabProps> = ({
     }
     return 0;
   });
+
+  const totalPages = Math.ceil(sortedRespondents.length / itemsPerPage);
+  const paginatedRespondents = sortedRespondents.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const countPending = respondents.filter(
     (r) => r.verificationStatus === "PENDING",
@@ -381,7 +394,7 @@ export const AdminRespondentsTab: React.FC<AdminRespondentsTabProps> = ({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200">
-              {sortedRespondents.length === 0 ? (
+              {paginatedRespondents.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="p-8 text-center text-slate-500">
                     Tidak ditemukan data kuesioner yang sesuai dengan kriteria
@@ -389,7 +402,7 @@ export const AdminRespondentsTab: React.FC<AdminRespondentsTabProps> = ({
                   </td>
                 </tr>
               ) : (
-                sortedRespondents.map((rsp) => (
+                paginatedRespondents.map((rsp) => (
                   <tr
                     key={rsp.submissionId}
                     className="hover:bg-slate-50 transition cursor-pointer"
@@ -469,13 +482,16 @@ export const AdminRespondentsTab: React.FC<AdminRespondentsTabProps> = ({
           </table>
         </div>
 
-        {/* Footer info */}
-        <div className="p-3.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-          <span>
-            Menampilkan {sortedRespondents.length} dari total{" "}
-            {respondents.length} isian kuesioner
-          </span>
-          <span>Klik baris untuk meninjau formulir secara lengkap</span>
+        {/* Footer info & Pagination */}
+        <div className="border-t border-slate-100">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={sortedRespondents.length}
+            itemsPerPage={itemsPerPage}
+            itemName="responden"
+            onPageChange={(page) => setCurrentPage(page)}
+          />
         </div>
       </div>
 

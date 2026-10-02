@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MOCK_ALUMNI_LIST } from '@/lib/mockData';
 import { Input } from '@/components/ui/Input';
 import { CustomSelect } from '@/components/ui/CustomSelect';
 import { UserAvatar } from '@/components/ui/UserAvatar';
+import { Pagination } from '@/components/ui/Pagination';
 import { Users, Search, GraduationCap, Building, MapPin, Sparkles } from 'lucide-react';
 
 export const AlumniTab: React.FC = () => {
   const [search, setSearch] = useState('');
   const [jurusanFilter, setJurusanFilter] = useState('ALL');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, jurusanFilter]);
 
   const filteredAlumni = MOCK_ALUMNI_LIST.filter((alumni) => {
     const matchSearch =
@@ -20,6 +27,12 @@ export const AlumniTab: React.FC = () => {
 
     return matchSearch && matchJurusan;
   });
+
+  const totalPages = Math.ceil(filteredAlumni.length / itemsPerPage);
+  const paginatedAlumni = filteredAlumni.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <div className="space-y-4 sm:space-y-6">
@@ -58,7 +71,7 @@ export const AlumniTab: React.FC = () => {
 
       {/* Alumni Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5">
-        {filteredAlumni.map((alumni, idx) => (
+        {paginatedAlumni.map((alumni, idx) => (
           <div
             key={idx}
             className="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
@@ -103,6 +116,19 @@ export const AlumniTab: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalItems={filteredAlumni.length}
+        itemsPerPage={itemsPerPage}
+        itemName="alumni"
+        onPageChange={(page) => {
+          setCurrentPage(page);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
     </div>
   );
 };

@@ -378,7 +378,7 @@ export const AdminExportReportTab: React.FC = () => {
                   Pilih Format Berkas:
                 </label>
                 <div className="space-y-2">
-                  <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition">
+                  <label className="flex items-center gap-2.5 p-3 hover:bg-slate-50 cursor-pointer transition">
                     <input
                       type="radio"
                       name="export_format"
@@ -396,7 +396,7 @@ export const AdminExportReportTab: React.FC = () => {
                     </div>
                   </label>
 
-                  <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition">
+                  <label className="flex items-center gap-2.5 p-3 hover:bg-slate-50 cursor-pointer transition">
                     <input
                       type="radio"
                       name="export_format"
@@ -414,7 +414,7 @@ export const AdminExportReportTab: React.FC = () => {
                     </div>
                   </label>
 
-                  <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition">
+                  <label className="flex items-center gap-2.5 p-3 hover:bg-slate-50 cursor-pointer transition">
                     <input
                       type="radio"
                       name="export_format"
@@ -472,7 +472,7 @@ export const AdminExportReportTab: React.FC = () => {
               </p>
 
               {/* Summary Points */}
-              <div className="bg-slate-50 rounded-xl p-4 border border-slate-200/80 space-y-2 text-xs text-slate-700">
+              <div className="p-4 space-y-2 text-xs text-slate-700">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#0d2346] shrink-0" />
                   <span>Kop Surat Resmi Yayasan dan SMK Sasmita Jaya 2</span>

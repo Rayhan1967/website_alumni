@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAdminStore, MasterAlumniRecord } from "@/store/adminStore";
 import { JurusanSMK } from "@/types/tracer";
 import { AdminImportModal } from "./AdminImportModal";
@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { CustomSelect } from "@/components/ui/CustomSelect";
+import { ConfirmModal } from "@/components/ui/ConfirmModal";
+import { Pagination } from "@/components/ui/Pagination";
 
 const WhatsAppIcon: React.FC<{ className?: string }> = ({ className = "w-3.5 h-3.5" }) => (
   <svg
@@ -69,10 +71,14 @@ export const AdminMasterAlumniTab: React.FC = () => {
   );
   const [jurusanFilter, setJurusanFilter] = useState("ALL");
   const [nameSortOrder, setNameSortOrder] = useState<"asc" | "desc">("asc");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15;
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [isDownloaded, setIsDownloaded] = useState(false);
+  const [deleteConfirmAlumni, setDeleteConfirmAlumni] =
+    useState<MasterAlumniRecord | null>(null);
 
   // Add Single Alumni Form State
   const [newNisn, setNewNisn] = useState("");
@@ -90,6 +96,18 @@ export const AdminMasterAlumniTab: React.FC = () => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(""), 4000);
   };
+
+  const handleConfirmDelete = () => {
+    if (deleteConfirmAlumni) {
+      deleteMasterAlumni(deleteConfirmAlumni.id);
+      showToast(`Data ${deleteConfirmAlumni.nama} berhasil dihapus.`);
+      setDeleteConfirmAlumni(null);
+    }
+  };
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, statusFilter, jurusanFilter]);
 
   const filteredAlumni = masterAlumni.filter((a) => {
     const matchSearch =
@@ -111,6 +129,12 @@ export const AdminMasterAlumniTab: React.FC = () => {
     }
     return b.nama.localeCompare(a.nama, "id-ID");
   });
+
+  const totalPages = Math.ceil(sortedAlumni.length / itemsPerPage);
+  const paginatedAlumni = sortedAlumni.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const countSudah = masterAlumni.filter(
     (a) => a.statusTracer === "SUDAH",
@@ -326,7 +350,7 @@ export const AdminMasterAlumniTab: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
-                {sortedAlumni.length === 0 ? (
+                {paginatedAlumni.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="p-8 text-center text-slate-500">
                       Tidak ada data siswa yang cocok dengan pencarian atau
@@ -334,7 +358,7 @@ export const AdminMasterAlumniTab: React.FC = () => {
                     </td>
                   </tr>
                 ) : (
-                  sortedAlumni.map((alumni) => (
+                  paginatedAlumni.map((alumni) => (
                     <tr
                       key={alumni.id}
                       className="hover:bg-slate-50 transition"
@@ -398,18 +422,7 @@ export const AdminMasterAlumniTab: React.FC = () => {
 
                           <button
                             type="button"
-                            onClick={() => {
-                              if (
-                                window.confirm(
-                                  `Apakah Anda yakin ingin menghapus data siswa ${alumni.nama}?`,
-                                )
-                              ) {
-                                deleteMasterAlumni(alumni.id);
-                                showToast(
-                                  `Data ${alumni.nama} berhasil dihapus.`,
-                                );
-                              }
-                            }}
+                            onClick={() => setDeleteConfirmAlumni(alumni)}
                             className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition cursor-pointer"
                             title="Hapus data siswa"
                           >
@@ -424,13 +437,16 @@ export const AdminMasterAlumniTab: React.FC = () => {
             </table>
           </div>
 
-          {/* Footer info */}
-          <div className="p-3.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>
-              Menampilkan {filteredAlumni.length} dari total{" "}
-              {masterAlumni.length} siswa
-            </span>
-            <span>Tahun Kelulusan: {settings.targetYear}</span>
+          {/* Footer Pagination & Info */}
+          <div className="border-t border-slate-100">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              totalItems={sortedAlumni.length}
+              itemsPerPage={itemsPerPage}
+              itemName="siswa"
+              onPageChange={(page) => setCurrentPage(page)}
+            />
           </div>
         </div>
       </div>
@@ -523,33 +539,15 @@ export const AdminMasterAlumniTab: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-semibold text-slate-700 block mb-1">
+                  <label className="font-semibold text-slate-700 block mb-1 text-xs">
                     Program Keahlian
                   </label>
-                  <select
+                  <CustomSelect
+                    options={JURUSAN_OPTIONS.filter((j) => j.value !== "ALL")}
                     value={newJurusan}
-                    onChange={(e) =>
-                      setNewJurusan(e.target.value as JurusanSMK)
-                    }
-                    className="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346]"
-                  >
-                    <option value="Teknik Komputer dan Jaringan">
-                      Teknik Komputer dan Jaringan
-                    </option>
-                    <option value="Teknik Pemesinan">Teknik Pemesinan</option>
-                    <option value="Teknik Instalasi Tenaga Listrik">
-                      Teknik Instalasi Tenaga Listrik
-                    </option>
-                    <option value="Teknik Elektronika Industri">
-                      Teknik Elektronika Industri
-                    </option>
-                    <option value="Teknik Kendaraan Ringan Otomotif">
-                      Teknik Kendaraan Ringan Otomotif
-                    </option>
-                    <option value="Teknik dan Bisnis Sepeda Motor">
-                      Teknik dan Bisnis Sepeda Motor
-                    </option>
-                  </select>
+                    onChange={(val) => setNewJurusan(val as JurusanSMK)}
+                    triggerSize="sm"
+                  />
                 </div>
                 <div>
                   <label className="font-semibold text-slate-700 block mb-1">
@@ -608,6 +606,22 @@ export const AdminMasterAlumniTab: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Custom Delete Confirmation Modal */}
+      <ConfirmModal
+        isOpen={Boolean(deleteConfirmAlumni)}
+        onClose={() => setDeleteConfirmAlumni(null)}
+        onConfirm={handleConfirmDelete}
+        title="Hapus Data Siswa Alumni?"
+        message={
+          deleteConfirmAlumni
+            ? `Apakah Anda yakin ingin menghapus data siswa ${deleteConfirmAlumni.nama} (NISN: ${deleteConfirmAlumni.nisn}) dari master alumni?`
+            : ''
+        }
+        confirmText="Ya, Hapus Data"
+        cancelText="Batal"
+        type="danger"
+      />
     </>
   );
 };

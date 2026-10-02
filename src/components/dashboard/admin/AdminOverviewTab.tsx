@@ -178,7 +178,7 @@ export const AdminOverviewTab: React.FC<AdminOverviewTabProps> = ({
             <span className="text-xs font-semibold text-slate-500">
               Target Jumlah Lulusan
             </span>
-            <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#0d2346] flex items-center justify-center">
+            <div className="w-8 h-8 text-[#0d2346] flex items-center justify-center">
               <SolidUsersIcon className="w-4 h-4 text-[#0d2346]" />
             </div>
           </div>
@@ -199,7 +199,7 @@ export const AdminOverviewTab: React.FC<AdminOverviewTabProps> = ({
             <span className="text-xs font-semibold text-slate-500">
               Tingkat Pengisian
             </span>
-            <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#0d2346] flex items-center justify-center">
+            <div className="w-8 h-8 text-[#0d2346] flex items-center justify-center">
               <SolidTrendingUpIcon className="w-4 h-4 text-[#0d2346]" />
             </div>
           </div>
@@ -225,7 +225,7 @@ export const AdminOverviewTab: React.FC<AdminOverviewTabProps> = ({
             <span className="text-xs font-semibold text-slate-500">
               Status Verifikasi
             </span>
-            <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#0d2346] flex items-center justify-center">
+            <div className="w-8 h-8 text-[#0d2346] flex items-center justify-center">
               <SolidClockIcon className="w-4 h-4 text-[#0d2346]" />
             </div>
           </div>
@@ -252,7 +252,7 @@ export const AdminOverviewTab: React.FC<AdminOverviewTabProps> = ({
             <span className="text-xs font-semibold text-slate-500">
               Aktivitas Lulusan
             </span>
-            <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#0d2346] flex items-center justify-center">
+            <div className="w-8 h-8 text-[#0d2346] flex items-center justify-center">
               <SolidBriefcaseIcon className="w-4 h-4 text-[#0d2346]" />
             </div>
           </div>
@@ -344,7 +344,7 @@ export const AdminOverviewTab: React.FC<AdminOverviewTabProps> = ({
               </div>
               <button
                 onClick={() => onNavigateTab("verifikasi")}
-                className="text-xs font-semibold text-[#0d2346] hover:underline"
+                className="text-xs font-semibold text-blue-600 hover:underline"
               >
                 Lihat Semua
               </button>

@@ -5,44 +5,22 @@ import {
   Save,
   RotateCcw,
   CheckCircle2,
-  Building,
   Calendar,
   UserCheck,
+  Building,
 } from 'lucide-react';
-
-const SolidSettingsIcon: React.FC<{ className?: string }> = ({ className = "w-5 h-5 text-[#0d2346]" }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-    <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54A.484.484 0 0 0 13.9 2h-3.8c-.24 0-.45.17-.48.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.485.485 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.8c.24 0 .45-.17.48-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
-  </svg>
-);
-
-const SolidCalendarIcon: React.FC<{ className?: string }> = ({ className = "w-4 h-4 text-[#0d2346]" }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-    <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5z" />
-  </svg>
-);
-
-const SolidUserCheckIcon: React.FC<{ className?: string }> = ({ className = "w-4 h-4 text-[#0d2346]" }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zm7.41-4.83L17.7 7.46l-1.41 1.41 3.12 3.12 6.07-6.07-1.41-1.41-4.66 4.66z" />
-  </svg>
-);
-
-const SolidBuildingIcon: React.FC<{ className?: string }> = ({ className = "w-4 h-4 text-[#0d2346]" }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-    <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" />
-  </svg>
-);
+import { ConfirmModal } from '@/components/ui/ConfirmModal';
 
 export const AdminSettingsTab: React.FC = () => {
   const { settings, updateSettings, resetToDefaultData } = useAdminStore();
 
   const [formData, setFormData] = useState({ ...settings });
   const [toastMessage, setToastMessage] = useState('');
+  const [showResetModal, setShowResetModal] = useState(false);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(''), 4000);
+    setTimeout(() => setToastMessage(''), 3500);
   };
 
   const handleSave = (e: React.FormEvent) => {
@@ -51,40 +29,52 @@ export const AdminSettingsTab: React.FC = () => {
     showToast('Pengaturan sistem dan profil pelaporan berhasil disimpan.');
   };
 
+  const handleConfirmReset = () => {
+    resetToDefaultData();
+    setFormData({ ...useAdminStore.getState().settings });
+    showToast('Data berhasil dikembalikan ke kondisi awal demo.');
+    setShowResetModal(false);
+  };
+
   const handleReset = () => {
-    if (
-      window.confirm(
-        'Apakah Anda yakin ingin mengembalikan seluruh data master dan kuesioner ke data awal demo?'
-      )
-    ) {
-      resetToDefaultData();
-      setFormData({ ...useAdminStore.getState().settings });
-      showToast('Data berhasil dikembalikan ke kondisi awal.');
-    }
+    setShowResetModal(true);
   };
 
   return (
     <>
-      <div className="space-y-6 max-w-4xl animate-in fade-in duration-200">
-        {/* Header */}
-        <div className="p-5">
-          <h2 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-            <SolidSettingsIcon className="w-5 h-5 text-[#0d2346]" />
-            <span>Pengaturan Sistem dan Profil Pelaporan</span>
-          </h2>
+      <div className="space-y-6 animate-in fade-in duration-200">
+        {/* Header Title */}
+        <div className="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Settings className="w-5 h-5 text-[#0d2346]" />
+              <span>Pengaturan Sistem & Profil Pelaporan</span>
+            </h1>
+          </div>
         </div>
 
-        <form onSubmit={handleSave} className="space-y-6">
+        {/* Single Unified Container Centered */}
+        <div className="max-w-3xl mx-auto">
+          <form
+            onSubmit={handleSave}
+            className="bg-white rounded-xl border border-slate-200 shadow-xs p-5 sm:p-7 space-y-6"
+          >
           {/* Section 1: Target Kuota & Periode */}
-          <div className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-xs space-y-4">
-            <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
-              <SolidCalendarIcon className="w-4 h-4 text-[#0d2346]" />
-              <span>Target Sasaran dan Periode Pengisian</span>
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
               <div>
-                <label className="font-semibold text-slate-700 block mb-1">
+                <h3 className="text-xs sm:text-sm font-bold text-slate-900">
+                  Target Sasaran & Periode Pengisian
+                </h3>
+                <p className="text-[11px] text-slate-400">
+                  Konfigurasi jumlah target alumni dan rentang waktu pengisian tracer study.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-900">
                   Target Jumlah Alumni (Siswa)
                 </label>
                 <input
@@ -93,15 +83,15 @@ export const AdminSettingsTab: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, targetQuota: Number(e.target.value) })
                   }
-                  className="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                 />
-                <span className="text-[11px] text-slate-400 mt-1 block">
-                  Jumlah total alumni yang dijadikan dasar perhitungan persentase partisipasi.
+                <span className="text-[10px] text-slate-400 block">
+                  Dasar perhitungan persentase partisipasi tracer study.
                 </span>
               </div>
 
-              <div>
-                <label className="font-semibold text-slate-700 block mb-1">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-900">
                   Tahun Kelulusan Sasaran
                 </label>
                 <input
@@ -110,15 +100,15 @@ export const AdminSettingsTab: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, targetYear: Number(e.target.value) })
                   }
-                  className="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                 />
-                <span className="text-[11px] text-slate-400 mt-1 block">
-                  Tahun kelulusan alumni yang menjadi fokus pengumpulan data saat ini.
+                <span className="text-[10px] text-slate-400 block">
+                  Tahun kelulusan alumni yang menjadi fokus pengumpulan data.
                 </span>
               </div>
 
-              <div>
-                <label className="font-semibold text-slate-700 block mb-1">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-900">
                   Tanggal Mulai Pengisian
                 </label>
                 <input
@@ -127,12 +117,12 @@ export const AdminSettingsTab: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, periodStart: e.target.value })
                   }
-                  className="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                 />
               </div>
 
-              <div>
-                <label className="font-semibold text-slate-700 block mb-1">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-900">
                   Tanggal Batas Pengisian
                 </label>
                 <input
@@ -141,22 +131,28 @@ export const AdminSettingsTab: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, periodEnd: e.target.value })
                   }
-                  className="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                 />
               </div>
             </div>
           </div>
 
-          {/* Section 2: Penandatangan Laporan Resmi (Kepala Sekolah & BKK) */}
-          <div className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-xs space-y-4">
-            <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
-              <SolidUserCheckIcon className="w-4 h-4 text-[#0d2346]" />
-              <span>Nama Pejabat Penandatangan Laporan Resmi</span>
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          {/* Section 2: Penandatangan Laporan Resmi */}
+          <div className="space-y-4 pt-4 border-t border-slate-100">
+            <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
               <div>
-                <label className="font-semibold text-slate-700 block mb-1">
+                <h3 className="text-xs sm:text-sm font-bold text-slate-900">
+                  Nama Pejabat Penandatangan Laporan Resmi
+                </h3>
+                <p className="text-[11px] text-slate-400">
+                  Data ini dicantumkan pada bagian pengesahan berkas ekspor laporan PDF.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-900">
                   Nama Kepala Sekolah
                 </label>
                 <input
@@ -165,13 +161,13 @@ export const AdminSettingsTab: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, kepalaSekolah: e.target.value })
                   }
-                  className="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                 />
               </div>
 
-              <div>
-                <label className="font-semibold text-slate-700 block mb-1">
-                  Nomor Induk Pegawai (NIP) Kepala Sekolah
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-900">
+                  NIP Kepala Sekolah
                 </label>
                 <input
                   type="text"
@@ -179,12 +175,12 @@ export const AdminSettingsTab: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, nipKepalaSekolah: e.target.value })
                   }
-                  className="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346] focus:outline-none font-mono"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium font-mono focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                 />
               </div>
 
-              <div>
-                <label className="font-semibold text-slate-700 block mb-1">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-900">
                   Nama Ketua Bursa Kerja Khusus (BKK)
                 </label>
                 <input
@@ -193,13 +189,13 @@ export const AdminSettingsTab: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, ketuaBkk: e.target.value })
                   }
-                  className="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                 />
               </div>
 
-              <div>
-                <label className="font-semibold text-slate-700 block mb-1">
-                  Nomor Induk Pegawai (NIP / NUPTK) Ketua BKK
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-900">
+                  NIP / NUPTK Ketua BKK
                 </label>
                 <input
                   type="text"
@@ -207,22 +203,28 @@ export const AdminSettingsTab: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, nipKetuaBkk: e.target.value })
                   }
-                  className="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346] focus:outline-none font-mono"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium font-mono focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                 />
               </div>
             </div>
           </div>
 
           {/* Section 3: Identitas Sekolah & Kontak Layanan */}
-          <div className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-xs space-y-4">
-            <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
-              <SolidBuildingIcon className="w-4 h-4 text-[#0d2346]" />
-              <span>Identitas Sekolah dan Kontak Layanan</span>
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div className="space-y-4 pt-4 border-t border-slate-100">
+            <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
               <div>
-                <label className="font-semibold text-slate-700 block mb-1">
+                <h3 className="text-xs sm:text-sm font-bold text-slate-900">
+                  Identitas Sekolah & Kontak Layanan
+                </h3>
+                <p className="text-[11px] text-slate-400">
+                  Informasi resmi lembaga untuk kop surat dan layanan alumni.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-900">
                   Nama Sekolah
                 </label>
                 <input
@@ -231,13 +233,13 @@ export const AdminSettingsTab: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, namaSekolah: e.target.value })
                   }
-                  className="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                 />
               </div>
 
-              <div>
-                <label className="font-semibold text-slate-700 block mb-1">
-                  Nomor Pokok Sekolah Nasional (NPSN)
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-900">
+                  NPSN (Nomor Pokok Sekolah Nasional)
                 </label>
                 <input
                   type="text"
@@ -245,13 +247,13 @@ export const AdminSettingsTab: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, npsn: e.target.value })
                   }
-                  className="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346] focus:outline-none font-mono"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium font-mono focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                 />
               </div>
 
-              <div className="sm:col-span-2">
-                <label className="font-semibold text-slate-700 block mb-1">
-                  Alamat Lengkap Sekolah (Untuk Kop Surat Resmi)
+              <div className="sm:col-span-2 space-y-1">
+                <label className="block text-xs font-bold text-slate-900">
+                  Alamat Lengkap Sekolah (Untuk Kop Surat)
                 </label>
                 <input
                   type="text"
@@ -259,12 +261,12 @@ export const AdminSettingsTab: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, alamatSekolah: e.target.value })
                   }
-                  className="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346] focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                 />
               </div>
 
-              <div>
-                <label className="font-semibold text-slate-700 block mb-1">
+              <div className="sm:col-span-2 space-y-1">
+                <label className="block text-xs font-bold text-slate-900">
                   Nomor Kontak WhatsApp Layanan Alumni
                 </label>
                 <input
@@ -273,14 +275,14 @@ export const AdminSettingsTab: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, kontakBkk: e.target.value })
                   }
-                  className="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0d2346] focus:border-[#0d2346] focus:outline-none font-mono"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium font-mono focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                 />
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-5 border-t border-slate-100">
             <button
               type="button"
               onClick={handleReset}
@@ -300,14 +302,27 @@ export const AdminSettingsTab: React.FC = () => {
           </div>
         </form>
       </div>
+    </div>
 
-      {/* Toast Alert (Outside space-y container to eliminate any layout shifting) */}
+      {/* Toast Alert */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs sm:text-sm font-semibold px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 pointer-events-none animate-in slide-in-from-bottom duration-200">
+        <div className="fixed bottom-6 right-6 z-50 bg-[#0d2346] text-white text-xs sm:text-sm font-semibold px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 pointer-events-none animate-in slide-in-from-bottom duration-200 border border-slate-700">
           <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}
+
+      {/* Custom System Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showResetModal}
+        onClose={() => setShowResetModal(false)}
+        onConfirm={handleConfirmReset}
+        title="Kembalikan ke Data Awal Demo?"
+        message="Tindakan ini akan mengembalikan seluruh data master alumni dan formulir kuesioner ke pengaturan default simulasi."
+        confirmText="Ya, Reset Data"
+        cancelText="Batal"
+        type="warning"
+      />
     </>
   );
 };

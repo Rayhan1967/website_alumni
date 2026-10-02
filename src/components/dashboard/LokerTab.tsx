@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useContentStore } from '@/store/contentStore';
 import { JobVacancy } from '@/types/tracer';
 import { Input } from '@/components/ui/Input';
@@ -6,6 +6,7 @@ import { CustomSelect } from '@/components/ui/CustomSelect';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
+import { Pagination } from '@/components/ui/Pagination';
 import {
   Briefcase,
   Search,
@@ -36,6 +37,12 @@ export const LokerTab: React.FC<LokerTabProps> = ({
   const [applyModalJob, setApplyModalJob] = useState<JobVacancy | null>(null);
   const [appliedSuccess, setAppliedSuccess] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedMajor]);
 
   const filteredJobs = jobList.filter((job) => {
     const matchQuery =
@@ -49,6 +56,12 @@ export const LokerTab: React.FC<LokerTabProps> = ({
 
     return matchQuery && matchMajor;
   });
+
+  const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
+  const paginatedJobs = filteredJobs.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleApply = (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,7 +112,7 @@ export const LokerTab: React.FC<LokerTabProps> = ({
 
       {/* Jobs Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-5">
-        {filteredJobs.map((job) => (
+        {paginatedJobs.map((job) => (
           <div
             key={job.id}
             className="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between space-y-3.5 sm:space-y-4"
@@ -166,6 +179,19 @@ export const LokerTab: React.FC<LokerTabProps> = ({
           </div>
         ))}
       </div>
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalItems={filteredJobs.length}
+        itemsPerPage={itemsPerPage}
+        itemName="lowongan"
+        onPageChange={(page) => {
+          setCurrentPage(page);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
 
       {/* Modal Detail Loker */}
       <Modal
