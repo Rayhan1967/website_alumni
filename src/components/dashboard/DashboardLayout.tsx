@@ -7,6 +7,7 @@ import { CekIjazahTab } from './CekIjazahTab';
 import { LokerTab } from './LokerTab';
 import { AlumniTab } from './AlumniTab';
 import { HelpdeskTab } from './HelpdeskTab';
+import { DashboardBreadcrumb } from './DashboardBreadcrumb';
 import { TracerWizard } from '@/components/tracer/TracerWizard';
 import { SubmissionReceiptModal } from '@/components/tracer/SubmissionReceiptModal';
 import { useTracerStore } from '@/store/tracerStore';
@@ -19,6 +20,7 @@ import { AdminMasterAlumniTab } from './admin/AdminMasterAlumniTab';
 import { AdminRespondentsTab } from './admin/AdminRespondentsTab';
 import { AdminNewsTab } from './admin/AdminNewsTab';
 import { AdminJobsTab } from './admin/AdminJobsTab';
+import { AdminMessagesTab } from './admin/AdminMessagesTab';
 import { AdminExportReportTab } from './admin/AdminExportReportTab';
 import { AdminSettingsTab } from './admin/AdminSettingsTab';
 
@@ -39,6 +41,7 @@ const VALID_TABS: DashboardTab[] = [
   'helpdesk',
   'master_alumni',
   'verifikasi',
+  'pesan',
   'kelola_berita',
   'kelola_loker',
   'laporan',
@@ -182,6 +185,16 @@ export const DashboardLayout: React.FC = () => {
           }}
         />
 
+        {/* Dynamic Breadcrumb Navigation for all pages except Dashboard */}
+        <DashboardBreadcrumb
+          activeTab={activeTab}
+          isAdmin={isAdmin}
+          onNavigateHome={() => {
+            setSelectedRespondentId(null);
+            setActiveTab('beranda');
+          }}
+        />
+
         {/* Dynamic Tab Body */}
         <main className="p-3.5 sm:p-6 lg:p-8 flex-1 max-w-7xl w-full mx-auto">
           {/* ADMIN VIEW */}
@@ -211,6 +224,17 @@ export const DashboardLayout: React.FC = () => {
                 <AdminRespondentsTab
                   initialSelectedId={selectedRespondentId}
                   onClearInitialSelectedId={() => setSelectedRespondentId(null)}
+                />
+              )}
+
+              {activeTab === 'pesan' && (
+                <AdminMessagesTab
+                  onNavigateTab={(tab, respondentId) => {
+                    if (respondentId) {
+                      setSelectedRespondentId(respondentId);
+                    }
+                    setActiveTab(tab as DashboardTab);
+                  }}
                 />
               )}
 

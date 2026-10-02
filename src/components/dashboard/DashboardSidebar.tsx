@@ -9,6 +9,7 @@ import {
   Settings,
   ShieldCheck,
   Newspaper,
+  Mail,
   LogOut,
   ChevronLeft,
   ChevronRight,
@@ -29,6 +30,7 @@ export type DashboardTab =
   // Admin Tabs
   | "master_alumni"
   | "verifikasi"
+  | "pesan"
   | "kelola_berita"
   | "kelola_loker"
   | "laporan"
@@ -55,6 +57,8 @@ const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
       case "loker":
       case "kelola_loker":
         return <Briefcase className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
+      case "pesan":
+        return <Mail className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
       case "kelola_berita":
         return <Newspaper className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
       case "alumni":
@@ -288,6 +292,23 @@ const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
           />
         </svg>
       );
+    case "pesan":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className="w-5 h-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <rect width="20" height="16" x="2" y="4" rx="2" fill="white" stroke="white" />
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" stroke="#2563eb" strokeWidth="2" fill="none" />
+        </svg>
+      );
     case "pengaturan":
       return (
         <svg
@@ -358,6 +379,7 @@ const ADMIN_MENU_ITEMS = [
   { id: "beranda", label: "Dashboard" },
   { id: "master_alumni", label: "Data Alumni" },
   { id: "verifikasi", label: "Verifikasi" },
+  { id: "pesan", label: "Pesan Masuk" },
   { id: "kelola_berita", label: "Kelola Berita" },
   { id: "kelola_loker", label: "Kelola Loker" },
   { id: "laporan", label: "Laporan" },
