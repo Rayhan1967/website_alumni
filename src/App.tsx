@@ -59,6 +59,14 @@ export const App: React.FC = () => {
           element={isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" replace />}
         />
 
+        {/* Admin Route Aliases */}
+        <Route path="/admin/login" element={<Navigate to="/login" replace />} />
+        <Route path="/admin/dashboard" element={<Navigate to="/dashboard?tab=beranda" replace />} />
+        <Route path="/admin/alumni" element={<Navigate to="/dashboard?tab=master_alumni" replace />} />
+        <Route path="/admin/responden" element={<Navigate to="/dashboard?tab=verifikasi" replace />} />
+        <Route path="/admin/laporan" element={<Navigate to="/dashboard?tab=laporan" replace />} />
+        <Route path="/admin/*" element={<Navigate to="/dashboard" replace />} />
+
         {/* Fallback route */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

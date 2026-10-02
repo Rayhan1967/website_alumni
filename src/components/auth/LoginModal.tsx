@@ -57,6 +57,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     setIdentifier('0051234567');
   };
 
+  const handleUnfilledDemo = () => {
+    setLoginMethod('nisn');
+    setIdentifier('0057890123');
+  };
+
   const handleAdminDemo = () => {
     setLoginMethod('nisn');
     setIdentifier('admin@smksasmitajaya2.sch.id');
@@ -273,13 +278,23 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                   type="button"
                   onClick={handleQuickDemo}
                   className="px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 font-semibold text-[10px]"
+                  title="Alumni yang sudah mengisi tracer"
                 >
-                  Alumni (Ahmad Dani)
+                  Alumni (Sudah Isi)
+                </button>
+                <button
+                  type="button"
+                  onClick={handleUnfilledDemo}
+                  className="px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 hover:bg-amber-100 font-semibold text-[10px]"
+                  title="Alumni yang belum mengisi tracer"
+                >
+                  Alumni (Belum Isi)
                 </button>
                 <button
                   type="button"
                   onClick={handleAdminDemo}
                   className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-semibold text-[10px]"
+                  title="Akun Admin Pengelola BKK"
                 >
                   Admin BKK
                 </button>

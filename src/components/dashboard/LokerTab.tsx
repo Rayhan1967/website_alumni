@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MOCK_JOBS } from '@/lib/mockData';
+import { useContentStore } from '@/store/contentStore';
 import { JobVacancy } from '@/types/tracer';
 import { Input } from '@/components/ui/Input';
 import { CustomSelect } from '@/components/ui/CustomSelect';
@@ -27,6 +27,7 @@ export const LokerTab: React.FC<LokerTabProps> = ({
   selectedJobFromOverview,
   onClearSelectedJob,
 }) => {
+  const { jobList } = useContentStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedMajor, setSelectedMajor] = useState<string>('ALL');
   const [selectedJob, setSelectedJob] = useState<JobVacancy | null>(
@@ -36,7 +37,7 @@ export const LokerTab: React.FC<LokerTabProps> = ({
   const [appliedSuccess, setAppliedSuccess] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const filteredJobs = MOCK_JOBS.filter((job) => {
+  const filteredJobs = jobList.filter((job) => {
     const matchQuery =
       job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||

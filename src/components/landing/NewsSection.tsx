@@ -1,10 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_NEWS } from '@/lib/mockData';
-import { ArrowRight, Calendar, ChevronRight, Clock } from 'lucide-react';
+import { useContentStore } from '@/store/contentStore';
+import { Calendar, ChevronRight, Clock } from 'lucide-react';
 
 export const NewsSection: React.FC = () => {
   const navigate = useNavigate();
+  const { newsList } = useContentStore();
 
   return (
     <section id="berita" className="pt-12 sm:pt-16 pb-12 sm:pb-16 bg-transparent relative">
@@ -20,15 +21,15 @@ export const NewsSection: React.FC = () => {
           </p>
         </div>
 
-        {/* 6 Grid Cards: Static, no hover translation/zoom animations */}
+        {/* Grid Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
-          {MOCK_NEWS.map((item) => (
+          {newsList.slice(0, 6).map((item) => (
             <div
               key={item.id}
               onClick={() => navigate(`/berita/${item.id}`)}
               className="bg-white rounded-md overflow-hidden border border-slate-200 shadow-sm flex flex-col cursor-pointer"
             >
-              {/* Image thumbnail (static, no hover zoom) */}
+              {/* Image thumbnail */}
               <div className="relative h-48 w-full overflow-hidden bg-slate-100">
                 <img
                   src={item.imageUrl}
@@ -66,15 +67,17 @@ export const NewsSection: React.FC = () => {
         </div>
 
         {/* Bottom Link: Lihat Semua */}
-        <div className="mt-12 text-right">
-          <button
-            onClick={() => navigate(`/berita/${MOCK_NEWS[0].id}`)}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-800 hover:text-blue-600 transition-colors cursor-pointer"
-          >
-            <span>Lihat Semua</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
+        {newsList.length > 0 && (
+          <div className="mt-12 text-right">
+            <button
+              onClick={() => navigate(`/berita/${newsList[0].id}`)}
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-800 hover:text-blue-600 transition-colors cursor-pointer"
+            >
+              <span>Lihat Semua</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
       </div>
     </section>

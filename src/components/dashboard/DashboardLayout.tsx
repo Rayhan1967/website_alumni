@@ -13,6 +13,15 @@ import { useTracerStore } from '@/store/tracerStore';
 import { useAuthStore } from '@/store/authStore';
 import { JobVacancy } from '@/types/tracer';
 
+// Admin Tabs
+import { AdminOverviewTab } from './admin/AdminOverviewTab';
+import { AdminMasterAlumniTab } from './admin/AdminMasterAlumniTab';
+import { AdminRespondentsTab } from './admin/AdminRespondentsTab';
+import { AdminNewsTab } from './admin/AdminNewsTab';
+import { AdminJobsTab } from './admin/AdminJobsTab';
+import { AdminExportReportTab } from './admin/AdminExportReportTab';
+import { AdminSettingsTab } from './admin/AdminSettingsTab';
+
 import {
   OverviewTabSkeleton,
   CekIjazahTabSkeleton,
@@ -28,10 +37,16 @@ const VALID_TABS: DashboardTab[] = [
   'loker',
   'alumni',
   'helpdesk',
+  'master_alumni',
+  'verifikasi',
+  'kelola_berita',
+  'kelola_loker',
+  'laporan',
+  'pengaturan',
 ];
 
 export const DashboardLayout: React.FC = () => {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, user } = useAuthStore();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -41,13 +56,17 @@ export const DashboardLayout: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  const isAdmin = user?.role === 'admin_bkk';
+
   const tabParam = (searchParams.get('tab') as DashboardTab) || 'beranda';
   const activeTab: DashboardTab = VALID_TABS.includes(tabParam) ? tabParam : 'beranda';
 
   // Purposeful tab-level loading state to avoid layout shifts during transitions
   const [isTabLoading, setIsTabLoading] = useState(false);
+  const [selectedRespondentId, setSelectedRespondentId] = useState<string | null>(null);
 
   const setActiveTab = (tab: DashboardTab) => {
+    setSelectedRespondentId(null);
     setSearchParams((prev) => {
       const nextParams = new URLSearchParams(prev);
       if (tab === 'beranda') {
@@ -68,7 +87,7 @@ export const DashboardLayout: React.FC = () => {
     setIsTabLoading(true);
     const timer = setTimeout(() => {
       setIsTabLoading(false);
-    }, 280);
+    }, 250);
 
     return () => clearTimeout(timer);
   }, [activeTab]);
@@ -155,49 +174,98 @@ export const DashboardLayout: React.FC = () => {
         <DashboardHeader
           onToggleMobileMenu={() => setIsMobileOpen(!isMobileOpen)}
           onOpenReceipt={() => setReceiptModalOpen(true)}
+          onNavigateTab={(tab, respondentId) => {
+            if (respondentId) {
+              setSelectedRespondentId(respondentId);
+            }
+            setActiveTab(tab as DashboardTab);
+          }}
         />
 
-        {/* Dynamic Tab Body with Accurate Skeleton Loaders */}
+        {/* Dynamic Tab Body */}
         <main className="p-3.5 sm:p-6 lg:p-8 flex-1 max-w-7xl w-full mx-auto">
-          {activeTab === 'beranda' && (
-            isTabLoading ? (
-              <OverviewTabSkeleton />
-            ) : (
-              <OverviewTab
-                onNavigateTab={(tab) => setActiveTab(tab)}
-                onOpenReceipt={() => setReceiptModalOpen(true)}
-                onSelectJob={handleSelectJobFromOverview}
-              />
-            )
-          )}
+          {/* ADMIN VIEW */}
+          {isAdmin ? (
+            <>
+              {activeTab === 'beranda' && (
+                isTabLoading ? (
+                  <OverviewTabSkeleton />
+                ) : (
+                  <AdminOverviewTab
+                    onNavigateTab={(tab) => setActiveTab(tab as DashboardTab)}
+                    onOpenRespondentDetail={(subId) => {
+                      setSelectedRespondentId(subId);
+                      setSearchParams((prev) => {
+                        const nextParams = new URLSearchParams(prev);
+                        nextParams.set('tab', 'verifikasi');
+                        return nextParams;
+                      });
+                    }}
+                  />
+                )
+              )}
 
-          {activeTab === 'cek_ijazah' && (
-            isTabLoading ? <CekIjazahTabSkeleton /> : <CekIjazahTab />
-          )}
+              {activeTab === 'master_alumni' && <AdminMasterAlumniTab />}
 
-          {activeTab === 'tracer_study' && (
-            <div className="-mx-4 -my-4 sm:-mx-8 sm:-my-8">
-              <TracerWizard onBackToOverview={() => setActiveTab('beranda')} />
-            </div>
-          )}
+              {activeTab === 'verifikasi' && (
+                <AdminRespondentsTab
+                  initialSelectedId={selectedRespondentId}
+                  onClearInitialSelectedId={() => setSelectedRespondentId(null)}
+                />
+              )}
 
-          {activeTab === 'loker' && (
-            isTabLoading ? (
-              <LokerTabSkeleton />
-            ) : (
-              <LokerTab
-                selectedJobFromOverview={selectedJob}
-                onClearSelectedJob={() => setSelectedJob(null)}
-              />
-            )
-          )}
+              {activeTab === 'kelola_berita' && <AdminNewsTab />}
 
-          {activeTab === 'alumni' && (
-            isTabLoading ? <AlumniTabSkeleton /> : <AlumniTab />
-          )}
+              {activeTab === 'kelola_loker' && <AdminJobsTab />}
 
-          {activeTab === 'helpdesk' && (
-            isTabLoading ? <HelpdeskTabSkeleton /> : <HelpdeskTab />
+              {activeTab === 'laporan' && <AdminExportReportTab />}
+
+              {activeTab === 'pengaturan' && <AdminSettingsTab />}
+            </>
+          ) : (
+            /* ALUMNI VIEW */
+            <>
+              {activeTab === 'beranda' && (
+                isTabLoading ? (
+                  <OverviewTabSkeleton />
+                ) : (
+                  <OverviewTab
+                    onNavigateTab={(tab) => setActiveTab(tab)}
+                    onOpenReceipt={() => setReceiptModalOpen(true)}
+                    onSelectJob={handleSelectJobFromOverview}
+                  />
+                )
+              )}
+
+              {activeTab === 'cek_ijazah' && (
+                isTabLoading ? <CekIjazahTabSkeleton /> : <CekIjazahTab />
+              )}
+
+              {activeTab === 'tracer_study' && (
+                <div className="-mx-4 -my-4 sm:-mx-8 sm:-my-8">
+                  <TracerWizard onBackToOverview={() => setActiveTab('beranda')} />
+                </div>
+              )}
+
+              {activeTab === 'loker' && (
+                isTabLoading ? (
+                  <LokerTabSkeleton />
+                ) : (
+                  <LokerTab
+                    selectedJobFromOverview={selectedJob}
+                    onClearSelectedJob={() => setSelectedJob(null)}
+                  />
+                )
+              )}
+
+              {activeTab === 'alumni' && (
+                isTabLoading ? <AlumniTabSkeleton /> : <AlumniTab />
+              )}
+
+              {activeTab === 'helpdesk' && (
+                isTabLoading ? <HelpdeskTabSkeleton /> : <HelpdeskTab />
+              )}
+            </>
           )}
         </main>
       </div>

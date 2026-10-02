@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Navbar } from './Navbar';
 import { HeroSection } from './HeroSection';
 import { FeaturesGrid } from './FeaturesGrid';
@@ -8,16 +8,13 @@ import { LegalBases } from './LegalBases';
 import { NewsSection } from './NewsSection';
 import { FaqSection } from './FaqSection';
 import { Footer } from './Footer';
-import { LoginModal } from '@/components/auth/LoginModal';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 export const LandingPage: React.FC = () => {
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
-
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      {/* Navbar with Login Modal Trigger */}
-      <Navbar onOpenLogin={() => setLoginModalOpen(true)} />
+      {/* Navbar with Direct Login Navigation */}
+      <Navbar />
 
       {/* Hero Section */}
       <HeroSection />
@@ -78,12 +75,6 @@ export const LandingPage: React.FC = () => {
 
       {/* Footer */}
       <Footer />
-
-      {/* Login / Auth Modal */}
-      <LoginModal
-        isOpen={loginModalOpen}
-        onClose={() => setLoginModalOpen(false)}
-      />
     </div>
   );
 };

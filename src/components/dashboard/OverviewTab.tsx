@@ -1,7 +1,8 @@
 import React from "react";
 import { useAuthStore } from "@/store/authStore";
 import { useTracerStore } from "@/store/tracerStore";
-import { MOCK_JOBS } from "@/lib/mockData";
+import { useContentStore } from "@/store/contentStore";
+import { JobVacancy } from "@/types/tracer";
 import { DashboardTab } from "./DashboardSidebar";
 import {
   Check,
@@ -20,7 +21,7 @@ import { Button } from "@/components/ui/Button";
 interface OverviewTabProps {
   onNavigateTab: (tab: DashboardTab) => void;
   onOpenReceipt: () => void;
-  onSelectJob: (job: (typeof MOCK_JOBS)[0]) => void;
+  onSelectJob: (job: JobVacancy) => void;
 }
 
 export const OverviewTab: React.FC<OverviewTabProps> = ({
@@ -30,9 +31,10 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
 }) => {
   const { user } = useAuthStore();
   const { isSubmitted, lastSubmissionId } = useTracerStore();
+  const { jobList } = useContentStore();
 
   const isTracerDone = isSubmitted || user?.tracerStatus === "SUDAH";
-  const recentJobs = MOCK_JOBS.slice(0, 3);
+  const recentJobs = jobList.slice(0, 3);
 
   return (
     <div className="space-y-6 sm:space-y-8">

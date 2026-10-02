@@ -267,7 +267,129 @@ export const ReportDetailPage: React.FC = () => {
       </div>
 
       {/* Hero Banner Header */}
-      <section className="bg-[#102a4e] text-white py-10 sm:py-14 relative overflow-hidden">
+      <section className="bg-gradient-to-r from-[#0d223f] via-[#163863] to-[#0f2747] text-white py-12 sm:py-16 relative overflow-hidden">
+        {/* Background Decorative Motif & Ambient Lighting */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
+          {/* Ambient Glows */}
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl" />
+          <div className="absolute -bottom-24 right-1/4 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 -left-20 -translate-y-1/2 w-64 h-64 bg-indigo-500/10 rounded-full blur-2xl" />
+
+          {/* Subtle Technical Grid Overlay */}
+          <svg
+            className="absolute inset-0 w-full h-full opacity-[0.09]"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <pattern id="report-banner-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#38bdf8" strokeWidth="0.8" />
+                <circle cx="32" cy="0" r="1.5" fill="#93c5fd" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#report-banner-grid)" />
+          </svg>
+
+          {/* Analytical Data Curve & Telemetry Chart Motif (Right Side) */}
+          <svg
+            className="absolute right-0 top-0 bottom-0 h-full w-[550px] sm:w-[700px] lg:w-[860px] max-w-none opacity-30 sm:opacity-40"
+            viewBox="0 0 900 300"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <defs>
+              <linearGradient id="report-chart-fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.25" />
+                <stop offset="100%" stopColor="#1e40af" stopOpacity="0.0" />
+              </linearGradient>
+              <linearGradient id="report-line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.2" />
+                <stop offset="40%" stopColor="#38bdf8" stopOpacity="0.8" />
+                <stop offset="80%" stopColor="#818cf8" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#c084fc" stopOpacity="0.4" />
+              </linearGradient>
+              <linearGradient id="report-bar-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.05" />
+              </linearGradient>
+            </defs>
+
+            {/* Subtle Background Histogram / Data Bars */}
+            <g opacity="0.4">
+              <rect x="520" y="160" width="18" height="90" rx="3" fill="url(#report-bar-grad)" stroke="#60a5fa" strokeWidth="0.8" />
+              <rect x="555" y="130" width="18" height="120" rx="3" fill="url(#report-bar-grad)" stroke="#60a5fa" strokeWidth="0.8" />
+              <rect x="590" y="100" width="18" height="150" rx="3" fill="url(#report-bar-grad)" stroke="#60a5fa" strokeWidth="0.8" />
+              <rect x="625" y="145" width="18" height="105" rx="3" fill="url(#report-bar-grad)" stroke="#60a5fa" strokeWidth="0.8" />
+              <rect x="660" y="75" width="18" height="175" rx="3" fill="url(#report-bar-grad)" stroke="#60a5fa" strokeWidth="0.8" />
+              <rect x="695" y="115" width="18" height="135" rx="3" fill="url(#report-bar-grad)" stroke="#60a5fa" strokeWidth="0.8" />
+              <rect x="730" y="60" width="18" height="190" rx="3" fill="url(#report-bar-grad)" stroke="#60a5fa" strokeWidth="0.8" />
+            </g>
+
+            {/* Area Curve Fill */}
+            <path
+              d="M120 260 Q 280 250 420 180 T 660 75 T 900 40 L 900 280 L 120 280 Z"
+              fill="url(#report-chart-fill)"
+            />
+
+            {/* Primary Growth Trend Spline Curve */}
+            <path
+              d="M120 260 Q 280 250 420 180 T 660 75 T 900 40"
+              stroke="url(#report-line-grad)"
+              strokeWidth="3"
+              strokeLinecap="round"
+            />
+
+            {/* Secondary Target / Projection Curve */}
+            <path
+              d="M180 280 C 340 260, 480 140, 680 130 C 780 125, 840 70, 900 80"
+              stroke="#38bdf8"
+              strokeWidth="1.5"
+              strokeDasharray="4 4"
+              strokeOpacity="0.6"
+            />
+
+            {/* Glowing Data Marker Nodes on Primary Trendline */}
+            <g>
+              {/* Node 1 */}
+              <circle cx="350" cy="225" r="4" fill="#38bdf8" />
+              <circle cx="350" cy="225" r="8" stroke="#38bdf8" strokeWidth="1" opacity="0.4" />
+              
+              {/* Node 2 */}
+              <circle cx="500" cy="140" r="4.5" fill="#60a5fa" />
+              <circle cx="500" cy="140" r="10" stroke="#60a5fa" strokeWidth="1" opacity="0.4" />
+              <line x1="500" y1="140" x2="500" y2="250" stroke="#60a5fa" strokeWidth="1" strokeDasharray="2 3" opacity="0.3" />
+
+              {/* Node 3 (Peak) */}
+              <circle cx="660" cy="75" r="6" fill="#38bdf8" />
+              <circle cx="660" cy="75" r="14" stroke="#38bdf8" strokeWidth="1.5" opacity="0.5" />
+              <line x1="660" y1="75" x2="660" y2="250" stroke="#38bdf8" strokeWidth="1" strokeDasharray="2 3" opacity="0.4" />
+              
+              {/* Node 4 */}
+              <circle cx="780" cy="55" r="4" fill="#a78bfa" />
+              <circle cx="780" cy="55" r="9" stroke="#a78bfa" strokeWidth="1" opacity="0.4" />
+            </g>
+
+            {/* Radar / Circular Metric Badge (Top Right) */}
+            <g transform="translate(800, 160)">
+              <circle cx="0" cy="0" r="70" stroke="#60a5fa" strokeWidth="1" strokeDasharray="4 4" opacity="0.25" />
+              <circle cx="0" cy="0" r="45" stroke="#38bdf8" strokeWidth="1" opacity="0.3" />
+              <circle cx="0" cy="0" r="20" stroke="#818cf8" strokeWidth="1" opacity="0.4" />
+              <path d="M 0 -70 L 0 70 M -70 0 L 70 0" stroke="#93c5fd" strokeWidth="0.8" opacity="0.2" />
+              <polygon points="0,-40 30,-10 20,25 -20,20 -30,-15" fill="#38bdf8" fillOpacity="0.15" stroke="#38bdf8" strokeWidth="1.2" />
+            </g>
+
+            {/* Minimalist Micro Geometry Accents */}
+            <g stroke="#93c5fd" strokeWidth="1.5" opacity="0.35">
+              <path d="M 300 100 L 300 110 M 295 105 L 305 105" />
+              <path d="M 450 60 L 450 70 M 445 65 L 455 65" />
+              <path d="M 850 250 L 850 260 M 845 255 L 855 255" />
+            </g>
+            <circle cx="410" cy="90" r="2" fill="#38bdf8" opacity="0.5" />
+            <circle cx="580" cy="45" r="2.5" fill="#a78bfa" opacity="0.5" />
+            <circle cx="720" cy="220" r="2" fill="#93c5fd" opacity="0.5" />
+          </svg>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl space-y-3.5">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
@@ -354,7 +476,7 @@ export const ReportDetailPage: React.FC = () => {
 
           <div className="bg-white rounded-3xl border border-slate-200 shadow-xs grid grid-cols-1 lg:grid-cols-3 gap-5">
             {/* Chart Card 1: Diagram Laju Serap / Status Aktivitas Lulusan */}
-            <div className="p-5 sm:p-6 border-r border-slate-200 flex flex-col justify-between hover:shadow-md transition-all">
+            <div className="p-5 sm:p-6 border-r border-slate-200 flex flex-col justify-between">
               <div>
                 <div className="pb-3 border-b border-slate-100 mb-4">
                   <span className="text-[10px] font-bold text-[#182a4a]  tracking-wider block">
@@ -552,7 +674,7 @@ export const ReportDetailPage: React.FC = () => {
             </div>
 
             {/* Chart Card 2: Diagram Kesesuaian Bidang Kerja / Linieritas */}
-            <div className="p-5 sm:p-6 border-r border-r-slate-200 flex flex-col justify-between hover:shadow-md transition-all">
+            <div className="p-5 sm:p-6 border-r border-r-slate-200 flex flex-col justify-between">
               <div>
                 <div className="pb-3 border-b border-slate-100 mb-4">
                   <span className="text-[10px] font-bold text-[#182a4a]  tracking-wider block">
@@ -672,7 +794,7 @@ export const ReportDetailPage: React.FC = () => {
             </div>
 
             {/* Chart Card 3: Diagram Sektor / Skala Tempat Kerja */}
-            <div className="p-5 sm:p-6 border-r-slate-200 flex flex-col justify-between hover:shadow-md transition-all">
+            <div className="p-5 sm:p-6 border-r-slate-200 flex flex-col justify-between">
               <div>
                 <div className="pb-3 border-b border-slate-100 mb-4">
                   <span className="text-[10px] font-bold text-[#182a4a]  tracking-wider block">
@@ -822,7 +944,7 @@ export const ReportDetailPage: React.FC = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-200">
                 {tableRows.map((row) => {
                   const isSelected = selectedJurusan === row.id;
                   return (

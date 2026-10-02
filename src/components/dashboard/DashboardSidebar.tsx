@@ -6,6 +6,9 @@ import {
   Briefcase,
   Users,
   Headphones,
+  Settings,
+  ShieldCheck,
+  Newspaper,
   LogOut,
   ChevronLeft,
   ChevronRight,
@@ -22,7 +25,14 @@ export type DashboardTab =
   | "tracer_study"
   | "loker"
   | "alumni"
-  | "helpdesk";
+  | "helpdesk"
+  // Admin Tabs
+  | "master_alumni"
+  | "verifikasi"
+  | "kelola_berita"
+  | "kelola_loker"
+  | "laporan"
+  | "pengaturan";
 
 interface DashboardSidebarProps {
   activeTab: DashboardTab;
@@ -43,15 +53,25 @@ const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
       case "tracer_study":
         return <FileSpreadsheet className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
       case "loker":
+      case "kelola_loker":
         return <Briefcase className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
+      case "kelola_berita":
+        return <Newspaper className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
       case "alumni":
+      case "master_alumni":
         return <Users className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
+      case "verifikasi":
+        return <ShieldCheck className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
+      case "laporan":
+        return <FileSpreadsheet className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
+      case "pengaturan":
+        return <Settings className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
       case "helpdesk":
         return <Headphones className="w-5 h-5 shrink-0 text-white/80 transition-colors" />;
     }
   }
 
-  // Active state: EXACT Lucide SVG paths with proper solid fill & contrast cutouts
+  // Active state
   switch (id) {
     case "beranda":
       return (
@@ -92,15 +112,12 @@ const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
           strokeLinejoin="round"
           aria-hidden="true"
         >
-          {/* Main Document Body (Solid White) */}
           <path
             d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
             fill="white"
             stroke="white"
           />
-          {/* Folded flap top right */}
           <path d="M14 2v4a2 2 0 0 0 2 2h4" fill="#2563eb" stroke="#2563eb" />
-          {/* Centered Checkmark (Crisp Blue #2563eb) */}
           <path
             d="m9 15 2 2 4-4"
             stroke="#2563eb"
@@ -112,6 +129,7 @@ const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
         </svg>
       );
     case "tracer_study":
+    case "laporan":
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -137,6 +155,7 @@ const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
         </svg>
       );
     case "loker":
+    case "kelola_loker":
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -173,7 +192,31 @@ const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
           <line x1="2" y1="13" x2="22" y2="13" stroke="#2563eb" strokeWidth="1.5" />
         </svg>
       );
+    case "kelola_berita":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className="w-5 h-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"
+            fill="white"
+            stroke="white"
+          />
+          <path d="M18 14h-8" stroke="#2563eb" strokeWidth="2" />
+          <path d="M15 18h-5" stroke="#2563eb" strokeWidth="2" />
+          <path d="M10 6h8v4h-8V6Z" fill="#2563eb" stroke="#2563eb" strokeWidth="1" />
+        </svg>
+      );
     case "alumni":
+    case "master_alumni":
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +232,6 @@ const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
           <defs>
             <mask id="users-sidebar-active-mask">
               <rect width="24" height="24" fill="white" />
-              {/* Gap cutout around front user */}
               <circle cx="9" cy="7" r="4" fill="black" stroke="black" strokeWidth="4" />
               <path
                 d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2z"
@@ -199,8 +241,6 @@ const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
               />
             </mask>
           </defs>
-
-          {/* Back Person (Solid White with Mask Cutout) */}
           <g mask="url(#users-sidebar-active-mask)">
             <circle cx="16" cy="7" r="4" fill="white" stroke="white" strokeWidth="1" />
             <path
@@ -210,8 +250,6 @@ const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
               strokeWidth="1"
             />
           </g>
-
-          {/* Front Person (Pure Solid White) */}
           <circle cx="9" cy="7" r="4" fill="white" stroke="white" strokeWidth="2" />
           <path
             d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2z"
@@ -220,6 +258,55 @@ const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
             strokeWidth="2"
             strokeLinejoin="round"
           />
+        </svg>
+      );
+    case "verifikasi":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className="w-5 h-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+            fill="white"
+            stroke="white"
+          />
+          <path
+            d="m9 12 2 2 4-4"
+            stroke="#2563eb"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+          />
+        </svg>
+      );
+    case "pengaturan":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className="w-5 h-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+            fill="white"
+            stroke="white"
+          />
+          <circle cx="12" cy="12" r="3" fill="#2563eb" stroke="#2563eb" strokeWidth="1" />
         </svg>
       );
     case "helpdesk":
@@ -258,13 +345,23 @@ const renderMenuIcon = (id: DashboardTab, isActive: boolean) => {
   }
 };
 
-const MENU_ITEMS = [
+const ALUMNI_MENU_ITEMS = [
   { id: "beranda", label: "Beranda" },
   { id: "cek_ijazah", label: "Cek Ijazah" },
   { id: "tracer_study", label: "Tracer Study" },
   { id: "loker", label: "Info Loker/Magang" },
   { id: "alumni", label: "Alumni" },
   { id: "helpdesk", label: "Helpdesk" },
+] as const;
+
+const ADMIN_MENU_ITEMS = [
+  { id: "beranda", label: "Dashboard" },
+  { id: "master_alumni", label: "Data Alumni" },
+  { id: "verifikasi", label: "Verifikasi" },
+  { id: "kelola_berita", label: "Kelola Berita" },
+  { id: "kelola_loker", label: "Kelola Loker" },
+  { id: "laporan", label: "Laporan" },
+  { id: "pengaturan", label: "Pengaturan" },
 ] as const;
 
 export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
@@ -278,6 +375,9 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
   const { logout, user } = useAuthStore();
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+  const isAdmin = user?.role === "admin_bkk";
+  const menuList = isAdmin ? ADMIN_MENU_ITEMS : ALUMNI_MENU_ITEMS;
 
   const confirmLogout = () => {
     logout();
@@ -327,7 +427,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
           
           {/* Top Logo Section */}
           <div className="relative pb-4 border-b border-blue-900/60 flex flex-col items-center justify-center text-center">
-            {/* Logo Emblem (Centered, no background, no border, standard size) */}
+            {/* Logo Emblem */}
             <div className="flex items-center justify-center">
               <img
                 src="/logo-emblem.png"
@@ -341,7 +441,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
               />
             </div>
 
-            {/* School Name & Portal Badge (Always shown on mobile/tablet, hidden on collapsed desktop) */}
+            {/* School Name & Portal Badge */}
             <div className={`space-y-0.5 overflow-hidden animate-in fade-in duration-200 text-center ${
               isCollapsed ? "lg:hidden block" : "block"
             }`}>
@@ -349,14 +449,14 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                 SMK Sasmita Jaya 2
               </h2>
               <span className="text-[11px] text-blue-200/80 font-normal block">
-                Portal Alumni
+                {isAdmin ? "Panel Pengelola" : "Portal Alumni"}
               </span>
             </div>
           </div>
 
           {/* Navigation Menu Buttons */}
           <nav className="space-y-1.5">
-            {MENU_ITEMS.map((item) => {
+            {menuList.map((item) => {
               const isActive = activeTab === item.id;
 
               return (
@@ -396,10 +496,10 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
             />
             <div className={`text-left overflow-hidden ${isCollapsed ? "lg:hidden block" : "block"}`}>
               <p className="text-xs font-bold text-white truncate">
-                {user?.nama || "Alumni Sasmita"}
+                {user?.nama || "Admin BKK Sasmita"}
               </p>
-              <p className="text-[10px] text-blue-300/70">
-                NISN: {user?.nisn || "0051234567"}
+              <p className="text-[10px] text-blue-300/70 truncate">
+                {isAdmin ? "Pengelola Bursa Kerja" : `NISN: ${user?.nisn || "0051234567"}`}
               </p>
             </div>
           </div>
@@ -407,7 +507,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
           <button
             onClick={() => setShowLogoutModal(true)}
             title={isCollapsed ? "Keluar dari Akun" : undefined}
-            className={`w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-white text-xs font-medium transition cursor-pointer ${
+            className={`w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-white text-xs font-medium transition cursor-pointer hover:bg-white/10 ${
               isCollapsed ? "lg:p-2.5" : ""
             }`}
           >
@@ -424,8 +524,8 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         isOpen={showLogoutModal}
         onClose={() => setShowLogoutModal(false)}
         onConfirm={confirmLogout}
-        title="Keluar dari Portal Alumni?"
-        message="Sesi login Anda akan diakhiri. Anda dapat masuk kembali kapan saja menggunakan NISN atau NIK Anda."
+        title="Keluar dari Portal?"
+        message="Sesi login Anda akan diakhiri. Anda dapat masuk kembali kapan saja."
         confirmText="Ya, Keluar"
         cancelText="Batal"
         type="danger"

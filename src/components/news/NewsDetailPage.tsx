@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { MOCK_NEWS } from "@/lib/mockData";
+import { useContentStore } from "@/store/contentStore";
 import { useAuthStore } from "@/store/authStore";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
@@ -23,10 +23,11 @@ export const NewsDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthStore();
+  const { newsList } = useContentStore();
   const [copied, setCopied] = useState(false);
 
-  const newsItem = MOCK_NEWS.find((item) => item.id === id) || MOCK_NEWS[0];
-  const relatedNews = MOCK_NEWS.filter((item) => item.id !== newsItem.id).slice(
+  const newsItem = newsList.find((item) => item.id === id) || newsList[0];
+  const relatedNews = newsList.filter((item) => item.id !== newsItem?.id).slice(
     0,
     3,
   );

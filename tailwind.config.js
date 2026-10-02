@@ -33,8 +33,10 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Poppins', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: ['Poppins', 'sans-serif'],
         poppins: ['Poppins', 'sans-serif'],
+        mono: ['Poppins', 'sans-serif'],
+        serif: ['Poppins', 'sans-serif'],
       },
     },
   },

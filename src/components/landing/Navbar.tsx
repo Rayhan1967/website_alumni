@@ -20,7 +20,7 @@ interface NavbarProps {
   onOpenLogin?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
+export const Navbar: React.FC<NavbarProps> = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isAuthenticated, user } = useAuthStore();
   const navigate = useNavigate();
@@ -118,7 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin }) => {
               </button>
             ) : (
               <button
-                onClick={() => (onOpenLogin ? onOpenLogin() : navigate('/login'))}
+                onClick={() => navigate('/login')}
                 className="flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-[#132238] hover:bg-[#1c3355] text-white text-sm font-semibold tracking-wide shadow-md transition-all active:scale-95 cursor-pointer"
               >
                 <img

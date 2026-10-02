@@ -208,6 +208,36 @@ export const useTracerStore = create<TracerFormState>()(
           ],
         }));
 
+        // Seamlessly sync with Admin Store, Auth Store & Mail Store
+        try {
+          const { useAdminStore } = await import('./adminStore');
+          useAdminStore.getState().addOrUpdateRespondent(payload, submissionId);
+          const { useAuthStore } = await import('./authStore');
+          useAuthStore.getState().updateUserTracerStatus('SUDAH', submissionId);
+          const { useMailStore } = await import('./mailStore');
+          useMailStore.getState().addMail({
+            senderName: payload.identitas.nama_lengkap,
+            senderRole: 'alumni',
+            senderEmail: payload.identitas.email,
+            senderNisn: payload.identitas.nisn,
+            senderMajor: payload.identitas.jurusan,
+            senderGradYear: payload.identitas.tahun_lulus,
+            senderAvatarGender: payload.identitas.jenis_kelamin === 'Perempuan' ? 'P' : 'L',
+            recipientRole: 'admin_bkk',
+            subject: `Pengajuan Tracer Study Baru (${submissionId})`,
+            preview: `${payload.identitas.nama_lengkap} (${payload.identitas.jurusan}) telah menyelesaikan pengisian kuesioner tracer study.`,
+            body: `Alumni ${payload.identitas.nama_lengkap} (NISN: ${payload.identitas.nisn}) telah mengirimkan formulir Tracer Study dengan ID ${submissionId}. Status kegiatan: ${payload.status_kegiatan}. Silakan periksa kelengkapan data di menu Verifikasi Isian.`,
+            category: 'tracer_submission',
+            submissionId,
+            actionUrl: {
+              tab: 'verifikasi',
+              label: 'Buka di Verifikasi Isian',
+            },
+          });
+        } catch {
+          // Ignore if stores are not available
+        }
+
         return response;
       },
 

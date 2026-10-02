@@ -53,18 +53,76 @@ export const useAuthStore = create<AuthState>()(
         // Quick delay to simulate authentic authentication
         await new Promise((resolve) => setTimeout(resolve, 400));
 
-        const isAdmin = identifier.toLowerCase().includes('admin') || role === 'admin_bkk';
-        const baseUser = isAdmin ? DEFAULT_MOCK_ADMIN : DEFAULT_MOCK_USER;
+        const cleanIdent = identifier.trim();
+        const lowerIdent = cleanIdent.toLowerCase();
+        const isAdmin = lowerIdent.includes('admin') || role === 'admin_bkk';
 
-        let user: UserSession = {
-          ...baseUser,
-          role: isAdmin ? 'admin_bkk' : 'alumni',
-        };
+        if (isAdmin) {
+          const user: UserSession = {
+            ...DEFAULT_MOCK_ADMIN,
+            role: 'admin_bkk',
+            email: identifier.includes('@') ? identifier : DEFAULT_MOCK_ADMIN.email,
+          };
+          const now = Date.now();
+          set({
+            isAuthenticated: true,
+            user,
+            lastDashboardActivity: now,
+          });
+          return true;
+        }
 
-        if (identifier && identifier.length === 10) {
-          user.nisn = identifier;
-        } else if (identifier.includes('@')) {
-          user.email = identifier;
+        // Dynamic lookup in Admin Store's master alumni list
+        let foundAlumni: any = null;
+        try {
+          const { useAdminStore } = await import('./adminStore');
+          const masterList = useAdminStore.getState().masterAlumni;
+          foundAlumni = masterList.find(
+            (a) =>
+              a.nisn.trim() === cleanIdent ||
+              a.nik.trim() === cleanIdent ||
+              a.email.toLowerCase() === lowerIdent ||
+              a.nama.toLowerCase() === lowerIdent
+          );
+        } catch {
+          // Ignore if adminStore is not available
+        }
+
+        const isFemale =
+          foundAlumni?.nama &&
+          /^(citra|mega|olivia|qori|siti|vina|yasmin|bella|gita|indah)/i.test(
+            foundAlumni.nama
+          );
+
+        let user: UserSession;
+        if (foundAlumni) {
+          user = {
+            id: foundAlumni.id,
+            nisn: foundAlumni.nisn,
+            nama: foundAlumni.nama,
+            email: foundAlumni.email,
+            role: 'alumni',
+            jurusan: foundAlumni.jurusan,
+            tahun_lulus: foundAlumni.tahunLulus,
+            tracerStatus: foundAlumni.statusTracer,
+            submissionId: foundAlumni.submissionId,
+            submittedAt: foundAlumni.submittedAt,
+            jenisKelamin: isFemale ? 'P' : 'L',
+          };
+        } else {
+          // Dynamic fallback for arbitrary NISN / Email
+          const isNisn = /^\d{10}$/.test(cleanIdent);
+          user = {
+            ...DEFAULT_MOCK_USER,
+            id: `usr-${Date.now()}`,
+            nisn: isNisn ? cleanIdent : DEFAULT_MOCK_USER.nisn,
+            email: cleanIdent.includes('@') ? cleanIdent : DEFAULT_MOCK_USER.email,
+            nama: isNisn ? `Alumni (${cleanIdent})` : DEFAULT_MOCK_USER.nama,
+            role: 'alumni',
+            tracerStatus: 'BELUM',
+            submissionId: undefined,
+            submittedAt: undefined,
+          };
         }
 
         const now = Date.now();

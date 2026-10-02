@@ -44,19 +44,122 @@ export const AboutDetailPage: React.FC = () => {
       </div>
 
       {/* Hero Banner Header */}
-      <section className="bg-gradient-to-r from-[#102a4e] via-[#1a3d6d] to-[#102a4e] text-white py-12 sm:py-16 relative overflow-hidden">
+      <section className="bg-gradient-to-r from-[#0d223f] via-[#163863] to-[#0f2747] text-white py-12 sm:py-16 relative overflow-hidden">
+        {/* Background Decorative Motif & Ambient Lighting */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
+          {/* Ambient Glows */}
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl" />
+          <div className="absolute -bottom-24 right-1/4 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 -left-20 -translate-y-1/2 w-64 h-64 bg-sky-500/10 rounded-full blur-2xl" />
+
+          {/* Subtle Dot Matrix Grid */}
+          <svg
+            className="absolute inset-0 w-full h-full opacity-[0.12]"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <pattern id="about-banner-dots" width="24" height="24" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1" fill="#93c5fd" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#about-banner-dots)" />
+          </svg>
+
+          {/* Geometric & Wavy Flow Illustration Motif (Right Side) */}
+          <svg
+            className="absolute right-0 top-0 bottom-0 h-full w-[550px] sm:w-[700px] lg:w-[860px] max-w-none opacity-30 sm:opacity-40"
+            viewBox="0 0 900 300"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <defs>
+              <linearGradient id="about-line-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.1" />
+                <stop offset="50%" stopColor="#60a5fa" stopOpacity="0.7" />
+                <stop offset="100%" stopColor="#a855f7" stopOpacity="0.3" />
+              </linearGradient>
+              <linearGradient id="about-line-grad-2" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.8" />
+                <stop offset="70%" stopColor="#818cf8" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#c084fc" stopOpacity="0.0" />
+              </linearGradient>
+            </defs>
+
+            {/* Dynamic Flowing Waves */}
+            <path
+              d="M100 280 C 280 260, 360 80, 560 120 C 720 150, 800 50, 900 90"
+              stroke="url(#about-line-grad-1)"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M140 300 C 310 270, 390 100, 590 140 C 740 170, 820 70, 900 110"
+              stroke="url(#about-line-grad-1)"
+              strokeWidth="1.5"
+              strokeDasharray="4 4"
+              strokeOpacity="0.7"
+            />
+            <path
+              d="M200 240 C 350 180, 480 230, 680 90 C 790 20, 850 60, 900 40"
+              stroke="url(#about-line-grad-2)"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+            <path
+              d="M230 260 C 380 200, 510 250, 710 110 C 810 40, 870 80, 920 60"
+              stroke="url(#about-line-grad-2)"
+              strokeWidth="1"
+              strokeOpacity="0.5"
+            />
+
+            {/* Concentric Circles / Radar & Orbit System */}
+            <g transform="translate(680, 110)">
+              <circle cx="0" cy="0" r="110" stroke="#93c5fd" strokeWidth="1" strokeDasharray="3 6" opacity="0.25" />
+              <circle cx="0" cy="0" r="80" stroke="#60a5fa" strokeWidth="1" opacity="0.35" />
+              <circle cx="0" cy="0" r="50" stroke="#38bdf8" strokeWidth="1.2" strokeDasharray="2 4" opacity="0.45" />
+              <circle cx="0" cy="0" r="22" stroke="#a78bfa" strokeWidth="1.5" opacity="0.6" />
+              <circle cx="0" cy="0" r="5" fill="#38bdf8" />
+              
+              {/* Orbiting Satellite Nodes */}
+              <circle cx="80" cy="0" r="3" fill="#60a5fa" />
+              <circle cx="-35" cy="35" r="4" fill="#a78bfa" />
+              <circle cx="56" cy="-56" r="3" fill="#38bdf8" />
+              <line x1="-80" y1="0" x2="80" y2="0" stroke="#93c5fd" strokeWidth="0.8" strokeDasharray="2 4" opacity="0.3" />
+              <line x1="0" y1="-80" x2="0" y2="80" stroke="#93c5fd" strokeWidth="0.8" strokeDasharray="2 4" opacity="0.3" />
+            </g>
+
+            {/* Secondary Node Hub on the left wave */}
+            <g transform="translate(420, 170)">
+              <circle cx="0" cy="0" r="40" stroke="#60a5fa" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
+              <circle cx="0" cy="0" r="4" fill="#60a5fa" />
+              <circle cx="28" cy="-28" r="2.5" fill="#38bdf8" />
+              <line x1="0" y1="0" x2="28" y2="-28" stroke="#60a5fa" strokeWidth="1" opacity="0.4" />
+            </g>
+
+            {/* Neat Geometric Crosses / Plus Accents */}
+            <g stroke="#93c5fd" strokeWidth="1.5" opacity="0.4">
+              <path d="M 520 40 L 520 50 M 515 45 L 525 45" />
+              <path d="M 320 120 L 320 130 M 315 125 L 325 125" />
+              <path d="M 830 210 L 830 220 M 825 215 L 835 215" />
+              <path d="M 610 240 L 610 250 M 605 245 L 615 245" />
+            </g>
+
+            {/* Modern Diamond & Polygon accents */}
+            <polygon points="560,95 565,100 560,105 555,100" fill="#38bdf8" opacity="0.6" />
+            <polygon points="760,200 766,206 760,212 754,206" stroke="#818cf8" strokeWidth="1.2" fill="none" opacity="0.5" />
+            <polygon points="380,60 385,65 380,70 375,65" fill="#93c5fd" opacity="0.4" />
+          </svg>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl space-y-4">
-
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
               Tentang Tracer Study <br className="hidden sm:inline" />
               SMK Sasmita Jaya 2 Pamulang
             </h1>
           </div>
         </div>
-
-        {/* Subtle Background Pattern */}
-        <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-blue-400/10 blur-3xl pointer-events-none" />
       </section>
 
       {/* Main Content Layout */}

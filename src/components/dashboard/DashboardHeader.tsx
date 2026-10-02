@@ -1,19 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useTracerStore } from '@/store/tracerStore';
-import { Menu, Bell, LogOut, FileText, ChevronDown } from 'lucide-react';
+import { Menu, LogOut, FileText, ChevronDown } from 'lucide-react';
 import { UserAvatar } from '@/components/ui/UserAvatar';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { useNavigate } from 'react-router-dom';
+import { MailNotificationMenu } from './MailNotificationMenu';
 
 interface DashboardHeaderProps {
   onToggleMobileMenu: () => void;
   onOpenReceipt: () => void;
+  onNavigateTab?: (tab: string, respondentId?: string) => void;
 }
 
 export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   onToggleMobileMenu,
   onOpenReceipt,
+  onNavigateTab,
 }) => {
   const { user, logout } = useAuthStore();
   const { isSubmitted } = useTracerStore();
@@ -66,27 +69,25 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         <div>
           <h1 className="text-sm sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <span>Halo, {user?.nama || 'Ahmad Dani'}!</span>
-            
+            {user?.role === 'admin_bkk' && (
+              <span className="px-2 py-0.5 rounded-full bg-blue-100 text-slate-700 border border-slate-200 text-[11px] font-semibold">
+                Admin
+              </span>
+            )}
           </h1>
           <p className="text-xs text-slate-500 hidden sm:block">
-            SMK Sasmita Jaya 2 Pamulang | Tahun Lulus {user?.tahun_lulus || 2024}
+            {user?.role === 'admin_bkk'
+              ? 'Bursa Kerja Khusus SMK Sasmita Jaya 2 Pamulang'
+              : `SMK Sasmita Jaya 2 Pamulang | Tahun Lulus ${user?.tahun_lulus || 2024}`}
           </p>
         </div>
       </div>
 
-      {/* Right Area: Profile Circle matching Wireframe */}
-      <div className="flex items-center gap-3">
+      {/* Right Area: Mail Notification & Profile Circle */}
+      <div className="flex items-center gap-2.5 sm:gap-3">
         
-        {/* Notification Bell */}
-        <div className="relative">
-          <button
-            className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition"
-            aria-label="Notifikasi"
-          >
-            <Bell className="w-4 h-4" />
-          </button>
-          <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-white" />
-        </div>
+        {/* Interactive Mail Notification Center */}
+        <MailNotificationMenu onNavigateTab={onNavigateTab} />
 
         {/* Profile Circle with Dropdown */}
         <div className="relative" ref={dropdownRef}>
@@ -108,21 +109,23 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-40 text-xs text-slate-700">
               <div className="px-4 py-2.5 border-b border-slate-100">
                 <p className="font-bold text-slate-900">{user?.nama || 'Ahmad Dani'}</p>
-                <p className="text-slate-400 text-[11px] truncate">{user?.email || 'alumni@example.com'}</p>
+                <p className="text-slate-400 text-[11px] truncate">{user?.email || 'admin@smksasmitajaya2.sch.id'}</p>
               </div>
 
-              <div className="py-1">
-                <button
-                  onClick={() => {
-                    setDropdownOpen(false);
-                    onOpenReceipt();
-                  }}
-                  className="w-full px-4 py-2 text-left hover:bg-slate-50 flex items-center gap-2 text-slate-700 cursor-pointer"
-                >
-                  <FileText className="w-4 h-4 text-blue-900" />
-                  <span>Bukti Pengisian Tracer Study</span>
-                </button>
-              </div>
+              {user?.role !== 'admin_bkk' && (
+                <div className="py-1">
+                  <button
+                    onClick={() => {
+                      setDropdownOpen(false);
+                      onOpenReceipt();
+                    }}
+                    className="w-full px-4 py-2 text-left hover:bg-slate-50 flex items-center gap-2 text-slate-700 cursor-pointer"
+                  >
+                    <FileText className="w-4 h-4 text-blue-900" />
+                    <span>Bukti Pengisian Tracer Study</span>
+                  </button>
+                </div>
+              )}
 
               <div className="border-t border-slate-100 pt-1">
                 <button
