@@ -70,7 +70,3 @@ Thumbs.db
 
 # Agent / AI Scratch caches
 .agents/
-
-# documentation
-DATABASE_SCHEMA.md
-TRACER_STUDY_WORKFLOW.md
