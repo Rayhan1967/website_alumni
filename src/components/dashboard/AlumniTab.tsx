@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { MOCK_ALUMNI_LIST } from '@/lib/mockData';
+import { useAdminStore } from '@/store/adminStore';
 import { Input } from '@/components/ui/Input';
 import { CustomSelect } from '@/components/ui/CustomSelect';
 import { UserAvatar } from '@/components/ui/UserAvatar';
@@ -12,11 +13,54 @@ export const AlumniTab: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
+  const { masterAlumni, respondents } = useAdminStore();
+
   useEffect(() => {
     setCurrentPage(1);
   }, [search, jurusanFilter]);
 
-  const filteredAlumni = MOCK_ALUMNI_LIST.filter((alumni) => {
+  // Combine master alumni from admin store with mock alumni
+  const combinedAlumniList = useMemo(() => {
+    const fromAdmin = (masterAlumni || []).map((m) => {
+      const resp = (respondents || []).find((r) => r.nisn === m.nisn || r.nik === m.nik);
+      const isFemale = /^(citra|mega|olivia|qori|siti|vina|yasmin|bella|gita|indah|dwi|ani|nur|rina)/i.test(m.nama);
+
+      let pekerjaan = 'Alumni Terdaftar';
+      let kampus = '-';
+      let kota = 'Tangerang Selatan';
+
+      if (resp) {
+        if (resp.statusKegiatan === 'KERJA' || resp.statusKegiatan === 'KERJA_KULIAH') {
+          pekerjaan = `${resp.jabatanProdiUsaha || 'Staff'} di ${resp.instansiKampusUsaha || 'Perusahaan Mitra'}`;
+          kota = resp.fullPayload?.detail_kerja?.kota_kabupaten || 'Tangerang Selatan';
+        } else if (resp.statusKegiatan === 'KULIAH') {
+          kampus = `${resp.jabatanProdiUsaha || 'Mahasiswa'} di ${resp.instansiKampusUsaha || 'Universitas'}`;
+          pekerjaan = 'Studi Lanjut (Kuliah)';
+        } else if (resp.statusKegiatan === 'WIRAUSAHA' || resp.statusKegiatan === 'WIRAUSAHA_KULIAH') {
+          pekerjaan = `Owner ${resp.instansiKampusUsaha || 'Usaha Mandiri'}`;
+        }
+      }
+
+      return {
+        nama: m.nama,
+        jurusan: m.jurusan,
+        tahunLulus: m.tahunLulus,
+        status: resp?.statusKegiatan || (m.statusTracer === 'SUDAH' ? 'KERJA' : 'BELUM_KERJA'),
+        pekerjaan,
+        kampus,
+        kota,
+        jenisKelamin: (isFemale ? 'P' : 'L') as 'L' | 'P',
+      };
+    });
+
+    // Merge without duplicates by name
+    const seenNames = new Set(fromAdmin.map((a) => a.nama.toLowerCase()));
+    const additionalMock = MOCK_ALUMNI_LIST.filter((a) => !seenNames.has(a.nama.toLowerCase()));
+
+    return [...fromAdmin, ...additionalMock];
+  }, [masterAlumni, respondents]);
+
+  const filteredAlumni = combinedAlumniList.filter((alumni) => {
     const matchSearch =
       alumni.nama.toLowerCase().includes(search.toLowerCase()) ||
       alumni.pekerjaan.toLowerCase().includes(search.toLowerCase()) ||

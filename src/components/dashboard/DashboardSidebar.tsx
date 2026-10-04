@@ -486,7 +486,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                   key={item.id}
                   onClick={() => handleSelectTab(item.id as DashboardTab)}
                   title={isCollapsed ? item.label : undefined}
-                  className={`w-full flex items-center rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer gap-3 px-3.5 py-2.5 text-left ${
+                  className={`w-full flex items-center rounded-md text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer gap-3 px-3.5 py-2.5 text-left ${
                     isCollapsed ? "lg:justify-center lg:p-3" : ""
                   } ${
                     isActive

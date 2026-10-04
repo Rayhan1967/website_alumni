@@ -86,7 +86,7 @@ const DEFAULT_SETTINGS: AdminSettings = {
   targetYear: 2024,
   periodStart: '2026-08-01',
   periodEnd: '2026-11-30',
-  kepalaSekolah: 'Drs. H. Bakri Hadi, M.M.',
+  kepalaSekolah: 'Siti Zubaidah, S.E., S.Pd., M.Pd.I',
   nipKepalaSekolah: '19680514 199303 1 004',
   ketuaBkk: 'Ahmad Fauzi, S.Pd., M.Kom.',
   nipKetuaBkk: '19840219 200902 1 002',
@@ -107,7 +107,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '081298765432',
     email: 'ahmaddani@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0001',
+    submissionId: '2026100001',
     submittedAt: '2026-09-26T13:38:16Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -121,7 +121,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '081311223344',
     email: 'budisantoso@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0002',
+    submissionId: '2026100002',
     submittedAt: '2026-09-27T09:15:22Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -135,7 +135,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '081233445566',
     email: 'citradewi@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0003',
+    submissionId: '2026100003',
     submittedAt: '2026-09-28T10:40:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -149,7 +149,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '085711229988',
     email: 'dimaspratama@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0004',
+    submissionId: '2026100004',
     submittedAt: '2026-09-29T14:20:10Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -163,7 +163,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '087811992233',
     email: 'ekowahyudi@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0005',
+    submissionId: '2026100005',
     submittedAt: '2026-09-30T11:05:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -177,7 +177,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '081299887766',
     email: 'farhanrizki@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0006',
+    submissionId: '2026100006',
     submittedAt: '2026-10-01T08:30:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -191,7 +191,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '089533221100',
     email: 'megasilvia@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0007',
+    submissionId: '2026100007',
     submittedAt: '2026-10-01T15:45:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -205,7 +205,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '081211993388',
     email: 'naufaladitya@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0008',
+    submissionId: '2026100008',
     submittedAt: '2026-10-02T09:10:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -219,7 +219,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '081388776655',
     email: 'oliviazahra@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0009',
+    submissionId: '2026100009',
     submittedAt: '2026-10-02T10:15:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -233,7 +233,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '087711223344',
     email: 'panduwicaksono@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0010',
+    submissionId: '2026100010',
     submittedAt: '2026-10-02T11:00:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -247,7 +247,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '085812345678',
     email: 'qoriazzahra@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0011',
+    submissionId: '2026100011',
     submittedAt: '2026-10-02T11:45:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -261,7 +261,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '081234567890',
     email: 'rizkiramadhan@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0012',
+    submissionId: '2026100012',
     submittedAt: '2026-10-02T12:30:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -275,7 +275,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '081398765432',
     email: 'sitinurhaliza@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0013',
+    submissionId: '2026100013',
     submittedAt: '2026-10-02T13:15:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -289,7 +289,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '087855443322',
     email: 'taufikhidayat@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0014',
+    submissionId: '2026100014',
     submittedAt: '2026-10-02T14:00:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -303,7 +303,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '089677889900',
     email: 'umarfaruq@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0015',
+    submissionId: '2026100015',
     submittedAt: '2026-10-02T14:45:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -317,7 +317,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '085799887766',
     email: 'vinamelinda@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0016',
+    submissionId: '2026100016',
     submittedAt: '2026-10-02T15:20:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -331,7 +331,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '081266554433',
     email: 'wahyuprasetyo@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0017',
+    submissionId: '2026100017',
     submittedAt: '2026-10-02T16:00:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -345,7 +345,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '081322334455',
     email: 'xavierputra@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0018',
+    submissionId: '2026100018',
     submittedAt: '2026-10-02T16:40:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -359,7 +359,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '089511224466',
     email: 'yasminaulia@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0019',
+    submissionId: '2026100019',
     submittedAt: '2026-10-02T17:15:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -373,7 +373,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '081288112233',
     email: 'zidanalghifari@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0020',
+    submissionId: '2026100020',
     submittedAt: '2026-10-02T17:50:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -387,7 +387,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '087812349876',
     email: 'adityapratama@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0021',
+    submissionId: '2026100021',
     submittedAt: '2026-10-02T18:20:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -401,7 +401,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
     noWhatsapp: '085644332211',
     email: 'bellasafitri@example.com',
     statusTracer: 'SUDAH',
-    submissionId: 'TRC-2026-0022',
+    submissionId: '2026100022',
     submittedAt: '2026-10-02T19:00:00Z',
     createdAt: '2026-08-01T08:00:00Z',
   },
@@ -482,7 +482,7 @@ const INITIAL_MASTER_ALUMNI: MasterAlumniRecord[] = [
 const INITIAL_RESPONDENTS: RespondentRecord[] = [
   {
     id: 'rsp-001',
-    submissionId: 'TRC-2026-0001',
+    submissionId: '2026100001',
     nisn: '0051234567',
     nik: '3674012345670001',
     nama: 'Ahmad Dani',
@@ -549,7 +549,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-002',
-    submissionId: 'TRC-2026-0002',
+    submissionId: '2026100002',
     nisn: '0052345678',
     nik: '3674012345670002',
     nama: 'Budi Santoso',
@@ -606,7 +606,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-003',
-    submissionId: 'TRC-2026-0003',
+    submissionId: '2026100003',
     nisn: '0053456789',
     nik: '3674012345670003',
     nama: 'Citra Dewi Lestari',
@@ -661,7 +661,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-004',
-    submissionId: 'TRC-2026-0004',
+    submissionId: '2026100004',
     nisn: '0054567890',
     nik: '3674012345670004',
     nama: 'Dimas Bagus Pratama',
@@ -706,7 +706,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-005',
-    submissionId: 'TRC-2026-0005',
+    submissionId: '2026100005',
     nisn: '0055678901',
     nik: '3674012345670005',
     nama: 'Eko Wahyudi',
@@ -758,7 +758,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-006',
-    submissionId: 'TRC-2026-0006',
+    submissionId: '2026100006',
     nisn: '0056789012',
     nik: '3674012345670006',
     nama: 'Farhan Rizki Ramadhan',
@@ -806,7 +806,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-007',
-    submissionId: 'TRC-2026-0007',
+    submissionId: '2026100007',
     nisn: '0063456780',
     nik: '3674012345670013',
     nama: 'Mega Silvia Putri',
@@ -859,7 +859,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-008',
-    submissionId: 'TRC-2026-0008',
+    submissionId: '2026100008',
     nisn: '0064567891',
     nik: '3674012345670014',
     nama: 'Naufal Aditya Putra',
@@ -900,7 +900,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-009',
-    submissionId: 'TRC-2026-0009',
+    submissionId: '2026100009',
     nisn: '0065678902',
     nik: '3674012345670015',
     nama: 'Olivia Zahra Nabila',
@@ -960,7 +960,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-010',
-    submissionId: 'TRC-2026-0010',
+    submissionId: '2026100010',
     nisn: '0066789013',
     nik: '3674012345670016',
     nama: 'Pandu Wicaksono',
@@ -1018,7 +1018,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-011',
-    submissionId: 'TRC-2026-0011',
+    submissionId: '2026100011',
     nisn: '0067890124',
     nik: '3674012345670017',
     nama: 'Qori Azzahra',
@@ -1068,7 +1068,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-012',
-    submissionId: 'TRC-2026-0012',
+    submissionId: '2026100012',
     nisn: '0068901235',
     nik: '3674012345670018',
     nama: 'Rizki Ramadhan',
@@ -1117,7 +1117,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-013',
-    submissionId: 'TRC-2026-0013',
+    submissionId: '2026100013',
     nisn: '0069012346',
     nik: '3674012345670019',
     nama: 'Siti Nurhaliza',
@@ -1181,7 +1181,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-014',
-    submissionId: 'TRC-2026-0014',
+    submissionId: '2026100014',
     nisn: '0070123457',
     nik: '3674012345670020',
     nama: 'Taufik Hidayat',
@@ -1240,7 +1240,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-015',
-    submissionId: 'TRC-2026-0015',
+    submissionId: '2026100015',
     nisn: '0071234568',
     nik: '3674012345670021',
     nama: 'Umar Faruq',
@@ -1296,7 +1296,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-016',
-    submissionId: 'TRC-2026-0016',
+    submissionId: '2026100016',
     nisn: '0072345679',
     nik: '3674012345670022',
     nama: 'Vina Melinda',
@@ -1352,7 +1352,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-017',
-    submissionId: 'TRC-2026-0017',
+    submissionId: '2026100017',
     nisn: '0073456780',
     nik: '3674012345670023',
     nama: 'Wahyu Prasetyo',
@@ -1408,7 +1408,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-018',
-    submissionId: 'TRC-2026-0018',
+    submissionId: '2026100018',
     nisn: '0074567891',
     nik: '3674012345670024',
     nama: 'Xavier Putra Mahendra',
@@ -1463,7 +1463,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-019',
-    submissionId: 'TRC-2026-0019',
+    submissionId: '2026100019',
     nisn: '0075678902',
     nik: '3674012345670025',
     nama: 'Yasmin Aulia',
@@ -1513,7 +1513,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-020',
-    submissionId: 'TRC-2026-0020',
+    submissionId: '2026100020',
     nisn: '0076789013',
     nik: '3674012345670026',
     nama: 'Zidan Al-Ghifari',
@@ -1571,7 +1571,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-021',
-    submissionId: 'TRC-2026-0021',
+    submissionId: '2026100021',
     nisn: '0077890124',
     nik: '3674012345670027',
     nama: 'Aditya Pratama Putra',
@@ -1612,7 +1612,7 @@ const INITIAL_RESPONDENTS: RespondentRecord[] = [
   },
   {
     id: 'rsp-022',
-    submissionId: 'TRC-2026-0022',
+    submissionId: '2026100022',
     nisn: '0078901235',
     nik: '3674012345670028',
     nama: 'Bella Safitri',
@@ -1840,23 +1840,35 @@ export const useAdminStore = create<AdminState>()(
     }),
     {
       name: 'tracer_study_admin_sasmita2',
-      version: 4,
+      version: 6,
       migrate: (persistedState: any, version: number) => {
         if (
           !persistedState ||
-          version < 4 ||
+          version < 6 ||
           !persistedState.masterAlumni ||
           persistedState.masterAlumni.length < 20 ||
           !persistedState.respondents ||
           persistedState.respondents.length < 20
         ) {
           return {
-            masterAlumni: INITIAL_MASTER_ALUMNI,
-            respondents: INITIAL_RESPONDENTS,
-            settings: DEFAULT_SETTINGS,
+            masterAlumni: persistedState?.masterAlumni || INITIAL_MASTER_ALUMNI,
+            respondents: persistedState?.respondents || INITIAL_RESPONDENTS,
+            settings: {
+              ...(persistedState?.settings || DEFAULT_SETTINGS),
+              kepalaSekolah: 'Siti Zubaidah, S.E., S.Pd., M.Pd.I',
+            },
           };
         }
-        return persistedState;
+        return {
+          ...persistedState,
+          settings: {
+            ...persistedState.settings,
+            kepalaSekolah:
+              persistedState.settings?.kepalaSekolah === 'Drs. H. Bakri Hadi, M.M.'
+                ? 'Siti Zubaidah, S.E., S.Pd., M.Pd.I'
+                : persistedState.settings?.kepalaSekolah || 'Siti Zubaidah, S.E., S.Pd., M.Pd.I',
+          },
+        };
       },
     }
   )

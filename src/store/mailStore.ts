@@ -48,11 +48,11 @@ const INITIAL_MAILS: MailItem[] = [
     senderGradYear: 2024,
     senderAvatarGender: 'L',
     recipientRole: 'admin_bkk',
-    subject: 'Pengajuan Tracer Study Baru (TRC-2026-0001)',
+    subject: 'Pengajuan Tracer Study Baru (2026100001)',
     preview: 'Halo Admin BKK, saya telah mengirimkan pengisian tracer study untuk status Bekerja & Kuliah.',
-    body: 'Selamat siang Bapak/Ibu Pengelola BKK SMK Sasmita Jaya 2. Saya Ahmad Dani (TKJ 2024) ingin mengonfirmasi bahwa saya telah menyelesaikan pengisian kuesioner Tracer Study dengan nomor pengajuan TRC-2026-0001. Saat ini saya bekerja sebagai Technical Support di PT Solusi Teknologi Nusantara dan melanjutkan kuliah S1 Teknik Informatika di Universitas Pamulang. Mohon untuk diverifikasi. Terima kasih.',
+    body: 'Selamat siang Bapak/Ibu Pengelola BKK SMK Sasmita Jaya 2. Saya Ahmad Dani (TKJ 2024) ingin mengonfirmasi bahwa saya telah menyelesaikan pengisian kuesioner Tracer Study dengan nomor pengajuan 2026100001. Saat ini saya bekerja sebagai Technical Support di PT Solusi Teknologi Nusantara dan melanjutkan kuliah S1 Teknik Informatika di Universitas Pamulang. Mohon untuk diverifikasi. Terima kasih.',
     category: 'tracer_submission',
-    submissionId: 'TRC-2026-0001',
+    submissionId: '2026100001',
     createdAt: '2026-10-02T19:30:00Z',
     isRead: false,
     actionUrl: {
@@ -71,11 +71,11 @@ const INITIAL_MAILS: MailItem[] = [
     senderGradYear: 2024,
     senderAvatarGender: 'L',
     recipientRole: 'admin_bkk',
-    subject: 'Pembaruan Berkas Kuesioner (TRC-2026-0008)',
+    subject: 'Pembaruan Berkas Kuesioner (2026100008)',
     preview: 'Saya sudah melengkapi catatan domisili dan bidang loker yang diminta untuk revisi verifikasi.',
     body: 'Yth. Admin BKK Sasmita, menindaklanjuti status REVISI pada kuesioner saya, saya telah memperbarui informasi domisili (Kota Tangerang Selatan) dan minat lowongan operator mesin CNC/Bubut di kawasan industri Cilegon & Tangerang. Mohon bantuannya untuk peninjauan kembali. Terima kasih banyak atas arahan BKK.',
     category: 'inquiry',
-    submissionId: 'TRC-2026-0008',
+    submissionId: '2026100008',
     createdAt: '2026-10-02T18:45:00Z',
     isRead: false,
     actionUrl: {
@@ -98,7 +98,7 @@ const INITIAL_MAILS: MailItem[] = [
     preview: 'Terima kasih banyak BKK atas bimbingan tes kerja hingga diterima di PT Indonesia Epson Industry.',
     body: 'Kepada Yth. Tim BKK SMK Sasmita Jaya 2, saya Bella Safitri ingin mengucapkan terima kasih yang sebesar-besarnya. Berkat pembekalan materi soldering presisi dan simulasi wawancara dari BKK, saya berhasil lolos dan kini bertugas sebagai SMD Line Quality Leader. Saya juga memberikan masukan pada kuesioner agar modul PLC dan K3 manufaktur Jepang terus dipertahankan untuk adik-adik kelas.',
     category: 'feedback',
-    submissionId: 'TRC-2026-0022',
+    submissionId: '2026100022',
     createdAt: '2026-10-02T17:20:00Z',
     isRead: false,
     actionUrl: {
@@ -119,9 +119,9 @@ const INITIAL_MAILS: MailItem[] = [
     recipientRole: 'admin_bkk',
     subject: 'Pemberitahuan Wirausaha Mandiri RR Speed Motor',
     preview: 'Salam BKK, usaha bengkel servis dan coating motor kami sudah berjalan 8 bulan dengan omset stabil.',
-    body: 'Halo Bapak/Ibu Guru BKK, kuesioner wirausaha mandiri saya sudah diisi lengkap (TRC-2026-0012). Bengkel RR Speed Motor Garage saat ini sudah mempekerjakan 2 orang teknisi junior. Jika ada program pameran karya wirausaha alumni atau kunjungan adik kelas SMK, bengkel kami sangat terbuka untuk bekerja sama.',
+    body: 'Halo Bapak/Ibu Guru BKK, kuesioner wirausaha mandiri saya sudah diisi lengkap (2026100012). Bengkel RR Speed Motor Garage saat ini sudah mempekerjakan 2 orang teknisi junior. Jika ada program pameran karya wirausaha alumni atau kunjungan adik kelas SMK, bengkel kami sangat terbuka untuk bekerja sama.',
     category: 'feedback',
-    submissionId: 'TRC-2026-0012',
+    submissionId: '2026100012',
     createdAt: '2026-10-02T14:10:00Z',
     isRead: true,
     actionUrl: {
@@ -142,9 +142,9 @@ const INITIAL_MAILS: MailItem[] = [
     recipientRole: 'admin_bkk',
     subject: 'Konfirmasi Pengisian Tracer Lanjut Studi S1 PLN',
     preview: 'Data tracer study saya untuk program S1 Teknik Elektro Institut Teknologi PLN telah terkirim.',
-    body: 'Assalamu alaikum Wr. Wb. Data pengajuan TRC-2026-0003 saya sudah saya kirimkan melalui portal. Pembelajaran dasar instalasi tenaga listrik di Sasmita 2 sangat mempermudah praktikum saya di kampus. Terima kasih untuk seluruh bapak/ibu guru BKK.',
+    body: 'Assalamu alaikum Wr. Wb. Data pengajuan 2026100003 saya sudah saya kirimkan melalui portal. Pembelajaran dasar instalasi tenaga listrik di Sasmita 2 sangat mempermudah praktikum saya di kampus. Terima kasih untuk seluruh bapak/ibu guru BKK.',
     category: 'tracer_submission',
-    submissionId: 'TRC-2026-0003',
+    submissionId: '2026100003',
     createdAt: '2026-10-01T11:00:00Z',
     isRead: true,
     actionUrl: {
@@ -178,10 +178,10 @@ const INITIAL_MAILS: MailItem[] = [
     recipientRole: 'alumni',
     recipientNisn: '0051234567',
     subject: 'Verifikasi Berkas Kuesioner Disetujui (VALID)',
-    preview: 'Kuesioner Tracer Study Anda (TRC-2026-0001) telah berhasil diverifikasi oleh Tim BKK.',
-    body: 'Selamat Ahmad Dani, pengajuan kuesioner Tracer Study Anda dengan nomor TRC-2026-0001 telah dinyatakan VALID dan lengkap oleh Admin BKK. Anda dapat mengunduh dan mencetak Bukti Tanda Terima Tracer Study resmi melalui menu profil akun Anda.',
+    preview: 'Kuesioner Tracer Study Anda (2026100001) telah berhasil diverifikasi oleh Tim BKK.',
+    body: 'Selamat Ahmad Dani, pengajuan kuesioner Tracer Study Anda dengan nomor 2026100001 telah dinyatakan VALID dan lengkap oleh Admin BKK. Anda dapat mengunduh dan mencetak Bukti Tanda Terima Tracer Study resmi melalui menu profil akun Anda.',
     category: 'verification_update',
-    submissionId: 'TRC-2026-0001',
+    submissionId: '2026100001',
     createdAt: '2026-09-27T08:00:00Z',
     isRead: false,
     actionUrl: {
@@ -261,7 +261,15 @@ export const useMailStore = create<MailState>()(
     }),
     {
       name: 'tracer_study_mail_store',
-      version: 2,
+      version: 3,
+      migrate: (persistedState: any, version: number) => {
+        if (!persistedState || version < 3 || !persistedState.mails) {
+          return {
+            mails: INITIAL_MAILS,
+          };
+        }
+        return persistedState;
+      },
     }
   )
 );

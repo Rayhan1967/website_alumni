@@ -261,23 +261,52 @@ export const Step3Details: React.FC<Step3Props> = ({ onNext, onPrev }) => {
               <label className="block text-xs sm:text-sm font-semibold text-slate-800 mb-2">
                 Jenjang:
               </label>
-              <div className="flex items-center gap-4">
-                {JENJANG_KULIAH_OPTIONS.map((jenjang) => {
-                  const isSelected = (detail_kuliah?.jenjang || 'S1') === jenjang;
-                  return (
-                    <label key={jenjang} className="flex items-center gap-2 cursor-pointer text-xs sm:text-sm text-slate-800">
-                      <input
-                        type="radio"
-                        name="jenjang"
-                        value={jenjang}
-                        checked={isSelected}
-                        onChange={() => handleKuliahChange('jenjang', jenjang)}
-                        className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer"
-                      />
-                      <span>{jenjang}</span>
-                    </label>
-                  );
-                })}
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-wrap items-center gap-4">
+                  {JENJANG_KULIAH_OPTIONS.map((jenjang) => {
+                    const isLainnyaOption = (jenjang as string) === 'Lainnya';
+                    const currentJenjang = (detail_kuliah?.jenjang as string) || 'S1';
+                    const isSelected = isLainnyaOption
+                      ? currentJenjang === 'Lainnya' || !JENJANG_KULIAH_OPTIONS.some(o => (o as string) === currentJenjang && (o as string) !== 'Lainnya')
+                      : currentJenjang === jenjang;
+
+                    return (
+                      <label key={jenjang} className="flex items-center gap-2 cursor-pointer text-xs sm:text-sm text-slate-800">
+                        <input
+                          type="radio"
+                          name="jenjang"
+                          value={jenjang}
+                          checked={isSelected}
+                          onChange={() => handleKuliahChange('jenjang', jenjang)}
+                          className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer"
+                        />
+                        <span>{jenjang}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+                
+                {/* Input text untuk 'Lainnya' */}
+                {(() => {
+                  const currentJenjang = (detail_kuliah?.jenjang as string) || 'S1';
+                  const isLainnyaSelected = currentJenjang === 'Lainnya' || !JENJANG_KULIAH_OPTIONS.some(o => (o as string) === currentJenjang && (o as string) !== 'Lainnya');
+                  
+                  if (isLainnyaSelected) {
+                    return (
+                      <div className="w-full sm:w-1/2">
+                        <input
+                          type="text"
+                          placeholder="Sebutkan jenjang lainnya..."
+                          className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          value={currentJenjang === 'Lainnya' ? '' : currentJenjang}
+                          onChange={(e) => handleKuliahChange('jenjang', e.target.value || 'Lainnya')}
+                          required
+                        />
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
               </div>
             </div>
 

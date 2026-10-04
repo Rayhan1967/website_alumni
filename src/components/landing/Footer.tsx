@@ -1,22 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Mail, MapPin, Phone, Printer } from 'lucide-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Mail, MapPin, Phone, Printer } from "lucide-react";
 
 export const Footer: React.FC = () => {
   return (
-    <footer id="kontak" className="bg-[#0b192e] text-slate-300 pt-14 pb-8 border-t border-slate-800">
+    <footer
+      id="kontak"
+      className="bg-[#0b192e] text-slate-300 pt-14 pb-8 border-t border-slate-800"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         {/* Top/Middle row */}
         <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 pb-10 border-b border-slate-800">
-          
           {/* Logo prominently sized */}
           <Link
             to="/"
             onClick={(e) => {
-              if (window.location.pathname === '/') {
+              if (window.location.pathname === "/") {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}
             className="flex items-center text-left cursor-pointer mx-auto md:mx-0"
@@ -26,7 +27,7 @@ export const Footer: React.FC = () => {
               alt="Logo SMK Sasmita Jaya 2"
               className="h-16 sm:h-20 w-auto object-contain brightness-110"
               onError={(e) => {
-                (e.target as HTMLImageElement).src = '/logo-smk-dark.png';
+                (e.target as HTMLImageElement).src = "/logo-smk-dark.png";
               }}
             />
           </Link>
@@ -37,7 +38,8 @@ export const Footer: React.FC = () => {
             <div className="flex items-start gap-2.5 text-left w-full max-w-xs sm:max-w-sm md:max-w-md">
               <MapPin className="w-4 h-4 text-slate-300 shrink-0 mt-0.5" />
               <span className="text-left">
-                Jl. Surya Kencana No. 1, Pamulang Barat, Kec. Pamulang, Kota Tangerang Selatan, Banten 15417
+                Jl. Surya Kencana No. 1, Pamulang Barat, Kec. Pamulang, Kota
+                Tangerang Selatan, Banten 15417
               </span>
             </div>
 
@@ -69,22 +71,22 @@ export const Footer: React.FC = () => {
           {/* Social Icons & Copyright */}
           <div className="flex flex-col items-center md:items-end gap-3 text-center md:text-right mx-auto md:mx-0">
             <div className="flex items-center gap-3">
-              {/* Facebook */}
+              {/* Tiktok */}
               <a
-                href="https://facebook.com"
+                href="https://www.tiktok.com/@smksasmitajaya2.official"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-white/10  text-white flex items-center justify-center transition-colors"
-                aria-label="Facebook"
+                aria-label="Tiktok"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z" />
                 </svg>
               </a>
 
               {/* Instagram */}
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/smksasmitajaya2.official"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-white/10  text-white flex items-center justify-center transition-colors"
@@ -97,7 +99,7 @@ export const Footer: React.FC = () => {
 
               {/* YouTube */}
               <a
-                href="https://youtube.com"
+                href="https://youtube.com/@smksasmitajaya239"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center transition-colors"
@@ -109,17 +111,16 @@ export const Footer: React.FC = () => {
               </a>
             </div>
             <p className="text-[11px] text-slate-500">
-              © {new Date().getFullYear()} SMK Sasmita Jaya 2. All rights reserved.
+              © {new Date().getFullYear()} SMK Sasmita Jaya 2. All rights
+              reserved.
             </p>
           </div>
-
         </div>
 
         {/* Bottom micro note */}
         <div className="pt-6 text-center text-[11px] text-slate-500">
           Sistem Informasi Alumni & Tracer Study Vokasi
         </div>
-
       </div>
     </footer>
   );

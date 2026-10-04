@@ -204,7 +204,7 @@ export const Step5Review: React.FC<Step5Props> = ({ onPrev, onSuccess }) => {
           <p><span className="text-slate-500">Nama:</span> {identitas.nama_lengkap || '-'}</p>
           <p><span className="text-slate-500">NIS/NISN:</span> {identitas.nisn || '-'}</p>
           <p><span className="text-slate-500">Jurusan:</span> {identitas.jurusan || '-'}</p>
-          <p><span className="text-slate-500">Status:</span> {status_kegiatan || '-'}</p>
+          <p><span className="text-slate-500">Status:</span> {status_kegiatan === 'KERJA_KULIAH' ? 'Kuliah & Kerja' : (status_kegiatan ? status_kegiatan.replace(/_/g, ' ') : '-')}</p>
         </div>
       </div>
 

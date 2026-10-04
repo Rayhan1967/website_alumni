@@ -56,22 +56,39 @@ export const Step2Status: React.FC<Step2Props> = ({ onNext, onPrev }) => {
 
         <div className="space-y-2.5 pt-1 pl-1">
           {STATUS_KEGIATAN_OPTIONS.map((item) => {
-            const isSelected = status_kegiatan === item.value;
+            const isLainnyaOption = item.value === 'LAINNYA';
+            const currentStatus = (status_kegiatan as string) || '';
+            const isSelected = isLainnyaOption
+              ? currentStatus === 'LAINNYA' || (currentStatus !== '' && !STATUS_KEGIATAN_OPTIONS.some(o => o.value === currentStatus && o.value !== 'LAINNYA'))
+              : currentStatus === item.value;
+
             return (
-              <label
-                key={item.value}
-                className="flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm text-slate-800 hover:text-blue-600"
-              >
-                <input
-                  type="radio"
-                  name="status_kegiatan"
-                  value={item.value}
-                  checked={isSelected}
-                  onChange={() => handleSelectStatus(item.value as StatusKegiatan)}
-                  className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer"
-                />
-                <span>{item.label}</span>
-              </label>
+              <div key={item.value} className="flex flex-col gap-2">
+                <label className="flex items-center gap-2.5 cursor-pointer text-xs sm:text-sm text-slate-800 hover:text-blue-600">
+                  <input
+                    type="radio"
+                    name="status_kegiatan"
+                    value={item.value}
+                    checked={isSelected}
+                    onChange={() => handleSelectStatus(item.value as StatusKegiatan)}
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer"
+                  />
+                  <span>{item.label}</span>
+                </label>
+                
+                {isLainnyaOption && isSelected && (
+                  <div className="ml-7 mt-1">
+                    <input
+                      type="text"
+                      placeholder="Sebutkan kegiatan lainnya..."
+                      className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      value={status_kegiatan === 'LAINNYA' ? '' : status_kegiatan}
+                      onChange={(e) => updateStatusKegiatan((e.target.value || 'LAINNYA') as StatusKegiatan, masa_tunggu || '< 3 bulan')}
+                      required
+                    />
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>

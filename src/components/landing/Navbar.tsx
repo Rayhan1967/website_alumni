@@ -199,7 +199,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 <Link
                   to="/#beranda"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50  transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <Home className="w-4 h-4 text-slate-400" />
@@ -211,7 +211,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 <Link
                   to="/#tentang"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50  transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <Info className="w-4 h-4 text-slate-400" />
@@ -223,21 +223,19 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 <Link
                   to={isAuthenticated ? '/tracer-study' : '/login'}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold text-blue-600 bg-blue-50/70 border border-blue-100 hover:bg-blue-100/70 transition-colors"
+                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-600 bg-blue-50/70 hover:bg-blue-100/70 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <GraduationCap className="w-4 h-4 text-blue-600" />
+                    <GraduationCap className="w-4 h-4 text-slate-600" />
                     <span>Tracer Study</span>
                   </div>
-                  <span className="px-2 py-0.5 rounded-md bg-blue-600 text-[10px] font-bold text-white uppercase tracking-wider">
-                    Survei
-                  </span>
+                  <ChevronRight className="w-4 h-4 text-slate-300" />
                 </Link>
 
                 <Link
                   to="/#berita"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50  transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <Newspaper className="w-4 h-4 text-slate-400" />
@@ -249,7 +247,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 <Link
                   to="/laporan"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <FileText className="w-4 h-4 text-slate-400" />
@@ -261,7 +259,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 <Link
                   to="/#kontak"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-blue-50  transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <PhoneCall className="w-4 h-4 text-slate-400" />

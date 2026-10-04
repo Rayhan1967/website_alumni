@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Mail,
   CheckCheck,
@@ -6,7 +7,7 @@ import {
   ExternalLink,
   X,
   MessageSquare,
-  FileCheck2,
+  FileCheck2, 
   HelpCircle,
   Clock,
   ChevronRight,
@@ -20,10 +21,12 @@ import { useNavigate } from 'react-router-dom';
 
 interface MailNotificationMenuProps {
   onNavigateTab?: (tab: string, respondentId?: string) => void;
+  onOpenReceipt?: () => void;
 }
 
 export const MailNotificationMenu: React.FC<MailNotificationMenuProps> = ({
   onNavigateTab,
+  onOpenReceipt,
 }) => {
   const { user } = useAuthStore();
   const navigate = useNavigate();
@@ -69,8 +72,30 @@ export const MailNotificationMenu: React.FC<MailNotificationMenuProps> = ({
     };
   }, [isOpen]);
 
+  // Lock body scroll and listen for Escape key when modal is open
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedMail(null);
+      }
+    };
+
+    if (selectedMail) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedMail]);
+
   const handleOpenMail = (mail: MailItem) => {
     markAsRead(mail.id);
+    setIsOpen(false);
     setSelectedMail(mail);
   };
 
@@ -78,6 +103,11 @@ export const MailNotificationMenu: React.FC<MailNotificationMenuProps> = ({
     if (!mail.actionUrl) return;
     setIsOpen(false);
     setSelectedMail(null);
+
+    if (mail.actionUrl.label.toLowerCase().includes('bukti') && onOpenReceipt) {
+      onOpenReceipt();
+      return;
+    }
 
     if (onNavigateTab) {
       onNavigateTab(mail.actionUrl.tab, mail.actionUrl.respondentId);
@@ -92,13 +122,17 @@ export const MailNotificationMenu: React.FC<MailNotificationMenuProps> = ({
 
   const handleViewAllMessages = () => {
     setIsOpen(false);
-    if (onNavigateTab) {
-      onNavigateTab('pesan');
-    } else {
-      if (role === 'admin_bkk') {
-        navigate('/admin?tab=pesan');
+    if (role === 'admin_bkk') {
+      if (onNavigateTab) {
+        onNavigateTab('pesan');
       } else {
-        navigate('/dashboard?tab=pesan');
+        navigate('/admin?tab=pesan');
+      }
+    } else {
+      if (onNavigateTab) {
+        onNavigateTab('helpdesk');
+      } else {
+        navigate('/dashboard?tab=helpdesk');
       }
     }
   };
@@ -176,13 +210,21 @@ export const MailNotificationMenu: React.FC<MailNotificationMenuProps> = ({
 
       {/* Floating Mail Popover - Clean & Refined */}
       {isOpen && (
-        <div className="absolute right-0 mt-2.5 w-[330px] sm:w-[390px] max-w-[92vw] bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+        <>
+          {/* Mobile backdrop for easy dismissal */}
+          <div
+            className="fixed inset-0 z-40 bg-slate-950/20 backdrop-blur-2xs sm:hidden"
+            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+          />
+
+          <div className="fixed sm:absolute left-3 right-3 sm:left-auto sm:right-0 top-16 sm:top-full mt-1.5 sm:mt-2.5 w-auto sm:w-[390px] max-h-[82vh] sm:max-h-none bg-white rounded-xl shadow-2xl sm:shadow-xl border border-slate-200 z-50 overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
           
           {/* Header - Clean with no solid dark background */}
           <div className="p-3.5 sm:p-4 bg-white border-b border-slate-200 text-[#0d2346] flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-slate-100 text-[#0d2346]">
-                <Mail className="w-4 h-4" />
+              <div className="text-[#0d2346]">
+                <Mail className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-xs sm:text-sm font-bold text-[#0d2346]">
@@ -213,7 +255,7 @@ export const MailNotificationMenu: React.FC<MailNotificationMenuProps> = ({
                 onClick={() => setActiveFilter('all')}
                 className={`px-2.5 py-1 rounded-md font-semibold text-[11px] cursor-pointer transition ${
                   activeFilter === 'all'
-                    ? 'bg-[#0d2346] text-white'
+                    ? 'bg-slate-200/70 text-slate-600'
                     : 'text-slate-600 hover:bg-slate-200/70'
                 }`}
               >
@@ -223,7 +265,7 @@ export const MailNotificationMenu: React.FC<MailNotificationMenuProps> = ({
                 onClick={() => setActiveFilter('unread')}
                 className={`px-2.5 py-1 rounded-md font-semibold text-[11px] cursor-pointer transition ${
                   activeFilter === 'unread'
-                    ? 'bg-[#0d2346] text-white'
+                    ? 'bg-slate-200/70 text-slate-600'
                     : 'text-slate-600 hover:bg-slate-200/70'
                 }`}
               >
@@ -232,24 +274,19 @@ export const MailNotificationMenu: React.FC<MailNotificationMenuProps> = ({
             </div>
 
             <span className="text-[10px] text-slate-400">
-              {filteredMails.length} data
+              {filteredMails.length} Pesan
             </span>
           </div>
 
           {/* Mail List Body */}
-          <div className="max-h-[340px] overflow-y-auto divide-y divide-slate-100">
+          <div className="max-h-[calc(82vh-130px)] sm:max-h-[340px] overflow-y-auto divide-y divide-slate-100">
             {filteredMails.length === 0 ? (
               <div className="py-10 text-center px-4">
-                <div className="w-10 h-10 mx-auto rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-2">
+                <div className="w-10 h-10 mx-auto flex items-center justify-center text-slate-400 mb-2">
                   <Inbox className="w-5 h-5" />
                 </div>
                 <p className="text-xs font-bold text-slate-700">
                   Tidak ada pesan {activeFilter === 'unread' ? 'belum dibaca' : ''}
-                </p>
-                <p className="text-[11px] text-slate-400 mt-0.5">
-                  {role === 'admin_bkk'
-                    ? 'Pemberitahuan isian tracer dan pesan alumni akan muncul di sini.'
-                    : 'Pemberitahuan verifikasi kuesioner Anda akan masuk di sini.'}
                 </p>
               </div>
             ) : (
@@ -346,132 +383,138 @@ export const MailNotificationMenu: React.FC<MailNotificationMenuProps> = ({
               onClick={handleViewAllMessages}
               className="w-full py-2 px-3 rounded-lg bg-white hover:bg-slate-100 text-[#0d2346] text-xs font-bold border border-slate-200 transition cursor-pointer flex items-center justify-center gap-1.5 shadow-xs active:scale-98"
             >
-              <span>Lihat Semua Pesan</span>
+              <span>{role === 'admin_bkk' ? 'Lihat Semua Pesan' : 'Buka Pusat Bantuan BKK'}</span>
               <ArrowRight className="w-3.5 h-3.5 text-[#0d2346]" />
             </button>
           </div>
 
         </div>
+        </>
       )}
 
-      {/* Mail Detail Modal - Refined Border Radius & Clean Header */}
-      {selectedMail && (
-        <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-3 sm:p-4 bg-slate-950/60 backdrop-blur-xs animate-in fade-in duration-150">
+      {/* Mail Detail Modal - Rendered via Portal to break free from header stacking context */}
+      {selectedMail &&
+        createPortal(
           <div
-            className="relative w-full max-w-lg bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-3 sm:p-4 bg-slate-950/60 backdrop-blur-xs animate-in fade-in duration-150"
+            onClick={() => setSelectedMail(null)}
           >
-            {/* Modal Header - Clean */}
-            <div className="p-4 sm:p-5 bg-white border-b border-slate-200 text-[#0d2346] flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-lg bg-slate-100 text-[#0d2346]">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-sm sm:text-base font-bold text-[#0d2346]">
-                    Detail Pesan Masuk
-                  </h3>
-                  <p className="text-[11px] text-slate-500">
-                    Diterima: {new Date(selectedMail.createdAt).toLocaleString('id-ID', { dateStyle: 'long', timeStyle: 'short' })}
-                  </p>
-                </div>
-              </div>
-
-              <button
-                onClick={() => setSelectedMail(null)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer"
-                aria-label="Tutup"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Sender Meta Box */}
-            <div className="p-4 sm:p-5 border-b border-slate-200 bg-slate-50/60">
-              <div className="flex items-start gap-3">
-                <UserAvatar
-                  name={selectedMail.senderName}
-                  gender={selectedMail.senderAvatarGender}
-                  className="w-10 h-10 border border-slate-200 shrink-0"
-                />
-                <div className="flex-1 min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h4 className="text-sm font-bold text-slate-900">
-                      {selectedMail.senderName}
-                    </h4>
-                    {selectedMail.senderMajor && (
-                      <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
-                        {selectedMail.senderMajor} {selectedMail.senderGradYear ? `(${selectedMail.senderGradYear})` : ''}
-                      </span>
-                    )}
+            <div
+              className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden my-auto animate-in zoom-in-95 duration-150"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header - Clean */}
+              <div className="p-4 sm:p-5 bg-white border-b border-slate-200 text-[#0d2346] flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="p-2 rounded-lg bg-slate-100 text-[#0d2346]">
+                    <Mail className="w-5 h-5" />
                   </div>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    {selectedMail.senderEmail}
-                    {selectedMail.senderNisn ? ` • NISN: ${selectedMail.senderNisn}` : ''}
-                  </p>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-bold text-[#0d2346]">
+                      Detail Pesan Masuk
+                    </h3>
+                    <p className="text-[11px] text-slate-500">
+                      Diterima: {new Date(selectedMail.createdAt).toLocaleString('id-ID', { dateStyle: 'long', timeStyle: 'short' })}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Message Body */}
-            <div className="p-4 sm:p-5 space-y-3">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
-                  SUBJEK PESAN
-                </span>
-                <h2 className="text-base font-bold text-[#0d2346] leading-snug">
-                  {selectedMail.subject}
-                </h2>
-              </div>
-
-              {selectedMail.submissionId && (
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 border border-slate-200 text-xs font-semibold">
-                  <FileCheck2 className="w-3.5 h-3.5 text-[#0d2346]" />
-                  <span>ID Pengajuan Tracer: <strong>{selectedMail.submissionId}</strong></span>
-                </div>
-              )}
-
-              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-800 leading-relaxed font-normal whitespace-pre-line">
-                {selectedMail.body}
-              </div>
-            </div>
-
-            {/* Modal Actions */}
-            <div className="p-4 sm:p-5 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2">
-              <button
-                onClick={() => {
-                  deleteMail(selectedMail.id);
-                  setSelectedMail(null);
-                }}
-                className="px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 border border-rose-200 transition cursor-pointer flex items-center gap-1.5"
-              >
-                <Trash2 className="w-3.5 h-3.5" />
-                <span>Hapus Pesan</span>
-              </button>
-
-              <div className="flex items-center gap-2">
-                {selectedMail.actionUrl && (
-                  <button
-                    onClick={() => handleActionClick(selectedMail)}
-                    className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#0d2346] hover:bg-[#163868] shadow-xs transition cursor-pointer flex items-center gap-1.5"
-                  >
-                    <span>{selectedMail.actionUrl.label}</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </button>
-                )}
 
                 <button
                   onClick={() => setSelectedMail(null)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-200 border border-slate-300 transition cursor-pointer"
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+                  aria-label="Tutup"
                 >
-                  Tutup
+                  <X className="w-5 h-5" />
                 </button>
               </div>
-            </div>
 
-          </div>
-        </div>
-      )}
+              {/* Sender Meta Box */}
+              <div className="p-4 sm:p-5 border-b border-slate-200 bg-slate-50/60">
+                <div className="flex items-start gap-3">
+                  <UserAvatar
+                    name={selectedMail.senderName}
+                    gender={selectedMail.senderAvatarGender}
+                    className="w-10 h-10 border border-slate-200 shrink-0"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h4 className="text-sm font-bold text-slate-900">
+                        {selectedMail.senderName}
+                      </h4>
+                      {selectedMail.senderMajor && (
+                        <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                          {selectedMail.senderMajor} {selectedMail.senderGradYear ? `(${selectedMail.senderGradYear})` : ''}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      {selectedMail.senderEmail}
+                      {selectedMail.senderNisn ? ` • NISN: ${selectedMail.senderNisn}` : ''}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Message Body */}
+              <div className="p-4 sm:p-5 space-y-3 max-h-[60vh] overflow-y-auto">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                    SUBJEK PESAN
+                  </span>
+                  <h2 className="text-base font-bold text-[#0d2346] leading-snug">
+                    {selectedMail.subject}
+                  </h2>
+                </div>
+
+                {selectedMail.submissionId && (
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 border border-slate-200 text-xs font-semibold">
+                    <FileCheck2 className="w-3.5 h-3.5 text-[#0d2346]" />
+                    <span>ID Pengajuan Tracer: <strong>{selectedMail.submissionId}</strong></span>
+                  </div>
+                )}
+
+                <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-800 leading-relaxed font-normal whitespace-pre-line">
+                  {selectedMail.body}
+                </div>
+              </div>
+
+              {/* Modal Actions */}
+              <div className="p-4 sm:p-5 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2">
+                <button
+                  onClick={() => {
+                    deleteMail(selectedMail.id);
+                    setSelectedMail(null);
+                  }}
+                  className="px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 border border-rose-200 transition cursor-pointer flex items-center gap-1.5"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Hapus Pesan</span>
+                </button>
+
+                <div className="flex items-center gap-2">
+                  {selectedMail.actionUrl && (
+                    <button
+                      onClick={() => handleActionClick(selectedMail)}
+                      className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#0d2346] hover:bg-[#163868] shadow-xs transition cursor-pointer flex items-center gap-1.5"
+                    >
+                      <span>{selectedMail.actionUrl.label}</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+
+                  <button
+                    onClick={() => setSelectedMail(null)}
+                    className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-200 border border-slate-300 transition cursor-pointer"
+                  >
+                    Tutup
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 };

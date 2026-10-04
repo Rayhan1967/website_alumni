@@ -60,7 +60,7 @@ const STATUS_AKTIVITAS_OPTIONS = [
   { value: "KERJA", label: "Bekerja di Instansi / Perusahaan" },
   { value: "KULIAH", label: "Melanjutkan Studi / Kuliah" },
   { value: "WIRAUSAHA", label: "Wirausaha Mandiri" },
-  { value: "KERJA_KULIAH", label: "Bekerja Sambil Kuliah" },
+  { value: "KERJA_KULIAH", label: "Kuliah & Kerja" },
   { value: "BELUM_KERJA", label: "Sedang Mencari Kerja" },
 ];
 
@@ -166,11 +166,17 @@ export const AdminRespondentsTab: React.FC<AdminRespondentsTabProps> = ({
   const renderAktivitasBadge = (status: string) => {
     switch (status) {
       case "KERJA":
-      case "KERJA_KULIAH":
         return (
           <span className="inline-flex items-center gap-1.5 font-medium text-slate-800">
             <Building className="w-3.5 h-3.5 text-slate-600" />
             <span>Bekerja</span>
+          </span>
+        );
+      case "KERJA_KULIAH":
+        return (
+          <span className="inline-flex items-center gap-1.5 font-medium text-slate-800">
+            <Building className="w-3.5 h-3.5 text-slate-600" />
+            <span>Kuliah & Kerja</span>
           </span>
         );
       case "KULIAH":
@@ -203,21 +209,18 @@ export const AdminRespondentsTab: React.FC<AdminRespondentsTabProps> = ({
       case "VALID":
         return (
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 font-medium bg-slate-50 text-slate-800">
-            <CheckCircle2 className="w-3 h-3 text-slate-600" />
             <span>Disetujui</span>
           </span>
         );
       case "REVISI":
         return (
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 font-medium bg-rose-50 text-rose-800">
-            <AlertTriangle className="w-3 h-3 text-rose-600" />
             <span>Perlu Perbaikan</span>
           </span>
         );
       default:
         return (
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 font-medium bg-slate-50 text-slate-800">
-            <Clock className="w-3 h-3 text-slate-600" />
             <span>Menunggu Tinjauan</span>
           </span>
         );

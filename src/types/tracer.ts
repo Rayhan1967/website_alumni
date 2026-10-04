@@ -18,7 +18,7 @@ export type JurusanSMK =
   | 'Teknik dan Bisnis Sepeda Motor'
   | 'Teknik Komputer dan Jaringan';
 
-export type JenjangKuliah = 'D3' | 'D4' | 'S1';
+export type JenjangKuliah = 'D3' | 'D4' | 'S1' | 'S2' | 'S3' | 'Lainnya';
 
 export type KategoriUsaha =
   | 'Jasa'
@@ -143,8 +143,10 @@ export interface SubmissionResponse {
 export interface UserSession {
   id: string;
   nisn: string;
+  nik?: string;
   nama: string;
   email: string;
+  noWhatsapp?: string;
   role: 'alumni' | 'admin_bkk';
   jurusan: string;
   tahun_lulus: number;

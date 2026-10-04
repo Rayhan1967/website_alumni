@@ -18,7 +18,7 @@ export const STATUS_KEGIATAN_OPTIONS = [
   { value: 'KERJA', label: 'Bekerja', desc: 'Bekerja di instansi / perusahaan / kantor' },
   { value: 'KULIAH', label: 'Melanjutkan kuliah', desc: 'Melanjutkan studi perguruan tinggi (D3, D4, S1)' },
   { value: 'WIRAUSAHA', label: 'Berwirausaha', desc: 'Membuka usaha mandiri / menjalankan bisnis' },
-  { value: 'KERJA_KULIAH', label: 'Bekerja sambil kuliah', desc: 'Menjalani pekerjaan sekaligus studi' },
+  { value: 'KERJA_KULIAH', label: 'Kuliah & Kerja', desc: 'Menjalani perkuliahan sekaligus bekerja' },
   { value: 'BELUM_KERJA', label: 'Belum bekerja', desc: 'Sedang mencari pekerjaan / persiapan' },
   { value: 'LAINNYA', label: 'Lainnya', desc: 'Aktivitas di luar kategori di atas' },
 ] as const;
@@ -56,6 +56,8 @@ export const JENJANG_KULIAH_OPTIONS = [
   'D3',
   'D4',
   'S1',
+  'S2',
+  'S3',
   'Lainnya',
 ] as const;
 

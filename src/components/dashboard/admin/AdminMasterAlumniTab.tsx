@@ -222,7 +222,7 @@ export const AdminMasterAlumniTab: React.FC = () => {
           <div className="min-w-0">
             <h2 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
               <SolidUsersIcon className="w-5 h-5 text-[#0d2346] shrink-0" />
-              <span>Data Siswa Lulusan ({masterAlumni.length} Siswa)</span>
+              <span>Data Siswa Lulusan</span>
             </h2>
           </div>
 
@@ -255,13 +255,13 @@ export const AdminMasterAlumniTab: React.FC = () => {
         </div>
 
         {/* Filter & Search Bar */}
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs space-y-3">
+        <div className="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-xs space-y-3">
           {/* Status Tabs */}
-          <div className="flex flex-wrap items-center gap-2 pb-2 border-b border-slate-100 text-xs">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 pb-2 border-b border-slate-100 text-[11px] sm:text-xs">
             <button
               type="button"
               onClick={() => setStatusFilter("ALL")}
-              className={`px-3 py-1.5 rounded-lg font-semibold transition cursor-pointer ${
+              className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg font-semibold transition cursor-pointer ${
                 statusFilter === "ALL"
                   ? "bg-[#0d2346] text-white"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200"
@@ -272,25 +272,25 @@ export const AdminMasterAlumniTab: React.FC = () => {
             <button
               type="button"
               onClick={() => setStatusFilter("SUDAH")}
-              className={`px-3 py-1.5 rounded-lg font-semibold transition cursor-pointer flex items-center gap-1.5 ${
+              className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg font-semibold transition cursor-pointer flex items-center gap-1 sm:gap-1.5 ${
                 statusFilter === "SUDAH"
                   ? "bg-[#0d2346] text-white"
                   : "bg-slate-100 text-slate-700 hover:bg-slate-200"
               }`}
             >
-              <CheckCircle2 className="w-3.5 h-3.5" />
+              <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
               <span>Sudah Mengisi ({countSudah})</span>
             </button>
             <button
               type="button"
               onClick={() => setStatusFilter("BELUM")}
-              className={`px-3 py-1.5 rounded-lg font-semibold transition cursor-pointer flex items-center gap-1.5 ${
+              className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg font-semibold transition cursor-pointer flex items-center gap-1 sm:gap-1.5 ${
                 statusFilter === "BELUM"
                   ? "bg-slate-600 text-white"
                   : "bg-slate-100 text-slate-700 hover:bg-slate-200"
               }`}
             >
-              <Clock className="w-3.5 h-3.5" />
+              <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
               <span>Belum Mengisi ({countBelum})</span>
             </button>
           </div>
@@ -390,13 +390,11 @@ export const AdminMasterAlumniTab: React.FC = () => {
                       </td>
                       <td className="p-3.5">
                         {alumni.statusTracer === "SUDAH" ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 font-semibold bg-slate-100 text-slate-800">
-                            <CheckCircle2 className="w-3 h-3 text-slate-600" />
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 font-semibold text-slate-800">
                             <span>Sudah Mengisi</span>
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 font-semibold bg-slate-50 text-slate-800">
-                            <Clock className="w-3 h-3" />
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 font-semibold text-slate-800">
                             <span>Belum Mengisi</span>
                           </span>
                         )}
@@ -416,7 +414,7 @@ export const AdminMasterAlumniTab: React.FC = () => {
                             </a>
                           ) : (
                             <span className="text-[11px] text-slate-500 font-mono">
-                              {alumni.submissionId || "TRC-SELESAI"}
+                              {alumni.submissionId || "-"}
                             </span>
                           )}
 

@@ -49,13 +49,18 @@ export async function submitTracerStudy(
   // Standard Mock Server Response matching PRD 5.1
   await new Promise((res) => setTimeout(res, 600));
 
-  const randomNum = Math.floor(1000 + Math.random() * 9000);
+  const now = new Date();
+  const year = now.getFullYear().toString();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const randomSeq = Math.floor(1000 + Math.random() * 9000).toString();
+  const submissionId = `${year}${month}${randomSeq}`;
+
   const response: SubmissionResponse = {
     success: true,
     message: 'Data tracer study berhasil disimpan. Terima kasih atas partisipasi Anda.',
     data: {
-      submission_id: `TRC-2026-${randomNum}`,
-      submitted_at: new Date().toISOString(),
+      submission_id: submissionId,
+      submitted_at: now.toISOString(),
     },
   };
 

@@ -89,10 +89,6 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
             <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block" />
           </div>
 
-          <span className="text-[11px] font-semibold text-slate-400 tracking-wide">
-            Konfirmasi Sistem
-          </span>
-
           <button
             onClick={onClose}
             className="p-1 rounded-md text-slate-400 hover:bg-slate-200/60 hover:text-slate-600 transition cursor-pointer"

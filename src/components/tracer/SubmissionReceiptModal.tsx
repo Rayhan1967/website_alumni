@@ -3,7 +3,8 @@ import { Modal } from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
 import { useTracerStore } from '@/store/tracerStore';
 import { useNavigate } from 'react-router-dom';
-import { generateTracerReceiptPdf } from '@/lib/pdfGenerator';
+import { generateTracerReceiptPdf, formatStatusKegiatan } from '@/lib/pdfGenerator';
+import { FileText, ArrowRight, Download } from 'lucide-react';
 
 interface SubmissionReceiptModalProps {
   isOpen: boolean;
@@ -20,11 +21,25 @@ export const SubmissionReceiptModal: React.FC<SubmissionReceiptModalProps> = ({
   const [isDownloading, setIsDownloading] = useState(false);
   const navigate = useNavigate();
 
+  const numericReg = (submissionId || '').replace(/\D/g, '');
+  const formattedRegId = numericReg.length >= 6 ? numericReg : '2026102498';
+  const dateObj = lastSubmittedAt ? new Date(lastSubmittedAt) : new Date();
+  const tanggalSurat = dateObj.toLocaleDateString('id-ID', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+  const waktuPengisian =
+    dateObj.toLocaleString('id-ID', {
+      dateStyle: 'long',
+      timeStyle: 'short',
+    }) + ' WIB';
+
   const handleDownloadPdf = () => {
     try {
       setIsDownloading(true);
       generateTracerReceiptPdf({
-        submissionId: submissionId || 'TRC-2026-0001',
+        submissionId: formattedRegId,
         identitas,
         statusKegiatan: status_kegiatan || 'Alumni',
         submittedAt: lastSubmittedAt || undefined,
@@ -42,94 +57,134 @@ export const SubmissionReceiptModal: React.FC<SubmissionReceiptModalProps> = ({
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      maxWidth="xl"
-    >
-      <div className="space-y-6 text-center">
+    <Modal isOpen={isOpen} onClose={onClose} maxWidth="2xl">
+      <div className="space-y-5 text-center">
         <div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-            Pengisian Tracer Study Berhasil!
+          <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+            Pengisian Tracer Study Berhasil
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-md mx-auto">
-            Terima kasih telah berpartisipasi memajukan SMK Sasmita Jaya 2. Simpan tanda bukti di bawah ini.
+          <p className="text-xs text-slate-500 mt-0.5">
+            Dokumen tanda bukti resmi telah diterbitkan. Simpan atau cetak berkas ini untuk verifikasi.
           </p>
         </div>
 
-        {/* Printable Official Receipt Card */}
-        <div className="p-6 rounded-xl bg-slate-50 border-2 border-slate-200 text-left space-y-4 shadow-sm print:border-black print:bg-white">
-          {/* Header of Receipt */}
-          <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-            <div className="flex items-center gap-2.5">
-              <img
-                src="/logo sasmita.png"
-                alt="Logo SMK"
-                className="w-10 h-10 object-contain"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/logo smk sasmita.png';
-                }}
-              />
-              <div>
-                <h4 className="font-bold text-slate-900 text-xs sm:text-sm">
-                  SMK Sasmita Jaya 2 Pamulang
-                </h4>
-                <p className="text-[10px] text-slate-500 tracking-wider">
-                  Bukti Resmi Pengisian Tracer Study
-                </p>
+        {/* Formal Official Document Card - Times New Roman */}
+        <div
+          style={{ fontFamily: '"Times New Roman", Times, Georgia, serif' }}
+          className="p-5 sm:p-8 rounded-lg bg-white border border-slate-300 text-left text-black shadow-xs space-y-4 print:border-none"
+        >
+          {/* KOP SURAT RESMI */}
+          <div className="text-center space-y-0.5 border-b-2 border-black pb-2">
+            <h3 className="text-xs sm:text-sm font-bold tracking-wider uppercase">
+              Yayasan Sasmita Jaya
+            </h3>
+            <h2 className="text-sm sm:text-base font-extrabold uppercase">
+              SMK Sasmita Jaya 2 Pamulang
+            </h2>
+            <p className="text-[10px] sm:text-[11px] text-slate-700">
+              STATUS AKREDITASI &quot;A&quot; (UNGGUL) | NPSN: 20607839 | NSS: 322280305012
+            </p>
+            <p className="text-[9px] sm:text-[10px] text-slate-600">
+              Jl. Surya Kencana No. 1, Pamulang Barat, Kec. Pamulang, Kota Tangerang Selatan, Banten 15417
+            </p>
+            <p className="text-[9px] sm:text-[10px] text-slate-600">
+              Telp: (021) 7402661 | Website: https://smksasmitajaya2.sch.id | Email: bkk@smksasmitajaya2.sch.id
+            </p>
+          </div>
+
+          {/* Garis Ganda Pembatas Kop */}
+          <div className="-mt-3 border-b border-black pt-0.5" />
+
+          {/* JUDUL DOKUMEN & NOMOR REGISTRASI */}
+          <div className="text-center pt-1 space-y-0.5">
+            <h4 className="font-bold text-xs sm:text-sm uppercase underline">
+              Surat Keterangan Bukti Pengisian Tracer Study
+            </h4>
+            <p className="text-xs font-mono font-medium">
+              Nomor Registrasi: <span className="font-bold">{formattedRegId}</span>
+            </p>
+          </div>
+
+          {/* KALIMAT PEMBUKA */}
+          <p className="text-xs leading-relaxed text-justify">
+            Yang bertanda tangan di bawah ini, Koordinator Bursa Kerja Khusus (BKK) SMK Sasmita Jaya 2 Pamulang menerangkan bahwa alumni berikut:
+          </p>
+
+          {/* TABEL DATA FORMAL TITIK DUA SEJAJAR */}
+          <div className="text-xs space-y-1.5 pl-2 sm:pl-4">
+            <div className="grid grid-cols-12 gap-1">
+              <span className="col-span-5 sm:col-span-4 font-normal">Nama Lengkap</span>
+              <span className="col-span-1 text-center">:</span>
+              <span className="col-span-6 sm:col-span-7 font-bold">{identitas.nama_lengkap || '-'}</span>
+            </div>
+            <div className="grid grid-cols-12 gap-1">
+              <span className="col-span-5 sm:col-span-4 font-normal">NISN / NIK</span>
+              <span className="col-span-1 text-center">:</span>
+              <span className="col-span-6 sm:col-span-7 font-bold font-mono">{identitas.nisn || '-'} / {identitas.nik || '-'}</span>
+            </div>
+            <div className="grid grid-cols-12 gap-1">
+              <span className="col-span-5 sm:col-span-4 font-normal">Program Keahlian</span>
+              <span className="col-span-1 text-center">:</span>
+              <span className="col-span-6 sm:col-span-7 font-bold">{identitas.jurusan || '-'}</span>
+            </div>
+            <div className="grid grid-cols-12 gap-1">
+              <span className="col-span-5 sm:col-span-4 font-normal">Tahun Masuk / Lulus</span>
+              <span className="col-span-1 text-center">:</span>
+              <span className="col-span-6 sm:col-span-7 font-semibold">{identitas.tahun_masuk || 2021} / {identitas.tahun_lulus || 2024}</span>
+            </div>
+            <div className="grid grid-cols-12 gap-1">
+              <span className="col-span-5 sm:col-span-4 font-normal">Nomor Kontak (WhatsApp)</span>
+              <span className="col-span-1 text-center">:</span>
+              <span className="col-span-6 sm:col-span-7 font-mono">{identitas.no_whatsapp || '-'}</span>
+            </div>
+            <div className="grid grid-cols-12 gap-1">
+              <span className="col-span-5 sm:col-span-4 font-normal">Alamat Email</span>
+              <span className="col-span-1 text-center">:</span>
+              <span className="col-span-6 sm:col-span-7">{identitas.email || '-'}</span>
+            </div>
+            <div className="grid grid-cols-12 gap-1">
+              <span className="col-span-5 sm:col-span-4 font-normal">Status Aktivitas Terdata</span>
+              <span className="col-span-1 text-center">:</span>
+              <span className="col-span-6 sm:col-span-7 font-bold uppercase">{formatStatusKegiatan(status_kegiatan)}</span>
+            </div>
+            <div className="grid grid-cols-12 gap-1">
+              <span className="col-span-5 sm:col-span-4 font-normal">Waktu Pengisian Sistem</span>
+              <span className="col-span-1 text-center">:</span>
+              <span className="col-span-6 sm:col-span-7">{waktuPengisian}</span>
+            </div>
+          </div>
+
+          {/* PARAGRAF KETERANGAN FORMAL & PENUTUP */}
+          <div className="text-xs leading-relaxed space-y-2 pt-1 text-justify">
+            <p>
+              Telah menyelesaikan pengisian seluruh instrumen penelusuran tamatan (Tracer Study) Tahun Akademik 2025/2026 secara lengkap, sah, dan terdata pada pangkalan data sekolah.
+            </p>
+            <p>
+              Surat keterangan ini merupakan dokumen resmi yang diterbitkan secara elektronik oleh Sistem Informasi Alumni SMK Sasmita Jaya 2 dan dapat dipergunakan sebagai salah satu syarat verifikasi administrasi pengambilan Ijazah asli serta Sertifikat Uji Kompetensi Keahlian (BNSP).
+            </p>
+            <p>
+              Demikian surat keterangan bukti pengisian ini dibuat dengan sebenarnya untuk dapat dipergunakan sebagaimana mestinya.
+            </p>
+          </div>
+
+          {/* BAGIAN TANDA TANGAN & PENGESAHAN */}
+          <div className="pt-3 flex justify-end">
+            <div className="text-right text-xs space-y-0.5 min-w-[200px]">
+              <p>Pamulang, {tanggalSurat}</p>
+              <p>Mengetahui,</p>
+              <p className="font-semibold">Koordinator BKK SMK Sasmita Jaya 2,</p>
+              <div className="h-12 flex items-center justify-end">
+                <span className="text-[10px] text-slate-400 italic">[ Tanda Tangan & Cap Digital Terverifikasi ]</span>
               </div>
-            </div>
-
-            <div className="text-right">
-              <span className="text-[10px] text-slate-400 block">Nomor Registrasi</span>
-              <span className="font-mono font-bold text-xs sm:text-sm text-blue-700">
-                {submissionId}
-              </span>
+              <p className="font-bold underline">Ahmad Fauzi, S.Pd., M.Kom.</p>
+              <p className="text-[10px] text-slate-600">NIP. 19840219 200902 1 002</p>
             </div>
           </div>
 
-          {/* Details Table */}
-          <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-xs">
-            <div>
-              <span className="text-slate-400 block text-[10px]">Nama Lengkap</span>
-              <span className="font-bold text-slate-800">{identitas.nama_lengkap}</span>
-            </div>
-            <div>
-              <span className="text-slate-400 block text-[10px]">NISN / NIK</span>
-              <span className="font-semibold text-slate-800">{identitas.nisn} / {identitas.nik}</span>
-            </div>
-            <div>
-              <span className="text-slate-400 block text-[10px]">Kompetensi Keahlian</span>
-              <span className="font-semibold text-slate-800">{identitas.jurusan}</span>
-            </div>
-            <div>
-              <span className="text-slate-400 block text-[10px]">Tahun Lulus</span>
-              <span className="font-semibold text-slate-800">{identitas.tahun_lulus}</span>
-            </div>
-            <div>
-              <span className="text-slate-400 block text-[10px]">Status Terdata</span>
-              <span className="inline-block px-2 py-0.5 rounded text-slate-800 font-bold text-[10px]">
-                {status_kegiatan}
-              </span>
-            </div>
-            <div>
-              <span className="text-slate-400 block text-[10px]">Waktu Pengiriman</span>
-              <span className="text-slate-800 text-[11px]">
-                {lastSubmittedAt ? new Date(lastSubmittedAt).toLocaleString('id-ID') : new Date().toLocaleString('id-ID')}
-              </span>
-            </div>
-          </div>
-
-          {/* Verification Box */}
-          <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
-            <span className="text-[10px] leading-tight">
-              Tunjukkan bukti ini di loket Tata Usaha / BKK untuk verifikasi pengambilan Ijazah & Sertifikat BNSP.
-            </span>
-            <div className="text-right shrink-0">
-              <span className="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold text-[10px]">
-                TERVALIDASI
-              </span>
-            </div>
+          {/* FOOTER VERIFIKASI */}
+          <div className="pt-2 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between text-[10px] text-slate-500 italic">
+            <span>Dokumen ini sah dan diterbitkan secara digital oleh Sistem Tracer Study SMK Sasmita Jaya 2.</span>
+            <span className="font-mono font-medium not-italic">{formattedRegId}-SASMITA-VALID</span>
           </div>
         </div>
 
@@ -140,13 +195,12 @@ export const SubmissionReceiptModal: React.FC<SubmissionReceiptModalProps> = ({
             onClick={handleDownloadPdf}
             disabled={isDownloading}
             isLoading={isDownloading}
+            variant="outline"
             size="md"
-            className="w-full sm:w-auto flex items-center justify-center gap-2"
+            className="w-full sm:w-auto font-semibold flex items-center justify-center gap-2 cursor-pointer"
           >
-            <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 shrink-0">
-              <path fillRule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v11.69l3.22-3.22a.75.75 0 1 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 1 1 1.06-1.06l3.22 3.22V3a.75.75 0 0 1 .75-.75Zm-9 13.5a.75.75 0 0 1 .75.75v2.25a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V16.5a.75.75 0 0 1 1.5 0v2.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V16.5a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
-            </svg>
-            {isDownloading ? 'Menyiapkan PDF...' : 'Download PDF'}
+            <Download className="w-4 h-4" />
+            <span>{isDownloading ? 'Menyiapkan Dokumen...' : 'Unduh Berkas PDF'}</span>
           </Button>
 
           <Button
@@ -154,12 +208,14 @@ export const SubmissionReceiptModal: React.FC<SubmissionReceiptModalProps> = ({
             onClick={handleGoDashboard}
             variant="primary"
             size="md"
-            className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700"
+            className="w-full sm:w-auto bg-[#0d2346] hover:bg-[#163868] font-semibold flex items-center justify-center gap-2 cursor-pointer"
           >
-            Buka Dashboard Alumni
+            <span>Buka Dashboard Alumni</span>
+            <ArrowRight className="w-4 h-4" />
           </Button>
         </div>
       </div>
     </Modal>
   );
 };
+

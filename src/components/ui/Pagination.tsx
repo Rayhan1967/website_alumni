@@ -43,39 +43,21 @@ export const Pagination: React.FC<PaginationProps> = ({
   const startItem = itemsPerPage ? (currentPage - 1) * itemsPerPage + 1 : 1;
   const endItem = itemsPerPage && totalItems ? Math.min(currentPage * itemsPerPage, totalItems) : totalItems;
 
-  // Generate page numbers with intelligent ellipsis
+  // Generate page numbers limited to 3 main visible pages
   const getPageNumbers = () => {
-    const pages: (number | string)[] = [];
-    const maxVisiblePages = 5;
-
-    if (totalPages <= maxVisiblePages + 2) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      pages.push(1);
-
-      if (currentPage > 3) {
-        pages.push('...');
-      }
-
-      const start = Math.max(2, currentPage - 1);
-      const end = Math.min(totalPages - 1, currentPage + 1);
-
-      for (let i = start; i <= end; i++) {
-        if (i > 1 && i < totalPages) {
-          pages.push(i);
-        }
-      }
-
-      if (currentPage < totalPages - 2) {
-        pages.push('...');
-      }
-
-      pages.push(totalPages);
+    if (totalPages <= 3) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
 
-    return pages;
+    if (currentPage <= 2) {
+      return [1, 2, 3, '...', totalPages];
+    }
+
+    if (currentPage >= totalPages - 1) {
+      return [1, '...', totalPages - 2, totalPages - 1, totalPages];
+    }
+
+    return [1, '...', currentPage, '...', totalPages];
   };
 
   const handlePageClick = (page: number) => {
@@ -87,36 +69,36 @@ export const Pagination: React.FC<PaginationProps> = ({
   return (
     <div
       className={cn(
-        'flex flex-col sm:flex-row items-center justify-between gap-4 py-4 px-2 select-none',
+        'flex flex-col sm:flex-row items-center justify-between gap-3 py-3 px-1 text-xs text-slate-500 font-normal select-none',
         className
       )}
     >
       {/* Information string */}
       {showInfo && totalItems !== undefined ? (
-        <div className="text-xs text-slate-500 order-2 sm:order-1 text-center sm:text-left font-medium">
-          Menampilkan <strong className="text-slate-800">{startItem}-{endItem}</strong> dari{' '}
-          <strong className="text-slate-800">{totalItems}</strong> {itemName}
+        <div className="order-2 sm:order-1 text-center sm:text-left">
+          Menampilkan <span className="font-semibold text-slate-700">{startItem}–{endItem}</span> dari{' '}
+          <span className="font-semibold text-slate-700">{totalItems}</span> {itemName}
         </div>
       ) : (
         <div className="order-2 sm:order-1" />
       )}
 
       {/* Pagination controls */}
-      <div className="flex items-center gap-1.5 order-1 sm:order-2">
+      <div className="flex items-center gap-1 order-1 sm:order-2">
         {/* Previous Button */}
         <button
           type="button"
           onClick={() => handlePageClick(currentPage - 1)}
           disabled={currentPage <= 1}
           className={cn(
-            'inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-2xs',
+            'inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-medium border transition-colors',
             currentPage <= 1
-              ? 'bg-slate-50 text-slate-300 border-slate-100 cursor-not-allowed'
-              : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100 hover:text-[#0d2346] active:scale-95'
+              ? 'bg-slate-50 text-slate-300 border-slate-200 cursor-not-allowed'
+              : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:text-slate-900 cursor-pointer active:bg-slate-100'
           )}
           aria-label="Halaman Sebelumnya"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Sebelumnya</span>
         </button>
 
@@ -127,9 +109,9 @@ export const Pagination: React.FC<PaginationProps> = ({
               return (
                 <span
                   key={`ellipsis-${idx}`}
-                  className="w-8 h-8 flex items-center justify-center text-xs text-slate-400 font-bold tracking-widest"
+                  className="w-7 h-8 flex items-center justify-center text-xs text-slate-400 font-medium"
                 >
-                  •••
+                  ...
                 </span>
               );
             }
@@ -143,10 +125,10 @@ export const Pagination: React.FC<PaginationProps> = ({
                 type="button"
                 onClick={() => handlePageClick(pageNum)}
                 className={cn(
-                  'w-8 h-8 flex items-center justify-center rounded-xl text-xs font-bold transition-all cursor-pointer',
+                  'min-w-[32px] h-8 px-2 flex items-center justify-center rounded-md text-xs font-medium border transition-colors',
                   isActive
-                    ? 'bg-[#0d2346] text-white shadow-xs scale-105 pointer-events-none'
-                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 hover:border-slate-300 active:scale-95'
+                    ? 'bg-blue-50 text-blue-600 border-blue-300 font-semibold pointer-events-none'
+                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-slate-900 cursor-pointer active:bg-slate-100'
                 )}
                 aria-label={`Halaman ${pageNum}`}
                 aria-current={isActive ? 'page' : undefined}
@@ -163,15 +145,15 @@ export const Pagination: React.FC<PaginationProps> = ({
           onClick={() => handlePageClick(currentPage + 1)}
           disabled={currentPage >= totalPages}
           className={cn(
-            'inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-2xs',
+            'inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-medium border transition-colors',
             currentPage >= totalPages
-              ? 'bg-slate-50 text-slate-300 border-slate-100 cursor-not-allowed'
-              : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100 hover:text-[#0d2346] active:scale-95'
+              ? 'bg-slate-50 text-slate-300 border-slate-200 cursor-not-allowed'
+              : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:text-slate-900 cursor-pointer active:bg-slate-100'
           )}
           aria-label="Halaman Selanjutnya"
         >
           <span className="hidden sm:inline">Berikutnya</span>
-          <ChevronRight className="w-4 h-4" />
+          <ChevronRight className="w-3.5 h-3.5" />
         </button>
       </div>
     </div>

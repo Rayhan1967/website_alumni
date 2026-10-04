@@ -68,7 +68,7 @@ export const FaqSection: React.FC = () => {
         <div className="mt-10 p-4 sm:p-5 bg-[#1c293d] text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md">
           <div className="text-center sm:text-left">
             <h4 className="font-semibold text-sm sm:text-base text-white">
-              Butuh bantuan langsung dari Helpdesk?
+              Butuh bantuan ?
             </h4>
             <p className="text-xs text-slate-400 mt-0.5">
               Hubungi tim kami via WhatsApp untuk bantuan Tracer Study & layanan alumni
@@ -78,7 +78,7 @@ export const FaqSection: React.FC = () => {
             href="https://wa.me/6281298765432?text=Halo%20Helpdesk%20Tracer%20Study%20SMK%20Sasmita%20Jaya%202,%20saya%20ingin%20bertanya"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold text-xs transition shadow-md whitespace-nowrap active:scale-95 cursor-pointer w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold text-xs transition shadow-md whitespace-nowrap active:scale-95 cursor-pointer w-full sm:w-auto"
           >
             <svg
               className="w-4 h-4 fill-white shrink-0"

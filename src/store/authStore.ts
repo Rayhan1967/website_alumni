@@ -25,7 +25,7 @@ const DEFAULT_MOCK_USER: UserSession = {
   jurusan: 'Teknik Komputer dan Jaringan',
   tahun_lulus: 2024,
   tracerStatus: 'SUDAH',
-  submissionId: 'TRC-2026-0001',
+  submissionId: '2026102498',
   submittedAt: '2026-09-26T13:38:16Z',
   jenisKelamin: 'L',
 };
@@ -72,11 +72,15 @@ export const useAuthStore = create<AuthState>()(
           return true;
         }
 
-        // Dynamic lookup in Admin Store's master alumni list
+        // Dynamic lookup in Admin Store's master alumni list and respondents
         let foundAlumni: any = null;
+        let foundRespondent: any = null;
         try {
           const { useAdminStore } = await import('./adminStore');
-          const masterList = useAdminStore.getState().masterAlumni;
+          const adminState = useAdminStore.getState();
+          const masterList = adminState.masterAlumni || [];
+          const respondentsList = adminState.respondents || [];
+
           foundAlumni = masterList.find(
             (a) =>
               a.nisn.trim() === cleanIdent ||
@@ -84,40 +88,156 @@ export const useAuthStore = create<AuthState>()(
               a.email.toLowerCase() === lowerIdent ||
               a.nama.toLowerCase() === lowerIdent
           );
+
+          foundRespondent = respondentsList.find(
+            (r) =>
+              r.nisn.trim() === cleanIdent ||
+              r.nik.trim() === cleanIdent ||
+              r.email.toLowerCase() === lowerIdent ||
+              r.nama.toLowerCase() === lowerIdent ||
+              (foundAlumni && (r.nisn === foundAlumni.nisn || r.nik === foundAlumni.nik))
+          );
+
+          // If not found directly, check by ending digits (e.g. 1234567)
+          if (!foundAlumni && !foundRespondent && cleanIdent.length >= 7) {
+            const suffix = cleanIdent.slice(-7);
+            foundAlumni = masterList.find(
+              (a) => a.nisn.endsWith(suffix) || a.nik.endsWith(suffix)
+            );
+            if (foundAlumni) {
+              foundRespondent = respondentsList.find(
+                (r) => r.nisn === foundAlumni.nisn || r.nik === foundAlumni.nik
+              );
+            }
+          }
+
+          if (!foundAlumni && foundRespondent) {
+            foundAlumni = {
+              id: foundRespondent.id,
+              nisn: foundRespondent.nisn,
+              nik: foundRespondent.nik,
+              nama: foundRespondent.nama,
+              email: foundRespondent.email,
+              noWhatsapp: foundRespondent.noWhatsapp,
+              jurusan: foundRespondent.jurusan,
+              tahunLulus: foundRespondent.tahunLulus,
+              statusTracer: 'SUDAH' as const,
+              submissionId: foundRespondent.submissionId,
+              submittedAt: foundRespondent.submittedAt,
+            };
+          }
         } catch {
           // Ignore if adminStore is not available
         }
 
+        const alumniName = foundAlumni?.nama || foundRespondent?.nama || '';
         const isFemale =
-          foundAlumni?.nama &&
-          /^(citra|mega|olivia|qori|siti|vina|yasmin|bella|gita|indah)/i.test(
-            foundAlumni.nama
+          alumniName &&
+          /^(citra|mega|olivia|qori|siti|vina|yasmin|bella|gita|indah|dwi|ani|nur|rina)/i.test(
+            alumniName
           );
 
         let user: UserSession;
-        if (foundAlumni) {
+        if (foundAlumni || foundRespondent) {
+          const matched = foundAlumni || foundRespondent;
+          const statusTracer = (foundRespondent ? 'SUDAH' : matched.statusTracer) || 'BELUM';
+          const subId = matched.submissionId || foundRespondent?.submissionId;
+          const subAt = matched.submittedAt || foundRespondent?.submittedAt;
+
           user = {
-            id: foundAlumni.id,
-            nisn: foundAlumni.nisn,
-            nama: foundAlumni.nama,
-            email: foundAlumni.email,
+            id: matched.id,
+            nisn: matched.nisn,
+            nik: matched.nik,
+            nama: matched.nama,
+            email: matched.email,
+            noWhatsapp: matched.noWhatsapp,
             role: 'alumni',
-            jurusan: foundAlumni.jurusan,
-            tahun_lulus: foundAlumni.tahunLulus,
-            tracerStatus: foundAlumni.statusTracer,
-            submissionId: foundAlumni.submissionId,
-            submittedAt: foundAlumni.submittedAt,
+            jurusan: matched.jurusan,
+            tahun_lulus: matched.tahunLulus,
+            tracerStatus: statusTracer,
+            submissionId: subId,
+            submittedAt: subAt,
             jenisKelamin: isFemale ? 'P' : 'L',
           };
+
+          // Synchronize tracerStore with admin respondent data
+          try {
+            const { useTracerStore } = await import('./tracerStore');
+            const tracerStore = useTracerStore.getState();
+
+            if (statusTracer === 'SUDAH' && foundRespondent?.fullPayload) {
+              useTracerStore.setState({
+                isSubmitted: true,
+                lastSubmissionId: subId || '2026102498',
+                lastSubmittedAt: subAt || new Date().toISOString(),
+                identitas: foundRespondent.fullPayload.identitas || {
+                  nama_lengkap: user.nama,
+                  nisn: user.nisn,
+                  nik: user.nik,
+                  tahun_lulus: user.tahun_lulus,
+                  jurusan: user.jurusan,
+                  email: user.email,
+                  no_whatsapp: user.noWhatsapp,
+                },
+                status_kegiatan: foundRespondent.fullPayload.status_kegiatan || foundRespondent.statusKegiatan || 'KERJA',
+                masa_tunggu: foundRespondent.fullPayload.masa_tunggu || '< 3 bulan',
+                detail_kerja: foundRespondent.fullPayload.detail_kerja || null,
+                detail_kuliah: foundRespondent.fullPayload.detail_kuliah || null,
+                detail_usaha: foundRespondent.fullPayload.detail_usaha || null,
+                evaluasi: foundRespondent.fullPayload.evaluasi || tracerStore.evaluasi,
+                agreement: true,
+              });
+            } else if (statusTracer === 'SUDAH') {
+              useTracerStore.setState({
+                isSubmitted: true,
+                lastSubmissionId: subId || '2026102498',
+                lastSubmittedAt: subAt || new Date().toISOString(),
+                identitas: {
+                  nama_lengkap: user.nama,
+                  nisn: user.nisn,
+                  nik: user.nik,
+                  tahun_lulus: user.tahun_lulus,
+                  jurusan: user.jurusan as any,
+                  email: user.email,
+                  no_whatsapp: user.noWhatsapp,
+                  tahun_masuk: user.tahun_lulus - 3,
+                  jenis_kelamin: isFemale ? 'Perempuan' : 'Laki-laki',
+                },
+              });
+            } else {
+              useTracerStore.setState({
+                isSubmitted: false,
+                lastSubmissionId: null,
+                lastSubmittedAt: null,
+                hasStartedSurvey: false,
+                currentStep: 1,
+                identitas: {
+                  nama_lengkap: user.nama,
+                  nisn: user.nisn,
+                  nik: user.nik,
+                  tahun_lulus: user.tahun_lulus,
+                  jurusan: user.jurusan as any,
+                  email: user.email,
+                  no_whatsapp: user.noWhatsapp,
+                  tahun_masuk: user.tahun_lulus - 3,
+                  jenis_kelamin: isFemale ? 'Perempuan' : 'Laki-laki',
+                },
+              });
+            }
+          } catch {
+            // Ignore if tracerStore sync fails
+          }
         } else {
           // Dynamic fallback for arbitrary NISN / Email
           const isNisn = /^\d{10}$/.test(cleanIdent);
+          const isNik = /^\d{16}$/.test(cleanIdent);
           user = {
             ...DEFAULT_MOCK_USER,
             id: `usr-${Date.now()}`,
             nisn: isNisn ? cleanIdent : DEFAULT_MOCK_USER.nisn,
+            nik: isNik ? cleanIdent : DEFAULT_MOCK_USER.nik,
             email: cleanIdent.includes('@') ? cleanIdent : DEFAULT_MOCK_USER.email,
-            nama: isNisn ? `Alumni (${cleanIdent})` : DEFAULT_MOCK_USER.nama,
+            nama: DEFAULT_MOCK_USER.nama,
             role: 'alumni',
             tracerStatus: 'BELUM',
             submissionId: undefined,

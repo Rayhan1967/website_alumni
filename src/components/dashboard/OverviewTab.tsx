@@ -6,7 +6,9 @@ import { JobVacancy } from "@/types/tracer";
 import { DashboardTab } from "./DashboardSidebar";
 import {
   Check,
+  AlertCircle,
   FileSpreadsheet,
+  Download,
   Briefcase,
   GraduationCap,
   Building,
@@ -50,38 +52,38 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
 
             <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
               {isTracerDone
-                ? `Terima kasih telah mengisi Tracer Study. Nomor registrasi Anda: ${lastSubmissionId || "TRC-2026-0001"}. Gunakan bukti ini untuk pengambilan ijazah asli.`
+                ? `Terima kasih telah mengisi Tracer Study. Nomor registrasi Anda: ${lastSubmissionId || user?.submissionId || "2026102498"}`
                 : "Mohon luangkan waktu 3-5 menit untuk memperbarui data karir, studi, atau wirausaha Anda guna membantu pengembangan kurikulum sekolah."}
             </p>
           </div>
 
-          <div className="shrink-0 flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+          <div className="shrink-0 w-full md:w-auto">
             {isTracerDone ? (
-              <>
+              <div className="grid grid-cols-2 gap-2 sm:gap-3 w-full">
                 <Button
                   onClick={onOpenReceipt}
                   variant="secondary"
                   size="md"
-                  className="font-bold text-slate-950 w-full sm:w-auto"
+                  className="font-bold text-slate-950 w-full flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer text-xs sm:text-sm px-2 sm:px-4 text-center"
                 >
-                  <FileSpreadsheet className="w-4 h-4 mr-2" />
-                  <span>Lihat Bukti Pengisian</span>
+                  <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 mr-1" />
+                  <span className="truncate">Unduh Bukti</span>
                 </Button>
                 <Button
                   onClick={() => onNavigateTab("tracer_study")}
                   variant="outline"
                   size="md"
-                  className="bg-white/10 text-white hover:bg-white/20 border-white/30 w-full sm:w-auto"
+                  className="bg-white/10 text-white hover:bg-white/20 border-white/30 w-full text-xs sm:text-sm px-2 sm:px-4 text-center cursor-pointer"
                 >
                   <span>Update Data</span>
                 </Button>
-              </>
+              </div>
             ) : (
               <Button
                 onClick={() => onNavigateTab("tracer_study")}
                 variant="yellow"
                 size="lg"
-                className="font-bold text-slate-950 shadow-lg w-full sm:w-auto"
+                className="font-bold text-slate-950 shadow-lg w-full md:w-auto cursor-pointer"
               >
                 <span>Isi Kuesioner Sekarang</span>
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -96,12 +98,6 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
 
       {/* 2. Bagian Statistik matching Wireframe (3 Cards in a row) */}
       <div>
-        <div className="flex items-center justify-between mb-3 sm:mb-4">
-          <h3 className="text-2xl sm:text-2xl font-bold tracking-wider text-slate-600">
-            Statistik & Status Akun
-          </h3>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-5">
           {/* Stat Card 1: Status Tracer Study */}
           <div
@@ -118,11 +114,11 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
                 Status Tracer Study
               </span>
               <h4 className="stat-heading text-lg sm:text-xl font-bold text-slate-900 leading-snug transition-colors">
-                {isTracerDone ? "Sudah Diisi (Lengkap)" : "Belum Terisi"}
+                {isTracerDone ? "Sudah Terisi" : "Belum Terisi"}
               </h4>
-              <p className="stat-desc text-xs text-slate-600 mt-1.5 transition-colors">
+              <p className="stat-desc text-xs font-light text-slate-600 mt-1.5 transition-colors">
                 {isTracerDone
-                  ? "Tervalidasi di sistem BKK"
+                  ? "Tervalidasi di sistem"
                   : "Wajib diisi sebelum ambil ijazah"}
               </p>
             </div>
@@ -135,7 +131,11 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
             </div>
 
             <div className="go-corner" title="Tracer Study">
-              <Check className="go-icon" strokeWidth={2.5} />
+              {isTracerDone ? (
+                <Check className="go-icon" strokeWidth={2.5} />
+              ) : (
+                <AlertCircle className="go-icon" strokeWidth={2.5} />
+              )}
             </div>
           </div>
 
@@ -156,7 +156,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
               <h4 className="stat-heading text-lg sm:text-xl font-bold text-slate-900 leading-snug transition-colors">
                 Siap Diambil di TU
               </h4>
-              <p className="stat-desc text-xs text-slate-600 mt-1.5 transition-colors">
+              <p className="stat-desc text-xs font-light text-slate-600 mt-1.5 transition-colors">
                 No. Ijazah: M-SMK/24/0048291
               </p>
             </div>
@@ -190,7 +190,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
               <h4 className="stat-heading text-lg sm:text-xl font-bold text-slate-900 leading-snug transition-colors">
                 28 Lowongan Baru
               </h4>
-              <p className="stat-desc text-xs text-slate-600 mt-1.5 transition-colors">
+              <p className="stat-desc text-xs font-light text-slate-600 mt-1.5 transition-colors">
                 Kemitraan DUDI Tangerang Selatan & Jabodetabek
               </p>
             </div>

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useTracerStore } from '@/store/tracerStore';
-import { Menu, LogOut, FileText, ChevronDown } from 'lucide-react';
+import { Menu, LogOut, FileText, ChevronDown, Download } from 'lucide-react';
 import { UserAvatar } from '@/components/ui/UserAvatar';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,37 @@ interface DashboardHeaderProps {
   onOpenReceipt: () => void;
   onNavigateTab?: (tab: string, respondentId?: string) => void;
 }
+
+const getGreetingName = (user: any): string => {
+  if (!user) return 'Ahmad Dani';
+  if (user.role === 'admin_bkk') return 'Admin BKK';
+
+  const rawName = (user.nama || '').trim();
+  const ident = (user.nisn || user.nik || '').trim();
+
+  // If name contains raw placeholder like "Alumni (0061234567)" or "Alumni NIK"
+  if (!rawName || /^alumni\s*[\(/]/i.test(rawName)) {
+    if (ident.includes('1234567')) return 'Ahmad Dani';
+    if (ident.includes('2345678')) return 'Budi Santoso';
+    if (ident.includes('3456789')) return 'Citra Dewi';
+    if (ident.includes('4567890')) return 'Dimas Bagus';
+    if (ident.includes('5678901')) return 'Eko Wahyudi';
+    if (ident.includes('6789012')) return 'Farhan Rizki';
+    return 'Ahmad Dani';
+  }
+
+  // Clean any prefix and symbols
+  const cleanName = rawName.replace(/^alumni\s+/i, '').replace(/[\(\)\d]/g, '').trim();
+  const words = cleanName.split(/\s+/).filter(Boolean);
+
+  if (words.length >= 2) {
+    return `${words[0]} ${words[1]}`;
+  } else if (words.length === 1) {
+    return words[0];
+  }
+
+  return 'Ahmad Dani';
+};
 
 export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   onToggleMobileMenu,
@@ -68,7 +99,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
         <div>
           <h1 className="text-sm sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
-            <span>Halo, {user?.nama || 'Ahmad Dani'}!</span>
+            <span>Halo, {getGreetingName(user)}!</span>
             {user?.role === 'admin_bkk' && (
               <span className="px-2 py-0.5 rounded-full bg-blue-100 text-slate-700 border border-slate-200 text-[11px] font-semibold">
                 Admin
@@ -87,7 +118,10 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
       <div className="flex items-center gap-2.5 sm:gap-3">
         
         {/* Interactive Mail Notification Center */}
-        <MailNotificationMenu onNavigateTab={onNavigateTab} />
+        <MailNotificationMenu
+          onNavigateTab={onNavigateTab}
+          onOpenReceipt={onOpenReceipt}
+        />
 
         {/* Profile Circle with Dropdown */}
         <div className="relative" ref={dropdownRef}>
@@ -121,8 +155,8 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                     }}
                     className="w-full px-4 py-2 text-left hover:bg-slate-50 flex items-center gap-2 text-slate-700 cursor-pointer"
                   >
-                    <FileText className="w-4 h-4 text-blue-900" />
-                    <span>Bukti Pengisian Tracer Study</span>
+                    <Download className="w-4 h-4 text-blue-900" />
+                    <span>Unduh Bukti Pengisian (PDF)</span>
                   </button>
                 </div>
               )}

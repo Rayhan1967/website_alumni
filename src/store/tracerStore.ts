@@ -183,10 +183,12 @@ export const useTracerStore = create<TracerFormState>()(
         // Simulate REST API call with /api/v1/tracer-study contract
         await new Promise((resolve) => setTimeout(resolve, 800));
 
-        const submissionId = `TRC-2026-${String(
-          Math.floor(1000 + Math.random() * 9000)
-        )}`;
-        const submittedAt = new Date().toISOString();
+        const now = new Date();
+        const year = now.getFullYear().toString();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const randomSeq = Math.floor(1000 + Math.random() * 9000).toString();
+        const submissionId = `${year}${month}${randomSeq}`;
+        const submittedAt = now.toISOString();
 
         const response: SubmissionResponse = {
           success: true,

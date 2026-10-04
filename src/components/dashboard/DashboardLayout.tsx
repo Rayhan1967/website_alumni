@@ -9,7 +9,7 @@ import { AlumniTab } from './AlumniTab';
 import { HelpdeskTab } from './HelpdeskTab';
 import { DashboardBreadcrumb } from './DashboardBreadcrumb';
 import { TracerWizard } from '@/components/tracer/TracerWizard';
-import { SubmissionReceiptModal } from '@/components/tracer/SubmissionReceiptModal';
+import { generateTracerReceiptPdf } from '@/lib/pdfGenerator';
 import { useTracerStore } from '@/store/tracerStore';
 import { useAuthStore } from '@/store/authStore';
 import { JobVacancy } from '@/types/tracer';
@@ -103,8 +103,34 @@ export const DashboardLayout: React.FC = () => {
       return false;
     }
   });
-  const [receiptModalOpen, setReceiptModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState<JobVacancy | null>(null);
+
+  // Direct PDF Download tanpa preview modal
+  const handleDirectDownloadReceipt = () => {
+    const { identitas, status_kegiatan, lastSubmissionId, lastSubmittedAt } = useTracerStore.getState();
+    const currentUser = useAuthStore.getState().user;
+
+    const regId = lastSubmissionId || currentUser?.submissionId || '2026102498';
+    const activeIdent = identitas?.nama_lengkap
+      ? identitas
+      : {
+          nama_lengkap: currentUser?.nama || 'Ahmad Dani',
+          nisn: currentUser?.nisn || '0051234567',
+          nik: currentUser?.nik || '3674012345670001',
+          jurusan: currentUser?.jurusan || ('Teknik Komputer dan Jaringan' as any),
+          tahun_lulus: currentUser?.tahun_lulus || 2024,
+          tahun_masuk: (currentUser?.tahun_lulus || 2024) - 3,
+          no_whatsapp: '081298765432',
+          email: currentUser?.email || 'alumni@example.com',
+        };
+
+    generateTracerReceiptPdf({
+      submissionId: regId,
+      identitas: activeIdent,
+      statusKegiatan: status_kegiatan || 'KERJA',
+      submittedAt: lastSubmittedAt || currentUser?.submittedAt || new Date().toISOString(),
+    });
+  };
 
   // Lock body & html scroll when mobile sidebar drawer is open
   useEffect(() => {
@@ -176,7 +202,7 @@ export const DashboardLayout: React.FC = () => {
         {/* Header */}
         <DashboardHeader
           onToggleMobileMenu={() => setIsMobileOpen(!isMobileOpen)}
-          onOpenReceipt={() => setReceiptModalOpen(true)}
+          onOpenReceipt={handleDirectDownloadReceipt}
           onNavigateTab={(tab, respondentId) => {
             if (respondentId) {
               setSelectedRespondentId(respondentId);
@@ -255,7 +281,7 @@ export const DashboardLayout: React.FC = () => {
                 ) : (
                   <OverviewTab
                     onNavigateTab={(tab) => setActiveTab(tab)}
-                    onOpenReceipt={() => setReceiptModalOpen(true)}
+                    onOpenReceipt={handleDirectDownloadReceipt}
                     onSelectJob={handleSelectJobFromOverview}
                   />
                 )
@@ -293,13 +319,6 @@ export const DashboardLayout: React.FC = () => {
           )}
         </main>
       </div>
-
-      {/* Official Receipt Modal */}
-      <SubmissionReceiptModal
-        isOpen={receiptModalOpen}
-        onClose={() => setReceiptModalOpen(false)}
-        submissionId={lastSubmissionId || 'TRC-2026-0001'}
-      />
     </div>
   );
 };
