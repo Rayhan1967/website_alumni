@@ -38,7 +38,7 @@ const JOB_TYPES: JobVacancy["type"][] = [
 ];
 
 export const AdminJobsTab: React.FC = () => {
-  const { jobList, addJob, updateJob, deleteJob } = useContentStore();
+  const { jobList, addJob, updateJob, deleteJob, fetchJobsFromBackend } = useContentStore();
 
   const [viewMode, setViewMode] = useState<"list" | "editor">("list");
   const [searchQuery, setSearchQuery] = useState("");
@@ -46,6 +46,10 @@ export const AdminJobsTab: React.FC = () => {
   const [selectedMajor, setSelectedMajor] = useState("Semua");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+
+  useEffect(() => {
+    fetchJobsFromBackend();
+  }, [fetchJobsFromBackend]);
 
   // Editor State
   const [editingJob, setEditingJob] = useState<JobVacancy | null>(null);
@@ -61,7 +65,11 @@ export const AdminJobsTab: React.FC = () => {
   const [targetMajors, setTargetMajors] = useState<string[]>([
     "Teknik Komputer dan Jaringan",
   ]);
-  const [deadline, setDeadline] = useState("30 Okt 2026");
+  const [deadline, setDeadline] = useState(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 30);
+    return d.toISOString().split('T')[0];
+  });
   const [contactPerson, setContactPerson] = useState(
     "bkk@smksasmitajaya2.sch.id",
   );
@@ -75,6 +83,12 @@ export const AdminJobsTab: React.FC = () => {
   };
 
   const handleOpenEditor = (job: JobVacancy | null) => {
+    const formatDateForInput = (dateStr: string): string => {
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return '';
+      return d.toISOString().split('T')[0];
+    };
+
     if (job) {
       setEditingJob(job);
       setTitle(job.title);
@@ -83,7 +97,7 @@ export const AdminJobsTab: React.FC = () => {
       setType(job.type);
       setSalary(job.salary);
       setTargetMajors(job.targetMajors);
-      setDeadline(job.deadline);
+      setDeadline(formatDateForInput(job.deadline));
       setContactPerson(job.contactPerson);
       setIsBkkPartner(job.isBkkPartner);
       setDescription(job.description);
@@ -96,7 +110,7 @@ export const AdminJobsTab: React.FC = () => {
       setType("Full-time");
       setSalary("Rp 4.500.000 - Rp 6.500.000");
       setTargetMajors(["Teknik Komputer dan Jaringan"]);
-      setDeadline("30 Okt 2026");
+      setDeadline(formatDateForInput(new Date(Date.now() + 30 * 86400000).toISOString()));
       setContactPerson("bkk@smksasmitajaya2.sch.id");
       setIsBkkPartner(true);
       setDescription("");
@@ -370,10 +384,9 @@ export const AdminJobsTab: React.FC = () => {
                     Batas Akhir Pendaftaran (Deadline)
                   </label>
                   <input
-                    type="text"
+                    type="date"
                     value={deadline}
                     onChange={(e) => setDeadline(e.target.value)}
-                    placeholder="Contoh: 30 Okt 2026"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:border-[#0d2346] focus:ring-2 focus:ring-[#0d2346]/10 focus:outline-none transition bg-slate-50/50 focus:bg-white"
                   />
                 </div>

@@ -7,11 +7,15 @@ import {
   ChevronLeft,
   Info,
   Sparkles,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 
 export const LoginPage: React.FC = () => {
   const [loginMethod, setLoginMethod] = useState<"nisn" | "nik">("nisn");
-  const [identifier, setIdentifier] = useState("0061234567");
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -26,7 +30,8 @@ export const LoginPage: React.FC = () => {
 
   const handleLoginMethodChange = (method: "nisn" | "nik") => {
     setLoginMethod(method);
-    setIdentifier(method === "nisn" ? "0061234567" : "3274012304050001");
+    setIdentifier("");
+    setPassword("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,12 +43,21 @@ export const LoginPage: React.FC = () => {
       return;
     }
 
+    if (!password.trim()) {
+      setError("Harap masukkan password Anda.");
+      return;
+    }
+
     setLoading(true);
     try {
-      await login(identifier, "alumni");
-      navigate("/dashboard", { replace: true });
+      const success = await login(identifier, password);
+      if (success) {
+        navigate("/dashboard", { replace: true });
+      } else {
+        setError("NISN/NIK atau password salah. Silakan periksa kembali data Anda.");
+      }
     } catch {
-      setError("Data tidak ditemukan. Silakan periksa kembali NISN/NIK Anda.");
+      setError("NISN/NIK atau password salah. Silakan coba lagi.");
     } finally {
       setLoading(false);
     }
@@ -52,11 +66,13 @@ export const LoginPage: React.FC = () => {
   const handleQuickDemo = () => {
     setLoginMethod("nisn");
     setIdentifier("0051234567");
+    setPassword("alumni123");
   };
 
   const handleAdminDemo = () => {
     setLoginMethod("nisn");
     setIdentifier("admin@smksasmitajaya2.sch.id");
+    setPassword("Admin#12345");
   };
 
   return (
@@ -114,7 +130,7 @@ export const LoginPage: React.FC = () => {
           <div className="relative z-10">
             <div className="flex items-center gap-3 group">
               <img
-                src="/favicon.png"
+                src="/logo-smk.png"
                 alt="Logo SMK Sasmita Jaya 2"
                 className="w-10 h-10 object-contain drop-shadow-md"
               />
@@ -239,6 +255,30 @@ export const LoginPage: React.FC = () => {
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#182a4a] focus:border-transparent"
                   required
                 />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-800 mb-1.5">
+                  Password
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Masukkan password Anda"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#182a4a] focus:border-transparent pr-12"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                    aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}
+                  >
+                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
               </div>
 
               {/* Submit Button */}

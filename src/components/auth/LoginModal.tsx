@@ -17,7 +17,7 @@ interface LoginModalProps {
 
 export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   const [loginMethod, setLoginMethod] = useState<'nisn' | 'nik'>('nisn');
-  const [identifier, setIdentifier] = useState('0061234567');
+  const [identifier, setIdentifier] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -28,7 +28,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
   const handleLoginMethodChange = (method: 'nisn' | 'nik') => {
     setLoginMethod(method);
-    setIdentifier(method === 'nisn' ? '0061234567' : '3274012304050001');
+    setIdentifier('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -126,7 +126,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
             <div className="relative z-10">
               <div className="flex items-center gap-2.5">
                 <img
-                  src="/favicon.png"
+                  src="/logo-smk.png"
                   alt="Logo SMK Sasmita Jaya 2"
                   className="w-10 h-10 object-contain drop-shadow-md"
                 />

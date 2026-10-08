@@ -51,7 +51,7 @@ export const TracerWizard: React.FC<TracerWizardProps> = ({ onBackToOverview }) 
   }, [isAuthenticated, navigate]);
 
   const stepParam = searchParams.get('step');
-  const isTracerDone = isSubmitted || user?.tracerStatus === 'SUDAH';
+  const isTracerDone = user ? user.tracerStatus === 'SUDAH' : isSubmitted;
 
   // Synchronize step with URL search param so browser Back (<) and Forward (>) work seamlessly
   useEffect(() => {

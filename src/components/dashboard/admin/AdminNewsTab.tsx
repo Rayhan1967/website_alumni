@@ -59,13 +59,17 @@ const SAMPLE_IMAGES = [
 ];
 
 export const AdminNewsTab: React.FC = () => {
-  const { newsList, addNews, updateNews, deleteNews } = useContentStore();
+  const { newsList, addNews, updateNews, deleteNews, fetchNewsFromBackend } = useContentStore();
 
   const [viewMode, setViewMode] = useState<"list" | "editor">("list");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Semua");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+
+  useEffect(() => {
+    fetchNewsFromBackend();
+  }, [fetchNewsFromBackend]);
 
   // Editor State
   const [editingNews, setEditingNews] = useState<NewsItem | null>(null);
